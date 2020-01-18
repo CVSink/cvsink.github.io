@@ -15,7 +15,7 @@
 <meta property="og:description" content="题目描述&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;如果我们交换字符串 X 中的两个不同位置的字母，使得它和字符串 Y 相等，那么称 X 和 Y 两个字符串相似。如果这两个字符串本身是相等的，那它们也是相似的。 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 例如，”tars” 和 “rats” 是相似的 (交换 0 与 2 的">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-01-18T07:22:59.000Z">
-<meta property="article:modified_time" content="2020-01-18T08:57:54.583Z">
+<meta property="article:modified_time" content="2020-01-18T09:00:16.649Z">
 <meta property="article:author" content="LoongX">
 <meta property="article:tag" content="算法">
 <meta property="article:tag" content="并查集">
@@ -126,7 +126,7 @@ if (isWX) {
 <h6 id="另一种思路"><a href="#另一种思路" class="headerlink" title="另一种思路"></a>另一种思路</h6><br>
 ###### 天坑
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果UF中Union方法仅仅只将tag[a]指向b:
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">void Union(int a, int b) &#123;</span><br><span class="line">	tag[a] &#x3D; b;</span><br><span class="line">	return;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Union</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">	tag[a] = b;</span><br><span class="line">	<span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 那么在输入样例{ "zkhnmefhyr", "ykznfhehmr", "mkhnyefrzh", "zkhnyefrmh", "zkmnhefhyr", "ykznhfehmr", "zkynhfehmr", "mkhnhefrzy", "zkhnmefryh", "zkmnhfehyr" }中，正确输出应为1，但计算出的连通分量数却为2，有一个字符串既与一类中的某个字符串相似，又与另一类中的某个字符串相似，此时会出现一个结点对应两个父结点，由于tag[a]只能记录一个父结点，那么必然导致另一个父结点信息丢失。
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;另外虽然题目声称不包含重复字符串，但样例中仍存在若干个重复的字符串。
 <br><br>leetcode839: https://leetcode-cn.com/problems/similar-string-groups/
