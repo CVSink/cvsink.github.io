@@ -7,15 +7,15 @@
   
   <title>求集合的所有子集 | LoongX&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="### 二进制法 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;用一个二进制数来表示一个集合，如有一个含六个元素的集合{1,2,3,4,5,6}，它的一个子集{1,2,4,6}可以用二进制数110101表示。要进行集合间的运算就可以对其二进制数进行位运算。 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nb">
+  <meta name="description" content="二进制法&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;用一个二进制数来表示一个集合，如有一个含六个元素的集合{1,2,3,4,5,6}，它的一个子集{1,2,4,6}可以用二进制数110101表示。要进行集合间的运算就可以对其二进制数进行位运算。&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;利用">
 <meta property="og:type" content="article">
 <meta property="og:title" content="求集合的所有子集">
 <meta property="og:url" content="http://cvsink.github.io/2020/01/19/%E6%B1%82%E9%9B%86%E5%90%88%E7%9A%84%E6%89%80%E6%9C%89%E5%AD%90%E9%9B%86/index.html">
 <meta property="og:site_name" content="LoongX&#39;s Blog">
-<meta property="og:description" content="### 二进制法 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;用一个二进制数来表示一个集合，如有一个含六个元素的集合{1,2,3,4,5,6}，它的一个子集{1,2,4,6}可以用二进制数110101表示。要进行集合间的运算就可以对其二进制数进行位运算。 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nb">
+<meta property="og:description" content="二进制法&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;用一个二进制数来表示一个集合，如有一个含六个元素的集合{1,2,3,4,5,6}，它的一个子集{1,2,4,6}可以用二进制数110101表示。要进行集合间的运算就可以对其二进制数进行位运算。&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;利用">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-01-19T06:39:08.000Z">
-<meta property="article:modified_time" content="2020-01-19T07:10:16.058Z">
+<meta property="article:modified_time" content="2020-01-19T07:15:15.808Z">
 <meta property="article:author" content="LoongX">
 <meta name="twitter:card" content="summary">
   
@@ -116,9 +116,9 @@ if (isWX) {
       
         
         <font size=3>
-### 二进制法
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用一个二进制数来表示一个集合，如有一个含六个元素的集合{1,2,3,4,5,6}，它的一个子集{1,2,4,6}可以用二进制数110101表示。要进行集合间的运算就可以对其二进制数进行位运算。
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;利用二进制法生成集合所有子集的代码如下:
+
+<h3 id="二进制法"><a href="#二进制法" class="headerlink" title="二进制法"></a>二进制法</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用一个二进制数来表示一个集合，如有一个含六个元素的集合{1,2,3,4,5,6}，它的一个子集{1,2,4,6}可以用二进制数110101表示。要进行集合间的运算就可以对其二进制数进行位运算。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;利用二进制法生成集合所有子集的代码如下:</p>
+<a id="more"></a>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">subset</span><span class="params">(<span class="keyword">int</span> n,<span class="keyword">int</span> s)</span></span>&#123;	<span class="comment">//输出子集s包含的元素</span></span><br><span class="line"><span class="comment">/*&lt;&lt;把一个整型数的所有位向左移动指定的位数，移动到</span></span><br><span class="line"><span class="comment">左边界之外的多余二进制位会被丢弃，并从右边界移入0*/</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(s&amp;(<span class="number">1</span>&lt;&lt;i))	<span class="comment">//从最右侧开始遍历s中是否含有相应的元素</span></span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; i+<span class="number">1</span> &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n=<span class="number">3</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;(<span class="number">1</span>&lt;&lt;n);i++)<span class="comment">//设置二进制数的长度，枚举子集</span></span><br><span class="line">        subset(<span class="number">3</span>,i);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="增量构造法"><a href="#增量构造法" class="headerlink" title="增量构造法"></a>增量构造法</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;每次递归选取一个值放入到集合中，每次递归自身也输出一遍。递归出口即无法向集合中添加元素。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;生成子集的代码如下：</p>
