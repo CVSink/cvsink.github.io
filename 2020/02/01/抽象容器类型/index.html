@@ -15,7 +15,7 @@
 <meta property="og:description" content="顺序容器&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;顺序容器有以下三种：可变长动态数组 vector、双端队列 deque、双向链表 list。&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;它们之所以被称为顺序容器，是因为元素在容器中的位置同元素的值无关，即容器不是排序的。将元素插入容器时，指">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-02-01T07:48:22.000Z">
-<meta property="article:modified_time" content="2020-02-01T13:22:14.755Z">
+<meta property="article:modified_time" content="2020-02-01T13:48:26.043Z">
 <meta property="article:author" content="LoongX">
 <meta name="twitter:card" content="summary">
   
@@ -126,7 +126,7 @@ if (isWX) {
 </ul>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果既需要随机访问元素，又需要随机插入和删除元素，那么由主要操作来决定使用的容器类型，更有可能要自己设计使用更加复杂的数据结构。</p>
 <h4 id="vector"><a href="#vector" class="headerlink" title="vector"></a>vector</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vector为可变长动态数组。vector表示一段<strong>连续</strong>的内存区域，每个元素被顺序存储在这段内存中。对vector随机访问效率很高，因为每次访问离vector起始处的位移都是固定的。但是，在任意位置（不是在vector的末尾）插入或删除元素，效率很低，此时它需要将待插入元素右边的每个元素都拷贝一遍。这种代价对于大型（要拷贝的数据多）、复杂（调用的构造函数和析构函数开销大）的类对象来说尤其大。</p>
-<h6 id="vector的增长"><a href="#vector的增长" class="headerlink" title="vector的增长"></a>vector的增长</h6><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;为了提高效率，vector并不是随每一个元素的增长而增长，而是当vector需要增长自身时，它实际分配的空间要比当前所需要的空间多一点（分配额外容量的大小由具体实现定义）。由于存在这种机制，<strong>实际上对于小的对象，vector在使用中比list效率更高</strong>。STL的Rogue Wave实现版本下分配的额外容量如下表：</p>
+<h5 id="vector的增长"><a href="#vector的增长" class="headerlink" title="vector的增长"></a>vector的增长</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;为了提高效率，vector并不是随每一个元素的增长而增长，而是当vector需要增长自身时，它实际分配的空间要比当前所需要的空间多一点（分配额外容量的大小由具体实现定义）。由于存在这种机制，<strong>实际上对于小的对象，vector在使用中比list效率更高</strong>。STL的Rogue Wave实现版本下分配的额外容量如下表：</p>
 <table>
 <thead>
 <tr>
@@ -167,9 +167,9 @@ if (isWX) {
 </tr>
 </tbody></table>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;由表可见，随着数据类型的<strong>长度</strong>越来越大，vector为其分配的额外容量越来越少，这也意味着vector的效率越来越低。<strong>在分配的额外空间满后，重分配后的缺省容量为之前的两倍</strong>。对于大型的数据类型，缺省容量较小，因此插入操作后频繁引发的重分配和拷贝操作成为使用vector的主要开销。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;而数据类型的长度不仅仅是影响vector性能的唯一因素，由于在额外空间满后，每个元素需要依次调用析构函数和拷贝构造函数，类越复杂，调用拷贝构造函数和析构函数的开销也就越大，vector的性能也就越低。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关于reserve方法（依据经验）：用一个非1的缺省值来调整vector的容量看起来总会引起性能的退化。例如对于string和double型的vector，通过reserve()会导致很差的性能，而增加大型复杂类的容量，又能大大改善其性能。</p>
-<h6 id="vector的比较"><a href="#vector的比较" class="headerlink" title="vector的比较"></a>vector的比较</h6><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;容器间的比较，是两个容器的元素之间成对地比较，从第一个元素开始开始往后进行比较。对于大于和小于比较，第一个不相同的元素哪个容器里的更大哪个容器就更大，如果都相同，元素个数多的容器更大；对于等于比较，只有所有元素都相同且两个容器元素个数相同，这两个容器才相同。（支持运算符重载）</p>
+<h5 id="vector的比较"><a href="#vector的比较" class="headerlink" title="vector的比较"></a>vector的比较</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;容器间的比较，是两个容器的元素之间成对地比较，从第一个元素开始开始往后进行比较。对于大于和小于比较，第一个不相同的元素哪个容器里的更大哪个容器就更大，如果都相同，元素个数多的容器更大；对于等于比较，只有所有元素都相同且两个容器元素个数相同，这两个容器才相同。（支持运算符重载）</p>
 <h4 id="List"><a href="#List" class="headerlink" title="List"></a>List</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;list为双向链表，允许双向遍历，在任意位置插入删除元素效率高，但对随机访问不友好，需要先遍历中间的元素，除此之外还需要额外的空间开销。</p>
-<h6 id="vector和list的选择"><a href="#vector和list的选择" class="headerlink" title="vector和list的选择"></a>vector和list的选择</h6><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在vector和list插入1000w个元素来进行比较(单位为秒)：</p>
+<h5 id="vector和list的选择"><a href="#vector和list的选择" class="headerlink" title="vector和list的选择"></a>vector和list的选择</h5><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在vector和list插入1000w个元素来进行比较(单位为秒)：</p>
 <table>
 <thead>
 <tr>
