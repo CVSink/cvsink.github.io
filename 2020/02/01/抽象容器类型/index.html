@@ -14,11 +14,13 @@
 <meta property="og:site_name" content="LoongX&#39;s Blog">
 <meta property="og:description" content="顺序容器&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;顺序容器有以下三种：可变长动态数组 vector、双端队列 deque、双向链表 list。&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;它们之所以被称为顺序容器，是因为元素在容器中的位置同元素的值无关，即容器不是排序的。将元素插入容器时，指">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://cvsink.github.io/2020/02/01/%E6%8A%BD%E8%B1%A1%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%5Cimages%5Cpasted-2.png%5C">
 <meta property="article:published_time" content="2020-02-01T07:48:22.000Z">
-<meta property="article:modified_time" content="2020-02-01T14:14:33.895Z">
+<meta property="article:modified_time" content="2020-02-02T06:53:51.250Z">
 <meta property="article:author" content="LoongX">
 <meta property="article:tag" content="C++">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://cvsink.github.io/2020/02/01/%E6%8A%BD%E8%B1%A1%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/%5Cimages%5Cpasted-2.png%5C">
   
     <link rel="alternative" href="/atom.xml" title="LoongX&#39;s Blog" type="application/atom+xml">
   
@@ -216,7 +218,7 @@ if (isWX) {
 </tr>
 </tbody></table>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;对于小的数据类型，vector有更好的性能，但对于大型的数据类型，list则有更好的性能。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在小数据类型下，vector的额外容量分配较多，加之重分配后额外容量加倍，使得重分配次数大大减少，与此同时vector不用像list一样进行遍历，小数据类型的复制操作开销也相对较小，因此相较之下性能更佳。而在大数据类型下，vector额外容量少，大量的插入操作引发频繁的重分配（重分配又引起全部元素的析构和拷贝），相较之下list只需要遍历后直接插入，性能自然更佳。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;一种获得最好性能的方法是在vector的开销变得大时把vector转换成list（需要额外的转换时间）。另一种常用的方式是<strong>用指针存储大数据类型</strong>。指针长度仅为4，额外容量有256，而且指针的拷贝和释放不用调用该类的构造和析构函数。</p>
-<h3 id="deque"><a href="#deque" class="headerlink" title="deque"></a>deque</h3><p>&nbsp;&nbsp;&nbsp;deque为双端队列。也表示一段连续的内存区域，与vector类型的不同在于其支持高效的在首部插入删除元素，这种功能通过两级数组结构来实现，第一级表示实际的容器，第二级指向容器的首和尾。</p>
+<h3 id="deque"><a href="#deque" class="headerlink" title="deque"></a>deque</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;deque为双端队列。为分段连续的内存区域，但通过迭代器的++、–伪装成一段连续的内存区域，支持高效的在首部插入删除元素，这种功能通过两级数组结构来实现（中控器和缓冲区），<br><img src="%5Cimages%5Cpasted-2.png%5C" alt="upload successful"></p>
 <h2 id="关联容器"><a href="#关联容器" class="headerlink" title="关联容器"></a>关联容器</h2><p><br>关联容器有四种：set、multiset、map、multimap。关联容器内的元素是排序的。插入元素时，容器会按一定的排序规则将元素放到适当的位置上，因此插入元素时不能指定位置。</p>
 <h3 id="map"><a href="#map" class="headerlink" title="map"></a>map</h3><h3 id="set"><a href="#set" class="headerlink" title="set"></a>set</h3>
       
