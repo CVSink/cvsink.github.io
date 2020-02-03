@@ -88,6 +88,54 @@ if (isWX) {
     <div class="outer">
       <section id="main">
   
+    <article id="post-类成员" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <h3 href="/2020/02/03/%E7%B1%BB%E6%88%90%E5%91%98/" class="article-date">
+  <time datetime="2020-02-03T07:57:54.000Z" itemprop="datePublished">2020-02-03</time>
+</h3>
+    
+  </div>
+  <div class="article-inner">
+  <div class="curve-down">
+  <div class="fill-content">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/02/03/%E7%B1%BB%E6%88%90%E5%91%98/">静态类成员</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static类型的数据能更好地支持类的抽象。有时候某个特殊类类型的所有对象都需要访问一个全局对象，可能是要计数程序在某一点总共创建了多少个此类型的对象，或者是指向该类型错误处理例程的指针，或者是指向该类类型对象的自由存储区的指针，这些情况下，提供一个所有对象共同使用的全局对象比每个类对象维持一个独立的数据成员更为方便，也能节省存储空间。这个静态数据成员只有一个，由该类类型的所有对象共同访问。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;与全局对象相比，使用静态数据成员有两个优势： </p>
+        
+          <p class="article-more-link">
+            <a href="/2020/02/03/%E7%B1%BB%E6%88%90%E5%91%98/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <div class="article-footer-content">
+        
+        <a data-url="http://cvsink.github.io/2020/02/03/%E7%B1%BB%E6%88%90%E5%91%98/" data-id="ck6681p0h0000n8ts8zjj44i2" class="article-share-link">分享到</a>
+        
+      </div>
+    </footer>
+  </div>
+  </div>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-抽象容器类型" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <h3 href="/2020/02/01/%E6%8A%BD%E8%B1%A1%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/" class="article-date">
@@ -112,14 +160,14 @@ if (isWX) {
     
     <div class="article-entry" itemprop="articleBody">
       
-        <font size="3">
+        <font size=3>
 
 <h2 id="顺序容器"><a href="#顺序容器" class="headerlink" title="顺序容器"></a>顺序容器</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;顺序容器有以下三种：可变长动态数组 vector、双端队列 deque、双向链表 list。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;它们之所以被称为顺序容器，是因为元素在容器中的位置同元素的值无关，即容器不是排序的。将元素插入容器时，指定在什么位置（尾部、头部或中间某处）插入，元素就会位于什么位置。<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>这三种都是动态增长的，在这三者中选择的准则主要是关注插入特性以及对元素后续访问的要求。<br>关于选择三种顺序容器的准则：</p>
 <ul>
 <li>如果需要随机地访问一个容器，选择vector</li>
 <li>如果已知要存储元素的个数，选择vector（通过reserve方法设置容量为指定值）</li>
 <li>如果需要不只是在容器两端插入删除元素，酌情选择list和vector</li>
-<li>如果需要在容器首部插入删除元素，选择deque，否则优先选择vector</li></ul></font>
+<li>如果需要在容器首部插入删除元素，选择deque，否则优先选择vector
         
           <p class="article-more-link">
             <a href="/2020/02/01/%E6%8A%BD%E8%B1%A1%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/#more">Read More</a>
@@ -318,6 +366,10 @@ if (isWX) {
       <ul>
         
           <li>
+            <a href="/2020/02/03/%E7%B1%BB%E6%88%90%E5%91%98/">静态类成员</a>
+          </li>
+        
+          <li>
             <a href="/2020/02/01/%E6%8A%BD%E8%B1%A1%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/">抽象容器类型</a>
           </li>
         
@@ -351,7 +403,7 @@ if (isWX) {
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a><span class="archive-list-count">3</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a><span class="archive-list-count">3</span></li></ul>
     </div>
   </div>
 
