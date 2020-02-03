@@ -5,15 +5,22 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   
-  <title>LoongX&#39;s Blog</title>
+  <title>拷贝和赋值 | LoongX&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="LoongX&#39;s Blog">
-<meta property="og:url" content="http://cvsink.github.io/index.html">
+  <meta name="description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;拷贝构造与普通赋值构造的区别:   拷贝构造构造前对象不存在 创造一个新对象 普通赋值构造前对象已经存在 只是赋值  1234567int main( )  &amp;#123;    A   a1;&#x2F;&#x2F;无参构造,如果没有无参的构造函数报错    A   a2(a1); &#x2F;&#x2F;拷贝    A   a3 &#x3D; a2; &#x2F;&#x2F;拷贝">
+<meta property="og:type" content="article">
+<meta property="og:title" content="拷贝和赋值">
+<meta property="og:url" content="http://cvsink.github.io/2020/02/03/%E5%92%8C%E8%B5%8B%E5%80%BC/index.html">
 <meta property="og:site_name" content="LoongX&#39;s Blog">
+<meta property="og:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;拷贝构造与普通赋值构造的区别:   拷贝构造构造前对象不存在 创造一个新对象 普通赋值构造前对象已经存在 只是赋值  1234567int main( )  &amp;#123;    A   a1;&#x2F;&#x2F;无参构造,如果没有无参的构造函数报错    A   a2(a1); &#x2F;&#x2F;拷贝    A   a3 &#x3D; a2; &#x2F;&#x2F;拷贝">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://cvsink.github.io/images/%E6%8B%B7%E8%B4%9D%E5%92%8C%E8%B5%8B%E5%80%BC_image1.png">
+<meta property="og:image" content="http://cvsink.github.io/images/%E6%8B%B7%E8%B4%9D%E5%92%8C%E8%B5%8B%E5%80%BC_image2.png">
+<meta property="article:published_time" content="2020-02-03T09:11:42.000Z">
+<meta property="article:modified_time" content="2020-02-03T10:11:50.630Z">
 <meta property="article:author" content="LoongX">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://cvsink.github.io/images/%E6%8B%B7%E8%B4%9D%E5%92%8C%E8%B5%8B%E5%80%BC_image1.png">
   
     <link rel="alternative" href="/atom.xml" title="LoongX&#39;s Blog" type="application/atom+xml">
   
@@ -86,9 +93,7 @@ if (isWX) {
 </header>
 
     <div class="outer">
-      <section id="main">
-  
-    <article id="post-和赋值" class="article article-type-post" itemscope itemprop="blogPost">
+      <section id="main"><article id="post-和赋值" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <h3 href="/2020/02/03/%E5%92%8C%E8%B5%8B%E5%80%BC/" class="article-date">
   <time datetime="2020-02-03T09:11:42.000Z" itemprop="datePublished">2020-02-03</time>
@@ -103,8 +108,8 @@ if (isWX) {
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/02/03/%E5%92%8C%E8%B5%8B%E5%80%BC/">拷贝和赋值</a>
+    <h1 class="article-title" itemprop="name">
+      拷贝和赋值
     </h1>
   
 
@@ -159,282 +164,21 @@ if (isWX) {
   </div>
   </div>
   
-</article>
-
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-类成员" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <h3 href="/2020/02/03/%E7%B1%BB%E6%88%90%E5%91%98/" class="article-date">
-  <time datetime="2020-02-03T07:57:54.000Z" itemprop="datePublished">2020-02-03</time>
-</h3>
-    
-  </div>
-  <div class="article-inner">
-  <div class="curve-down">
-  <div class="fill-content">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/02/03/%E7%B1%BB%E6%88%90%E5%91%98/">静态类成员</a>
-    </h1>
+    <a href="/2020/02/03/%E7%B1%BB%E6%88%90%E5%91%98/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">静态类成员</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <font size="3">
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static类型的数据能更好地支持类的抽象。有时候某个特殊类类型的所有对象都需要访问一个全局对象，可能是要计数程序在某一点总共创建了多少个此类型的对象，或者是指向该类型错误处理例程的指针，或者是指向该类类型对象的自由存储区的指针，这些情况下，提供一个所有对象共同使用的全局对象比每个类对象维持一个独立的数据成员更为方便，也能节省存储空间。这个静态数据成员只有一个，由该类类型的所有对象共同访问。
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;与全局对象相比，使用静态数据成员有两个优势：</font>
-        
-          <p class="article-more-link">
-            <a href="/2020/02/03/%E7%B1%BB%E6%88%90%E5%91%98/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <div class="article-footer-content">
-        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li></ul>
-
-        <a data-url="http://cvsink.github.io/2020/02/03/%E7%B1%BB%E6%88%90%E5%91%98/" data-id="ck6681p0h0000n8ts8zjj44i2" class="article-share-link">分享到</a>
-        
-      </div>
-    </footer>
-  </div>
-  </div>
-  </div>
   
 </article>
 
 
-
-  
-    <article id="post-抽象容器类型" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <h3 href="/2020/02/01/%E6%8A%BD%E8%B1%A1%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/" class="article-date">
-  <time datetime="2020-02-01T07:48:22.000Z" itemprop="datePublished">2020-02-01</time>
-</h3>
-    
-  </div>
-  <div class="article-inner">
-  <div class="curve-down">
-  <div class="fill-content">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/02/01/%E6%8A%BD%E8%B1%A1%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/">抽象容器类型</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <font size=3>
-
-<h2 id="顺序容器"><a href="#顺序容器" class="headerlink" title="顺序容器"></a>顺序容器</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;顺序容器有以下三种：可变长动态数组 vector、双端队列 deque、双向链表 list。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;它们之所以被称为顺序容器，是因为元素在容器中的位置同元素的值无关，即容器不是排序的。将元素插入容器时，指定在什么位置（尾部、头部或中间某处）插入，元素就会位于什么位置。<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>这三种都是动态增长的，在这三者中选择的准则主要是关注插入特性以及对元素后续访问的要求。<br>关于选择三种顺序容器的准则：</p>
-<ul>
-<li>如果需要随机地访问一个容器，选择vector</li>
-<li>如果已知要存储元素的个数，选择vector（通过reserve方法设置容量为指定值）</li>
-<li>如果需要不只是在容器两端插入删除元素，酌情选择list和vector</li>
-<li>如果需要在容器首部插入删除元素，选择deque，否则优先选择vector
-        
-          <p class="article-more-link">
-            <a href="/2020/02/01/%E6%8A%BD%E8%B1%A1%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <div class="article-footer-content">
-        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li></ul>
-
-        <a data-url="http://cvsink.github.io/2020/02/01/%E6%8A%BD%E8%B1%A1%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/" data-id="ck63ao4ql0000g4ts110033x4" class="article-share-link">分享到</a>
-        
-      </div>
-    </footer>
-  </div>
-  </div>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-求集合的所有子集" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <h3 href="/2020/01/19/%E6%B1%82%E9%9B%86%E5%90%88%E7%9A%84%E6%89%80%E6%9C%89%E5%AD%90%E9%9B%86/" class="article-date">
-  <time datetime="2020-01-19T06:39:08.000Z" itemprop="datePublished">2020-01-19</time>
-</h3>
-    
-  </div>
-  <div class="article-inner">
-  <div class="curve-down">
-  <div class="fill-content">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/01/19/%E6%B1%82%E9%9B%86%E5%90%88%E7%9A%84%E6%89%80%E6%9C%89%E5%AD%90%E9%9B%86/">求集合的所有子集</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <font size=3>
-
-<h3 id="二进制法"><a href="#二进制法" class="headerlink" title="二进制法"></a>二进制法</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用一个二进制数来表示一个集合，如有一个含六个元素的集合{1,2,3,4,5,6}，它的一个子集{1,2,4,6}可以用二进制数110101表示。要进行集合间的运算就可以对其二进制数进行位运算。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;利用二进制法生成集合所有子集的代码如下:</p>
-        
-          <p class="article-more-link">
-            <a href="/2020/01/19/%E6%B1%82%E9%9B%86%E5%90%88%E7%9A%84%E6%89%80%E6%9C%89%E5%AD%90%E9%9B%86/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <div class="article-footer-content">
-        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
-
-        <a data-url="http://cvsink.github.io/2020/01/19/%E6%B1%82%E9%9B%86%E5%90%88%E7%9A%84%E6%89%80%E6%9C%89%E5%AD%90%E9%9B%86/" data-id="ck5knh11v0000zsts1sm75jgr" class="article-share-link">分享到</a>
-        
-      </div>
-    </footer>
-  </div>
-  </div>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-leetcode839-相似字符串组" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <h3 href="/2020/01/18/leetcode839-%E7%9B%B8%E4%BC%BC%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%BB%84/" class="article-date">
-  <time datetime="2020-01-18T07:22:59.000Z" itemprop="datePublished">2020-01-18</time>
-</h3>
-    
-  </div>
-  <div class="article-inner">
-  <div class="curve-down">
-  <div class="fill-content">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/01/18/leetcode839-%E7%9B%B8%E4%BC%BC%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%BB%84/">leetcode839 相似字符串组</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <font size=3>
-
-<h4 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果我们交换字符串 X 中的两个不同位置的字母，使得它和字符串 Y 相等，那么称 X 和 Y 两个字符串相似。如果这两个字符串本身是相等的，那它们也是相似的。<br><br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 例如，”tars” 和 “rats” 是相似的 (交换 0 与 2 的位置)； “rats” 和 “arts” 也是相似的，但是 “star” 不与 “tars”，”rats”，或 “arts” 相似。<br>总之，它们通过相似性形成了两个关联组：{“tars”, “rats”, “arts”} 和 {“star”}。注意，”tars” 和 “arts” 是在同一组中，即使它们并不相似。形式上，对每个组而言，要确定一个单词在组中，只需要这个词和该组中至少一个单词相似。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我们给出了一个不包含重复的字符串列表 A。列表中的每个字符串都是 A 中其它所有字符串的一个字母异位词。请问 A 中有多少个相似字符串组？</p>
-        
-          <p class="article-more-link">
-            <a href="/2020/01/18/leetcode839-%E7%9B%B8%E4%BC%BC%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%BB%84/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <div class="article-footer-content">
-        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B9%B6%E6%9F%A5%E9%9B%86/" rel="tag">并查集</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
-
-        <a data-url="http://cvsink.github.io/2020/01/18/leetcode839-%E7%9B%B8%E4%BC%BC%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%BB%84/" data-id="ck5j9lg7c0000sctsc1rpa86x" class="article-share-link">分享到</a>
-        
-      </div>
-    </footer>
-  </div>
-  </div>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <h3 href="/2020/01/13/hello-world/" class="article-date">
-  <time datetime="2020-01-13T06:54:26.742Z" itemprop="datePublished">2020-01-13</time>
-</h3>
-    
-  </div>
-  <div class="article-inner">
-  <div class="curve-down">
-  <div class="fill-content">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/01/13/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <div class="article-footer-content">
-        
-        <a data-url="http://cvsink.github.io/2020/01/13/hello-world/" data-id="ck5c3hz2b0000lotse7j898g0" class="article-share-link">分享到</a>
-        
-      </div>
-    </footer>
-  </div>
-  </div>
-  </div>
-  
-</article>
-
-
-
-  
-  
 </section>
       
       <aside id="sidebar">

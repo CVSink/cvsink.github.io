@@ -7,15 +7,15 @@
   
   <title>静态类成员 | LoongX&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;static类型的数据能更好地支持类的抽象。有时候某个特殊类类型的所有对象都需要访问一个全局对象，可能是要计数程序在某一点总共创建了多少个此类型的对象，或者是指向该类型错误处理例程的指针，或者是指向该类类型对象的自由存储区的指针，这些情况下，提供一个所有对象共同使用的全局对象比每个类对象维持一个独立的数据成员更为方便，也能节省">
+  <meta name="description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;static类型的数据能更好地支持类的抽象。有时候某个特殊类类型的所有对象都需要访问一个全局对象，可能是要计数程序在某一点总共创建了多少个此类型的对象，或者是指向该类型错误处理例程的指针，或者是指向该类类型对象的自由存储区的指针，这些情况下，提供一个所有对象共同使用的全局对象比每个类对象维持一个独立的数据成员更为方便，也能节">
 <meta property="og:type" content="article">
 <meta property="og:title" content="静态类成员">
 <meta property="og:url" content="http://cvsink.github.io/2020/02/03/%E7%B1%BB%E6%88%90%E5%91%98/index.html">
 <meta property="og:site_name" content="LoongX&#39;s Blog">
-<meta property="og:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;static类型的数据能更好地支持类的抽象。有时候某个特殊类类型的所有对象都需要访问一个全局对象，可能是要计数程序在某一点总共创建了多少个此类型的对象，或者是指向该类型错误处理例程的指针，或者是指向该类类型对象的自由存储区的指针，这些情况下，提供一个所有对象共同使用的全局对象比每个类对象维持一个独立的数据成员更为方便，也能节省">
+<meta property="og:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;static类型的数据能更好地支持类的抽象。有时候某个特殊类类型的所有对象都需要访问一个全局对象，可能是要计数程序在某一点总共创建了多少个此类型的对象，或者是指向该类型错误处理例程的指针，或者是指向该类类型对象的自由存储区的指针，这些情况下，提供一个所有对象共同使用的全局对象比每个类对象维持一个独立的数据成员更为方便，也能节">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-02-03T07:57:54.000Z">
-<meta property="article:modified_time" content="2020-02-03T09:00:32.991Z">
+<meta property="article:modified_time" content="2020-02-03T09:15:33.564Z">
 <meta property="article:author" content="LoongX">
 <meta property="article:tag" content="C++">
 <meta name="twitter:card" content="summary">
@@ -116,12 +116,13 @@ if (isWX) {
     <div class="article-entry" itemprop="articleBody">
       
         
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static类型的数据能更好地支持类的抽象。有时候某个特殊类类型的所有对象都需要访问一个全局对象，可能是要计数程序在某一点总共创建了多少个此类型的对象，或者是指向该类型错误处理例程的指针，或者是指向该类类型对象的自由存储区的指针，这些情况下，提供一个所有对象共同使用的全局对象比每个类对象维持一个独立的数据成员更为方便，也能节省存储空间。这个静态数据成员只有一个，由该类类型的所有对象共同访问。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;与全局对象相比，使用静态数据成员有两个优势： </p>
+        <font size="3">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static类型的数据能更好地支持类的抽象。有时候某个特殊类类型的所有对象都需要访问一个全局对象，可能是要计数程序在某一点总共创建了多少个此类型的对象，或者是指向该类型错误处理例程的指针，或者是指向该类类型对象的自由存储区的指针，这些情况下，提供一个所有对象共同使用的全局对象比每个类对象维持一个独立的数据成员更为方便，也能节省存储空间。这个静态数据成员只有一个，由该类类型的所有对象共同访问。
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;与全局对象相比，使用静态数据成员有两个优势： 
 <a id="more"></a>
-<ul>
-<li>静态数据成员没有进入程序的全局名字空间，因此不存在与程序中其他全局名字相冲突的可能性</li>
-<li>可以实现信息隐藏，静态成员可以是private成员，而全局对象不能</li>
-</ul>
+- 静态数据成员没有进入程序的全局名字空间，因此不存在与程序中其他全局名字相冲突的可能性
+- 可以实现信息隐藏，静态成员可以是private成员，而全局对象不能
+
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static对象<strong>必须在该类定义之外初始化</strong>，且只能提供一个定义，这意味着，<strong>静态数据成员的初始化不应该放在头文件中，而应该放在含有类的非inline函数定义的文件中</strong>。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关于static对象的初始化存在一个特例：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="built_in">string</span> Account::name(<span class="string">"abc"</span>); <span class="comment">//合法</span></span><br></pre></td></tr></table></figure>
 <p>但如果决定利用一个数组来储存name：</p>
@@ -137,7 +138,7 @@ if (isWX) {
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="keyword">int</span> var;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> var;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">int</span> stcvar;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">mem1</span><span class="params">(<span class="keyword">int</span> = var)</span></span>;<span class="comment">//非法，此时var解析为Foo里的var，没有相关类对象</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">mem2</span><span class="params">(<span class="keyword">int</span> = stcvar)</span></span>;<span class="comment">//合法，无需相关类对象</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">mem3</span><span class="params">(<span class="keyword">int</span> = ::var)</span></span>;<span class="comment">//合法，此时var为全局变量</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;另外，一个成员函数如果只访问static数据成员，除此之外不访问其他数据成员，这意味着这个函数与哪个对象来调用没有关系，不会访问或修改任何非static数据成员，这时最好将其声明为静态成员函数。<strong>静态成员函数不能声明为const或者volatile，且没有this指针</strong>。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;访问静态数据成员或静态成员函数，可以不利用已经实例化的对象。</p>
-
+</font>
       
     </div>
     <footer class="article-footer">
@@ -155,6 +156,15 @@ if (isWX) {
   
     
 <nav id="article-nav">
+  
+    <a href="/2020/02/03/%E5%92%8C%E8%B5%8B%E5%80%BC/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">
+        
+          拷贝和赋值
+        
+      </div>
+    </a>
   
   
     <a href="/2020/02/01/%E6%8A%BD%E8%B1%A1%E5%AE%B9%E5%99%A8%E7%B1%BB%E5%9E%8B/" id="article-nav-older" class="article-nav-link-wrap">
@@ -179,6 +189,10 @@ if (isWX) {
       <ul>
         
           <li>
+            <a href="/2020/02/03/%E5%92%8C%E8%B5%8B%E5%80%BC/">拷贝和赋值</a>
+          </li>
+        
+          <li>
             <a href="/2020/02/03/%E7%B1%BB%E6%88%90%E5%91%98/">静态类成员</a>
           </li>
         
@@ -192,10 +206,6 @@ if (isWX) {
         
           <li>
             <a href="/2020/01/18/leetcode839-%E7%9B%B8%E4%BC%BC%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%BB%84/">leetcode839 相似字符串组</a>
-          </li>
-        
-          <li>
-            <a href="/2020/01/13/hello-world/">Hello World</a>
           </li>
         
       </ul>
@@ -216,7 +226,7 @@ if (isWX) {
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a><span class="archive-list-count">3</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a><span class="archive-list-count">3</span></li></ul>
     </div>
   </div>
 
