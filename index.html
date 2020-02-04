@@ -200,7 +200,6 @@ if (isWX) {
     
     <div class="article-entry" itemprop="articleBody">
       
-        
         <font size="3">
 
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;子类转换为父类：</p>
@@ -210,15 +209,12 @@ if (isWX) {
 <li>但转换后的对象是一个新造的对象，它与c不是同一个对象</li>
 <li>这个对象是经过剪裁的</li>
 <li>应该尽可能地使用指针或引用型的向上类型转换</li>
-</ul>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public继承下的向下类型转换有意义，可能成功可能失败，只有在运行时才能确定。利用dynamic_cast操作符来实现。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>There is no implicit conversion from the base-class to the derived type.</strong></p>
-<h2 id="RTTI"><a href="#RTTI" class="headerlink" title="RTTI"></a>RTTI</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;运行时刻类型识别允许用指向基类的指针或引用来操作该指针或引用实际派生类型。一般利用VTable实现，因此为了使用RTTI，父类必须含有虚函数。其提供了dynamic_cast和typeid两种操作符。</p>
-<h4 id="dynamic-cast"><a href="#dynamic-cast" class="headerlink" title="dynamic_cast"></a>dynamic_cast</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;利用dynamic_cast<T>(exp)可以将一个类类型对象的指针转化成同一类层次结构中的其他类的指针，同时也可以用它把一个类类型对象的左值转换成同一类型层次结构中其他类的引用，多用于public继承下将父类类型转换成子类型。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;该转换利用RTTI（而RTTI一般利用VTable实现），因此父类中必须有虚函数。与其他的强制转换不同，它是在运行时刻执行的，如果<br>指针或左值操作数不能被转换成目标类型，那么dynamic_cast将失败，<strong>如果是针对指针类型的转换失败，那么返回0，如果是针对引用类型的转换失败，那么会抛出一个异常</strong>。也就是说dynamic_cast一次执行两个操作，它检验所请求的转换是否有效，只有在有效时才会执行转换。而其他的转换不会检查转换能否真正被执行。</T></p>
-<h4 id="typeid"><a href="#typeid" class="headerlink" title="typeid"></a>typeid</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;typeid操作符可以在程序中获取一个表达式的类型，如果表达式是一个基类的引用或指针，typeid会指出底层对象的派生类类型。其实际返回一个类型为type_info的对象。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="keyword">typeid</span>(a).name() &lt;&lt; <span class="built_in">endl</span>;  <span class="comment">//int</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="keyword">typeid</span>(<span class="number">3.14</span>).name() &lt;&lt; <span class="built_in">endl</span>;  <span class="comment">//double</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="type-info"><a href="#type-info" class="headerlink" title="type_info"></a>type_info</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type_info定义在头文件<type_info>中，type_info的确切定义与编译器有关。type_info的拷贝构造函数和拷贝赋值函数都是私有成员，所以不能自己定义type_info对象，创建type_info对象的唯一途径是调用typeid操作符。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;不同编译器对RTTI的支持不同，编译器拓展RTTI的技术一般是从type_info派生的类类型增加额外的信息。因为type_info含有一个虚拟析构函数（public）因此可以用dynamic_cast来判断是否提供额外支持：转换typeid的返回值，观察是否能够被成功转换，能成功转换就说明是通过拓展过的派生类来提供信息。</type_info></p>
-</font>
+</ul></font>
+        
+          <p class="article-more-link">
+            <a href="/2020/02/03/%E6%89%BF%E4%B8%8B%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/#more">Read More</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
