@@ -86,7 +86,7 @@
                         
 							
                         <li>
-                            <a href="/my-works/">my-works</a>
+                            <a href="/Tags/">Tags</a>
                         </li>
 							
 						
@@ -94,7 +94,7 @@
                         
 							
                         <li>
-                            <a href="/Tags/">Tags</a>
+                            <a href="/my-works/">my-works</a>
                         </li>
 							
 						
@@ -198,18 +198,18 @@
 - 可以实现信息隐藏，静态成员可以是private成员，而全局对象不能
 
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static对象<strong>必须在该类定义之外初始化</strong>，且只能提供一个定义，这意味着，<strong>静态数据成员的初始化不应该放在头文件中，而应该放在含有类的非inline函数定义的文件中</strong>。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关于static对象的初始化存在一个特例：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="built_in">string</span> Account::name(<span class="string">"abc"</span>); <span class="comment">//合法</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="built_in">string</span> Account::name(<span class="string">"abc"</span>); <span class="comment">//合法</span></span><br></pre></td></tr></table></figure>
 <p>但如果决定利用一个数组来储存name：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cosnt <span class="keyword">int</span> Account::nameize = <span class="number">3</span>；<span class="comment">//必需的成员定义</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">char</span> Account::name[nameSize] = <span class="string">"abc"</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">cosnt <span class="keyword">int</span> Account::nameize = <span class="number">3</span>；<span class="comment">//必需的成员定义</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">char</span> Account::name[nameSize] = <span class="string">"abc"</span>;</span><br></pre></td></tr></table></figure>
 <p><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;静态成员函数唯一性的特点（即独立于类的任何对象而存在的唯一实例），使其能以独特的方式被运用，这些方式对于非static对象来说是非法的：</p>
 <ul>
 <li>静态数据成员的类型可以是其所属类，而非static数据成员只能被声明为该类的对象的指针或引用：</li>
 </ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:<span class="comment">//...</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">static</span> A mem1;<span class="comment">//合法</span></span><br><span class="line">    A* mem2;<span class="comment">//合法</span></span><br><span class="line">    A mem3;<span class="comment">//非法</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:<span class="comment">//...</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">static</span> A mem1;<span class="comment">//合法</span></span><br><span class="line">    A* mem2;<span class="comment">//合法</span></span><br><span class="line">    A mem3;<span class="comment">//非法</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
 <li>静态数据成员可以被作为类成员函数的缺省参数，而非static成员不能：</li>
 </ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="keyword">int</span> var;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> var;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">int</span> stcvar;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">mem1</span><span class="params">(<span class="keyword">int</span> = var)</span></span>;<span class="comment">//非法，此时var解析为Foo里的var，没有相关类对象</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">mem2</span><span class="params">(<span class="keyword">int</span> = stcvar)</span></span>;<span class="comment">//合法，无需相关类对象</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">mem3</span><span class="params">(<span class="keyword">int</span> = ::var)</span></span>;<span class="comment">//合法，此时var为全局变量</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="keyword">int</span> var;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> var;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">int</span> stcvar;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">mem1</span><span class="params">(<span class="keyword">int</span> = var)</span></span>;<span class="comment">//非法，此时var解析为Foo里的var，没有相关类对象</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">mem2</span><span class="params">(<span class="keyword">int</span> = stcvar)</span></span>;<span class="comment">//合法，无需相关类对象</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">mem3</span><span class="params">(<span class="keyword">int</span> = ::var)</span></span>;<span class="comment">//合法，此时var为全局变量</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;另外，一个成员函数如果只访问static数据成员，除此之外不访问其他数据成员，这意味着这个函数与哪个对象来调用没有关系，不会访问或修改任何非static数据成员，这时最好将其声明为静态成员函数。<strong>静态成员函数不能声明为const或者volatile，且没有this指针</strong>。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;访问静态数据成员或静态成员函数，可以不利用已经实例化的对象。</p>
 </font>
