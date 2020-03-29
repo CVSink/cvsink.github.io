@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        多重继承｜LoongX&#39;s blog
+        贪吃蛇自动寻路｜LoongX&#39;s blog
         
     </title>
 
-    <link rel="canonical" href="http://cvsink.github.io/2020/02/03/重继承/">
+    <link rel="canonical" href="http://cvsink.github.io/2020/03/29/蛇自动寻路/">
 
     <!-- Bootstrap Core CSS -->
     
@@ -159,18 +159,15 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>多重继承</h1>
+                    <h1>贪吃蛇自动寻路</h1>
                     
                     <span class="meta">
                          作者 LoongX
                         <span>
-                          日期 2020-02-03
+                          日期 2020-03-29
                          </span>
                     </span>
                     <div class="tags text-center">
-                        
-                        <a class="tag" href="/tags/#C++"
-                           title="C++">C++</a>
                         
                     </div>
                 </div>
@@ -179,7 +176,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            多重继承
+            贪吃蛇自动寻路
         </span>
     </div>
 </header>
@@ -190,32 +187,22 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <font size="3">
+                <h1 id="贪吃蛇自动寻路"><a href="#贪吃蛇自动寻路" class="headerlink" title="贪吃蛇自动寻路"></a>贪吃蛇自动寻路</h1><p>Github链接: <a href="https://github.com/CVSink/RetroSnake-for-competition-" target="_blank" rel="noopener">https://github.com/CVSink/RetroSnake-for-competition-</a></p>
+<h2 id="数据结构课程设计B题"><a href="#数据结构课程设计B题" class="headerlink" title="数据结构课程设计B题"></a>数据结构课程设计B题</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;要求实现贪吃蛇的自动寻路算法，在一张地图上控制一条蛇同对手作战，先吃到35个食物获胜。地图上除了有食物外还有加速道具（蓝色三角形）和斜走道具（红色五角星）,其中第一关没有障碍物和道具。<br><img src="/images/%E8%B4%AA%E5%90%83%E8%9B%87_image1.png" alt="对战地图"></p>
+<h2 id="一种简单思路"><a href="#一种简单思路" class="headerlink" title="一种简单思路"></a>一种简单思路</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以先将地图信息存放在二维数组中，利用动态规划求解最短路径：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">AllLength</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span> block[<span class="number">300</span>][<span class="number">300</span>],<span class="keyword">int</span> A[<span class="number">300</span>][<span class="number">300</span>],<span class="keyword">int</span> path[<span class="number">300</span>][<span class="number">300</span>])</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> <span class="built_in">max</span> = <span class="number">9999</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n; ++j) &#123;</span><br><span class="line">			A[i][j] = block[i][j];</span><br><span class="line">			<span class="keyword">if</span> (i != j &amp;&amp; A[i][j] &lt; <span class="built_in">max</span>) &#123;</span><br><span class="line">				path[i][j] = i;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span> &#123;</span><br><span class="line">				path[i][j] = <span class="number">-1</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; n; ++k) &#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">			<span class="keyword">if</span> (i != k) &#123;</span><br><span class="line">				<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n; ++j) &#123;</span><br><span class="line">					<span class="keyword">if</span> (j != k &amp;&amp; j != i &amp;&amp; A[i][k] &lt; <span class="built_in">max</span> &amp;&amp; A[k][j] &lt; <span class="built_in">max</span> &amp;&amp; A[i][k] + A[k][j] &lt; A[i][j]) &#123;</span><br><span class="line">						A[i][j] = A[i][k] + A[k][j];</span><br><span class="line">						path[i][j] = path[k][j];</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>时间复杂度为O(n^3)。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;但地图大小为28*38，如果用这种方法，意味着大量的空间和时间消耗，为了满足规定的时间要求，只能将地图分成若干块进行分块求解，但如果分块太多，便失去了不同块之间的连接性，也增大了编程难度，分块太少又耗时太长。同时这种方法也缺乏策略的灵活性。</p>
+<h2 id="另一种思路"><a href="#另一种思路" class="headerlink" title="另一种思路"></a>另一种思路</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以使用热力图(heat map)来对地图进行加权标记，通过调整加权规则来控制蛇进食的优先级。加权值越高、区域越“热”，意味着那个区域价值越大，对蛇的“吸引力”越大；加权值越小、区域越“冷”，则意味着那个区域对蛇来说“缺乏吸引力”，不前往那块区域。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这种方法提供了一个巨大的优势：给予蛇的行动策略非常大的灵活性。仅需调用不同的计算模块，就可以改变地图的热力值，使蛇在作战过程中针对不同进攻策略的敌人动态地使用不同的策略。例如对于进攻性强的敌人，可以降低对方周围区域的热力值，使蛇避免与对方冲突；如果遇上进攻性弱的敌人，就可以采用“抢食”策略，提高对方蛇周围区域的热力值，使蛇优先和对方争抢食物。此外，通过调整各种道具和障碍物周围的热力值加权规则，还可以避免蛇进入容易被围堵的危险区域。</p>
 
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;派生类的构造与析构顺序:</p>
-<ul>
-<li>构造时 严格按继承顺序构造 </li>
-<li>析构时与构造顺序相反</li>
-</ul>
-<a id="more"></a>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;多重继承中的菱形结构：<br><img src="/images/%E5%A4%9A%E7%BB%A7%E6%89%BF_image1.png" alt="多重继承中的菱形结构"><br>此时继承了B和C的D实际上继承了两次A，拥有两个A的副本，两个A副本中变量名同名，这种情况下便会出现二义性问题，编译器无法得知应该将值赋给哪个副本中的变量，造成编译时刻错误，同时也会造成数据冗余：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//间接基类A</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">    <span class="keyword">int</span> m_a;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//直接基类B</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span>:</span> <span class="keyword">public</span> A&#123;</span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">    <span class="keyword">int</span> m_b;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//直接基类C</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span>:</span> <span class="keyword">public</span> A&#123;</span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">    <span class="keyword">int</span> m_c;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//派生类D</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">D</span>:</span> <span class="keyword">public</span> B, <span class="keyword">public</span> C&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">seta</span><span class="params">(<span class="keyword">int</span> a)</span></span>&#123; m_a = a; &#125;  <span class="comment">//命名冲突，此时实际上D有两个m_a</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">setb</span><span class="params">(<span class="keyword">int</span> b)</span></span>&#123; m_b = b; &#125;  <span class="comment">//正确</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">setc</span><span class="params">(<span class="keyword">int</span> c)</span></span>&#123; m_c = c; &#125;  <span class="comment">//正确</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">setd</span><span class="params">(<span class="keyword">int</span> d)</span></span>&#123; m_d = d; &#125;  <span class="comment">//正确</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> m_d;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>可以使用C::m_a和B::m_a来避免冲突，但不能避免数据冗余，也给类的用户带来麻烦，二义性问题要使用虚基类：<br><img src="/images/%E5%A4%9A%E7%BB%A7%E6%89%BF_image2.png" alt="虚基类"><br>在派生类继承基类时，加上一个virtual关键词则为虚拟基类继承，此时在派生类中只保留一份间接基类A的成员，直接访问就不会再有歧义了。同时虚派生只影响从指定了虚基类的派生类中进一步派生出来的类，它不会影响派生类本身。但是如果该成员被两条或多条路径覆盖了，那就不能直接访问，此时必须指明该成员属于哪个类。使用多继承经常会出现二义性问题，必须十分小心。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;与此同时，如果B和C拥有同名的函数，那么编译时无法知道应该调用哪个类中的函数，引发二义性错误（若B拥有A中函数的重载函数，C没有同样也会引发二义性），此时一种方法是让用户在使用时必须要添加类域操作符::来显示地限定（不推荐）。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;比较好的方法是<strong>在提供预期行为的派生类中定义一个同名实例</strong>（在这个实例中仍然要添加限定修饰符::，但此时用户使用时不需要添加）。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;对于多继承的派生类，即使它的声明被成功编译，也不能保证没有潜在的二义性问题，如果继承的层次再多一些，关系更复杂一些，程序的编写、调试和维护工作都会变得更加困难，因此不建议在程序中使用多继承，只有在比较简单和不易出现二义性的情况或实在必要时才使用多继承，能用单一继承解决的问题就不要使用多继承。</p>
-</font>
                 <hr>
                 
 
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/2020/03/29/蛇自动寻路/" data-toggle="tooltip" data-placement="top"
-                           title="贪吃蛇自动寻路">&larr; Previous Post</a>
-                    </li>
-                    
                     
                     <li class="next">
-                        <a href="/2020/02/03/承下的类型转换/" data-toggle="tooltip" data-placement="top"
-                           title="继承下的类型转换">Next Post &rarr;</a>
+                        <a href="/2020/02/03/重继承/" data-toggle="tooltip" data-placement="top"
+                           title="多重继承">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -234,7 +221,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#贪吃蛇自动寻路"><span class="toc-text">贪吃蛇自动寻路</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#数据结构课程设计B题"><span class="toc-text">数据结构课程设计B题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一种简单思路"><span class="toc-text">一种简单思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#另一种思路"><span class="toc-text">另一种思路</span></a></li></ol></li></ol>
                 </div>
             </div>
         </div>
@@ -255,9 +242,6 @@
                         <a href="/tags/">FEATURED TAGS</a>
                     </h5>
                     <div class="tags">
-                        
-                        <a class="tag" href="/tags/#C++"
-                           title="C++">C++</a>
                         
                     </div>
                 </section>

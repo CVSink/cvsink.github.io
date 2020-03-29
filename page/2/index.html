@@ -22,7 +22,7 @@
         
     </title>
 
-    <link rel="canonical" href="http://cvsink.github.io/archives/">
+    <link rel="canonical" href="http://cvsink.github.io/page/2/">
 
     <!-- Bootstrap Core CSS -->
     
@@ -50,7 +50,7 @@
 <body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
 <nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "false" data-istags="false
-" data-ishome = "false" >
+" data-ishome = "true" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
@@ -139,6 +139,126 @@
 <!-- Main Content -->
 
 
+<style>
+
+    .custom-haojen-container .post-preview:nth-of-type(1),
+    .custom-haojen-container .post-preview-poetry:nth-of-type(1) {
+        text-align: center;
+        background-repeat: no-repeat;
+        border-radius: 3px;
+        background-size: cover;
+        padding: 0;
+        height: 300px;
+        display: table;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.16);
+    }
+
+    /*去掉诗歌的背景图片*/
+    .custom-haojen-container .post-preview-poetry:nth-of-type(1) {
+        background-image: none !important;
+        background-color: rgba(255, 248, 220, 0.5);
+    }
+
+    .custom-haojen-container .post-preview:nth-child(1) h2,
+    .custom-haojen-container .post-preview:nth-child(1) .post-meta,
+    .custom-haojen-container .post-preview:nth-child(1) .post-subtitle {
+        text-shadow: 0 0 40px rgba(0, 0, 0, 1);
+        letter-spacing: 1px;
+        color: #fff;
+        margin-top: 0;
+        padding-left: 60px;
+        padding-right: 60px;
+    }
+
+    .custom-haojen-container .post-preview:nth-child(1) .post-meta {
+        font-size: .9em;
+        font-weight: 300;
+        margin-top: 0;
+    }
+
+    .custom-haojen-container .post-preview-poetry:nth-child(1) .post-subtitle {
+        letter-spacing: 6px;
+        font-size: 18px;
+        font-family: unset;
+        font-weight: 400;
+        color: rgba(0, 0, 0, .75)
+    }
+
+    /*不显示摘要*/
+    .custom-haojen-container .post-preview:nth-child(1) .post-content-preview {
+        display: none
+    }
+
+    /*只第一个显示背景图片*/
+    .custom-haojen-container .post-preview:not(:nth-child(1)) {
+        background-image: none !important;
+    }
+
+    /*第一个分界线去掉*/
+    .custom-haojen-container hr:nth-of-type(1) {
+        display: none;
+    }
+
+    /*主题*/
+    .custom-haojen-container .post-preview:nth-of-type(1) > a {
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    /*诗词标题*/
+    .custom-haojen-container .post-preview-poetry:nth-child(1) h2 {
+        font-size: 35px;
+        font-family: STKaiti;
+        color: rgba(0, 0, 0, .8);
+    }
+
+    .custom-haojen-container .post-preview-poetry:nth-of-type(1) .post-meta {
+        color: #0e2231;
+    }
+
+    @media (max-width: 768px) {
+        .custom-haojen-container .post-preview:nth-child(1) {
+            height: 240px;
+        }
+
+        .custom-haojen-container .post-preview-poetry:nth-child(1) h2 {
+            font-size: 28px !important;
+            margin-top: 0;
+        }
+
+        .custom-haojen-container .post-preview:nth-child(1) .post-subtitle {
+            font-size: 18px;
+            font-weight: 400;
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .custom-haojen-container .post-preview:nth-of-type(1) > a {
+            padding: 20px
+        }
+    }
+
+    /*手机屏幕*/
+    @media (max-width: 400px) {
+        .custom-haojen-container .post-preview:nth-child(1) {
+            height: 195px;
+        }
+
+        .custom-haojen-container .post-preview-poetry:nth-child(1) h2 {
+            font-size: 20px !important;
+        }
+
+        .custom-haojen-container .post-preview:nth-child(1) .post-subtitle {
+            font-size: 16px;
+        }
+
+        .custom-haojen-container .post-preview:nth-child(1) a {
+            padding: 30px 20px;
+        }
+    }
+</style>
+
 <!-- Page Header -->
 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 visible-xs-block visible-sm-block">
     <div class="row">
@@ -167,204 +287,17 @@
 
 <div class="post-preview "
      style="background-image: url('/images/wallpaper2.jpg#移动端显示的图片')">
-    <a href="/2020/03/29/蛇自动寻路/">
+    <a href="/2020/01/13/hello-world/">
         <h2 class="post-title">
-            贪吃蛇自动寻路
+            Hello World
         </h2>
         <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2020-03-29
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2020-01-13
         </p>
         
         <div class="post-content-preview">
             <p>
-                贪吃蛇自动寻路Github链接: https://github.com/CVSink/RetroSnake-for-competition-
-数据结构课程设计B题&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;要求实现贪吃蛇的自动寻路算法，在一张地..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview "
-     style="background-image: url('/images/wallpaper2.jpg#移动端显示的图片')">
-    <a href="/2020/02/03/重继承/">
-        <h2 class="post-title">
-            多重继承
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2020-02-03
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;派生类的构造与析构顺序:
-
-构造时 严格按继承顺序构造 
-析构时与构造顺序相反
-
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview "
-     style="background-image: url('/images/wallpaper2.jpg#移动端显示的图片')">
-    <a href="/2020/02/03/承下的类型转换/">
-        <h2 class="post-title">
-            继承下的类型转换
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2020-02-03
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;子类转换为父类：
-//子类的指针转换成父类指针（指针型）MTCar c;Car* c1 = &amp;c;  //安全的Car* c2 = new MTCar;  //安全的//子类对象转换成父类..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview "
-     style="background-image: url('/images/wallpaper2.jpg#移动端显示的图片')">
-    <a href="/2020/02/03/和赋值/">
-        <h2 class="post-title">
-            拷贝和赋值
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2020-02-03
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;拷贝构造与普通赋值构造的区别:
-
-
-拷贝构造构造前对象不存在 创造一个新对象
-普通赋值构造前对象已经存在 只是赋值
-
-int main( )  &#123;    A   a1;//无参构造,如果没有无参的构造..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview "
-     style="background-image: url('/images/wallpaper2.jpg#移动端显示的图片')">
-    <a href="/2020/02/03/类成员/">
-        <h2 class="post-title">
-            静态类成员
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2020-02-03
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static类型的数据能更好地支持类的抽象。有时候某个特殊类类型的所有对象都需要访问一个全局对象，可能是要计数程序在某一点总共创建了多少个此类型的对象，或者是指向该类型错误处理例程的指针，或者是指向该类类型对象的自由存储区..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview "
-     style="background-image: url('/images/wallpaper2.jpg#移动端显示的图片')">
-    <a href="/2020/02/01/抽象容器类型/">
-        <h2 class="post-title">
-            抽象容器类型
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2020-02-01
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                
-
-顺序容器&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;顺序容器有以下三种：可变长动态数组 vector、双端队列 deque、双向链表 list。&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview "
-     style="background-image: url('/images/wallpaper2.jpg#移动端显示的图片')">
-    <a href="/2020/01/19/求集合的所有子集/">
-        <h2 class="post-title">
-            求集合的所有子集
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2020-01-19
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                
-
-二进制法&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用一个二进制数来表示一个集合，如有一个含六个元素的集合{1,2,3,4,5,6}，它的一个子集{1,2,4,6}可以用二进制数110101表示。要进行集合间的运算就可以对其二进制数进行位运..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview "
-     style="background-image: url('/images/wallpaper2.jpg#移动端显示的图片')">
-    <a href="/2020/01/18/leetcode839-相似字符串组/">
-        <h2 class="post-title">
-            leetcode839 相似字符串组
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2020-01-18
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                
-
-题目描述&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果我们交换字符串 X 中的两个不同位置的字母，使得它和字符串 Y 相等，那么称 X 和 Y 两个字符串相似。如果这两个字符串本身是相等的，那它们也是相似的。 &nbsp;&nbsp;&nbsp;&n..
+                Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer i..
             </p>
         </div>
     </a>
@@ -380,10 +313,10 @@ int main( )  &#123;    A   a1;//无参构造,如果没有无参的构造..
 
 <ul class="pager">
     
-    
-    <li class="next">
-        <a href="/archives/page/2/">Older Posts &rarr;</a>
+    <li class="previous">
+        <a href="/">&larr; Newer Posts</a>
     </li>
+    
     
 </ul>
 
