@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        LoongX&#39;s blog
+        C++踩坑—vector的size()函数｜LoongX&#39;s blog
         
     </title>
 
-    <link rel="canonical" href="http://cvsink.github.io/archives/page/2/">
+    <link rel="canonical" href="http://cvsink.github.io/2020/06/22/踩坑—vector的size-函数/">
 
     <!-- Bootstrap Core CSS -->
     
@@ -49,7 +49,7 @@
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "false" data-istags="false
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
 " data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -138,191 +138,134 @@
 
 <!-- Main Content -->
 
+<!--only post-->
 
-<!-- Page Header -->
-<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 visible-xs-block visible-sm-block">
-    <div class="row">
-        <header class="intro-header">
-            <div class="container">
-                <div class="site-heading text-center">
-                    <div class="about-me">
-                        <!--移动端头部显示-->
-                        <img src="/images/header.jpg"/>
-                        <h5><a href="/about/">LoongX</a></h5>
-                        <p>功不唐捐 玉汝于成</p>
+
+<img class="wechat-title-img"
+     src="/images/wallpaper2.jpg#博文默认的图片">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('/images/wallpaper2.jpg#博文默认的图片')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>C++踩坑—vector的size()函数</h1>
+                    
+                    <span class="meta">
+                         作者 LoongX
+                        <span>
+                          日期 2020-06-22
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
                     </div>
                 </div>
             </div>
-        </header>
-    </div>
-</div>
-<!-- Main Content -->
-<div class="container custom-haojen-container">
-    <!-- Post Container -->
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-1 col-md-8 col-md-offset-1 col-sm-12 col-xs-12 post-container">
-            <!-- Main Content -->
-
-
-
-<div class="post-preview "
-     style="background-image: url('/images/wallpaper2.jpg#移动端显示的图片')">
-    <a href="/2020/01/19/求集合的所有子集/">
-        <h2 class="post-title">
-            求集合的所有子集
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2020-01-19
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                
-
-二进制法&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用一个二进制数来表示一个集合，如有一个含六个元素的集合{1,2,3,4,5,6}，它的一个子集{1,2,4,6}可以用二进制数110101表示。要进行集合间的运算就可以对其二进制数进行位运..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview "
-     style="background-image: url('/images/wallpaper2.jpg#移动端显示的图片')">
-    <a href="/2020/01/18/leetcode839-相似字符串组/">
-        <h2 class="post-title">
-            leetcode839 相似字符串组
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2020-01-18
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                
-
-题目描述&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果我们交换字符串 X 中的两个不同位置的字母，使得它和字符串 Y 相等，那么称 X 和 Y 两个字符串相似。如果这两个字符串本身是相等的，那它们也是相似的。 &nbsp;&nbsp;&nbsp;&n..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview "
-     style="background-image: url('/images/wallpaper2.jpg#移动端显示的图片')">
-    <a href="/2020/01/13/hello-world/">
-        <h2 class="post-title">
-            Hello World
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2020-01-13
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer i..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-
-<!-- 翻页 pager -->
-
-<ul class="pager">
-    
-    <li class="previous">
-        <a href="/archives/">&larr; Newer Posts</a>
-    </li>
-    
-    
-</ul>
-
-
-        </div>
-        <!-- Sidebar Container -->
-        <div class="
-                col-lg-3 col-lg-offset-0
-                col-md-3 col-md-offset-0
-                col-sm-12
-                col-xs-12
-                sidebar-container
-            ">
-
-            <!-- About Me -->
-            <section class="visible-md visible-lg" style="padding: 0 18px">
-                <div class="short-about">
-                    <!--侧边栏头像-->
-                    
-                    <img src="/images/header.jpg"/>
-                    
-                    <h5><a href="/about/">LoongX</a></h5>
-                    
-                    <p>功不唐捐 玉汝于成</p>
-                    
-                    <hr>
-                    <!-- SNS Link 社交 -->
-                    <ul class="list-inline">
-                        
-                        
-                        
-
-                        
-
-                        
-
-                        
-                        <li>
-                            <a target="_blank" href="https://github.com/CVSink">
-                                        <span class="fa-stack fa-lg">
-                                            <i class="fa fa-circle fa-stack-2x"></i>
-                                            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                                        </span>
-                            </a>
-                        </li>
-                        
-
-                        
-                    </ul>
-                </div>
-            </section>
-
-            <!-- Featured Tags  标签 -->
-            
-            <section>
-                <div class="tags">
-                    
-                    
-                    <a href="/tags/#C++" title="C++"
-                       rel="5">C++</a>
-                    
-                    
-                    
-                    <a href="/tags/#算法" title="算法"
-                       rel="2">算法</a>
-                    
-                    
-                </div>
-            </section>
-            
-
-            
-
         </div>
     </div>
-</div>
+    <div class="post-title-haojen">
+        <span>
+            C++踩坑—vector的size()函数
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <font size="3">
+
+<p>问题代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; p &#123; <span class="number">1</span> &#125;;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"p.size()="</span> &lt;&lt; p.<span class="built_in">size</span>() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; p.<span class="built_in">size</span>() - <span class="number">2</span>; ++i) &#123;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"ENTER LOOP"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此时容器的大小为1，1-2=-1，按理不应该进入循环，但输出结果如下：<br><img src="/images/C++%E8%B8%A9%E5%9D%91vector%E7%9A%84size_image1.png" alt="输出结果"><br>测试p.size()和p.size()-1的值:</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; p &#123; <span class="number">1</span> &#125;;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"p.size()="</span> &lt;&lt; p.<span class="built_in">size</span>() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"p.size()-2="</span> &lt;&lt; p.<span class="built_in">size</span>() - <span class="number">2</span> &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
+<p>结果如下：<br><img src="/images/C++%E8%B8%A9%E5%9D%91vector%E7%9A%84size_image2.png" alt="输出结果"><br>此时虽然p.size()=1，但是p.size()-2却是一个大数。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>进一步发现，实际上vector的size函数返回值是unsigned int类型。根据转换规则<br><img src="/images/C++%E8%B8%A9%E5%9D%91vector%E7%9A%84size_image3.png" alt="转换规则"><br>p.size() - 2类型为unsigned int，那么此时发生下溢。</p>
+</font>
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2020/06/22/eetcode739-每日温度/" data-toggle="tooltip" data-placement="top"
+                           title="leetcode739 每日温度">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2020/03/29/蛇自动寻路/" data-toggle="tooltip" data-placement="top"
+                           title="贪吃蛇自动寻路">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
 
 <!-- Footer -->
 <!-- Footer -->

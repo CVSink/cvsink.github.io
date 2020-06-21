@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        贪吃蛇自动寻路｜LoongX&#39;s blog
+        leetcode739 每日温度｜LoongX&#39;s blog
         
     </title>
 
-    <link rel="canonical" href="http://cvsink.github.io/2020/03/29/蛇自动寻路/">
+    <link rel="canonical" href="http://cvsink.github.io/2020/06/22/eetcode739-每日温度/">
 
     <!-- Bootstrap Core CSS -->
     
@@ -159,12 +159,12 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>贪吃蛇自动寻路</h1>
+                    <h1>leetcode739 每日温度</h1>
                     
                     <span class="meta">
                          作者 LoongX
                         <span>
-                          日期 2020-03-29
+                          日期 2020-06-22
                          </span>
                     </span>
                     <div class="tags text-center">
@@ -176,7 +176,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            贪吃蛇自动寻路
+            leetcode739 每日温度
         </span>
     </div>
 </header>
@@ -187,27 +187,24 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <h1 id="贪吃蛇自动寻路"><a href="#贪吃蛇自动寻路" class="headerlink" title="贪吃蛇自动寻路"></a>贪吃蛇自动寻路</h1><p>Github链接: <a href="https://github.com/CVSink/RetroSnake-for-competition-" target="_blank" rel="noopener">https://github.com/CVSink/RetroSnake-for-competition-</a></p>
-<h2 id="数据结构课程设计B题"><a href="#数据结构课程设计B题" class="headerlink" title="数据结构课程设计B题"></a>数据结构课程设计B题</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;要求实现贪吃蛇的自动寻路算法，在一张地图上控制一条蛇同对手作战，先吃到35个食物获胜。地图上除了有食物外还有加速道具（蓝色三角形）和斜走道具（红色五角星）,其中第一关没有障碍物和道具。<br><img src="/images/%E8%B4%AA%E5%90%83%E8%9B%87_image1.png" alt="对战地图"></p>
-<h2 id="一种简单思路"><a href="#一种简单思路" class="headerlink" title="一种简单思路"></a>一种简单思路</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以先将地图信息存放在二维数组中，利用动态规划求解最短路径：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">AllLength</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span> block[<span class="number">300</span>][<span class="number">300</span>],<span class="keyword">int</span> A[<span class="number">300</span>][<span class="number">300</span>],<span class="keyword">int</span> path[<span class="number">300</span>][<span class="number">300</span>])</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> <span class="built_in">max</span> = <span class="number">9999</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n; ++j) &#123;</span><br><span class="line">			A[i][j] = block[i][j];</span><br><span class="line">			<span class="keyword">if</span> (i != j &amp;&amp; A[i][j] &lt; <span class="built_in">max</span>) &#123;</span><br><span class="line">				path[i][j] = i;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span> &#123;</span><br><span class="line">				path[i][j] = <span class="number">-1</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; n; ++k) &#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">			<span class="keyword">if</span> (i != k) &#123;</span><br><span class="line">				<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n; ++j) &#123;</span><br><span class="line">					<span class="keyword">if</span> (j != k &amp;&amp; j != i &amp;&amp; A[i][k] &lt; <span class="built_in">max</span> &amp;&amp; A[k][j] &lt; <span class="built_in">max</span> &amp;&amp; A[i][k] + A[k][j] &lt; A[i][j]) &#123;</span><br><span class="line">						A[i][j] = A[i][k] + A[k][j];</span><br><span class="line">						path[i][j] = path[k][j];</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>时间复杂度为O(n^3)。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;但地图大小为28*38，如果用这种方法，意味着大量的空间和时间消耗，为了满足规定的时间要求，只能将地图分成若干块进行分块求解，但如果分块太多，便失去了不同块之间的连接性，也增大了编程难度，分块太少又耗时太长。同时这种方法也缺乏策略的灵活性。</p>
-<h2 id="另一种思路"><a href="#另一种思路" class="headerlink" title="另一种思路"></a>另一种思路</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;可以使用热力图(heat map)来对地图进行加权标记，通过调整加权规则来控制蛇进食的优先级。加权值越高、区域越“热”，意味着那个区域价值越大，对蛇的“吸引力”越大；加权值越小、区域越“冷”，则意味着那个区域对蛇来说“缺乏吸引力”，不前往那块区域。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这种方法提供了一个巨大的优势：给予蛇的行动策略非常大的灵活性。仅需调用不同的计算模块，就可以改变地图的热力值，使蛇在作战过程中针对不同进攻策略的敌人动态地使用不同的策略。例如对于进攻性强的敌人，可以降低对方周围区域的热力值，使蛇避免与对方冲突；如果遇上进攻性弱的敌人，就可以采用“抢食”策略，提高对方蛇周围区域的热力值，使蛇优先和对方争抢食物。此外，通过调整各种道具和障碍物周围的热力值加权规则，还可以避免蛇进入容易被围堵的危险区域。</p>
+                <font size="3">
+  leetcode739: https://leetcode-cn.com/problems/daily-temperatures/
 
+<h4 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;请根据每日 气温 列表，重新生成一个列表。对应位置的输出为：要想观测到更高的气温，至少需要等待的天数。如果气温在这之后都不会升高，请在该位置用 0 来代替。<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>例如，给定一个列表 temperatures = [73, 74, 75, 71, 69, 72, 76, 73]，你的输出应该是 [1, 1, 4, 2, 1, 1, 0, 0]。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>气温 列表长度的范围是 [1, 30000]。每个气温的值的均为华氏度，都是在 [30, 100] 范围内的整数。</p>
+<h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;官方提供了两种思路：暴力法和单调栈。这里使用动态规划来解决</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; dailyTemperatures(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; T) &#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; TimeToWait;</span><br><span class="line">        <span class="keyword">int</span>* dp = <span class="keyword">new</span> <span class="keyword">int</span>[T.<span class="built_in">size</span>()];</span><br><span class="line">        dp[T.<span class="built_in">size</span>() - <span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = T.<span class="built_in">size</span>() - <span class="number">2</span>; i &gt;= <span class="number">0</span>; --i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (T[i] &lt; T[i + <span class="number">1</span>])</span><br><span class="line">                dp[i] = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">int</span> j;</span><br><span class="line">                <span class="keyword">for</span> (j = i + <span class="number">1</span>; j &lt; T.<span class="built_in">size</span>(); ) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (T[i] &lt; T[j]) &#123;</span><br><span class="line">                        dp[i] = j - i;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">else</span> &#123;</span><br><span class="line">                        <span class="keyword">if</span> (dp[j])</span><br><span class="line">                            j = j + dp[j];</span><br><span class="line">                        <span class="keyword">else</span> &#123;</span><br><span class="line">                            dp[i] = <span class="number">0</span>;</span><br><span class="line">                            <span class="keyword">break</span>;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (j == T.<span class="built_in">size</span>())</span><br><span class="line">                    dp[i] = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; T.<span class="built_in">size</span>(); ++i) &#123;</span><br><span class="line">            TimeToWait.push_back(dp[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> TimeToWait;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>dp从后向前开始记录，要查找下一个比T[i]温度高的日期，从T[i+1]开始，如果T[i+1]本身就比T[i]大，那么结果就是1；否则就比较T[i+1+dp[i+1]]，也就是下一个比T[i+1]温度高的日期，如果T[i+1]比T[i]小，那么只有T[i+1+dp[i+1]]才有可能比T[i]大，依次向后直到找到目标。</p>
+<h4 id="效率分析"><a href="#效率分析" class="headerlink" title="效率分析"></a>效率分析</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;官方给出的单调栈方法运行时间在150ms左右，dp方法只需100ms左右。如果使用vector容器来代替dp数组记录，在最后调用reverse方法反转，那么效率能够进一步提高。</p>
+</font>
                 <hr>
                 
 
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/2020/06/22/踩坑—vector的size-函数/" data-toggle="tooltip" data-placement="top"
-                           title="C++踩坑—vector的size()函数">&larr; Previous Post</a>
-                    </li>
-                    
                     
                     <li class="next">
-                        <a href="/2020/02/03/重继承/" data-toggle="tooltip" data-placement="top"
-                           title="多重继承">Next Post &rarr;</a>
+                        <a href="/2020/06/22/踩坑—vector的size-函数/" data-toggle="tooltip" data-placement="top"
+                           title="C++踩坑—vector的size()函数">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -226,7 +223,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#贪吃蛇自动寻路"><span class="toc-text">贪吃蛇自动寻路</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#数据结构课程设计B题"><span class="toc-text">数据结构课程设计B题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一种简单思路"><span class="toc-text">一种简单思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#另一种思路"><span class="toc-text">另一种思路</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#题目描述"><span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#思路"><span class="toc-text">思路</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#效率分析"><span class="toc-text">效率分析</span></a></li></ol>
                 </div>
             </div>
         </div>
