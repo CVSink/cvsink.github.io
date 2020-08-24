@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="林某在 Github 上的个人博客">
+    <meta name="keyword" content="">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="LoongX" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        抽象容器类型｜LoongX&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://cvsink.github.io/2020/02/01/抽象容器类型/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+
+    <!-- Custom CSS -->
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
+
+    <!-- Pygments Github CSS -->
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('//o7bkkhiex.bkt.clouddn.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    LoongX
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/my-works/">my-works</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/Tags/">Tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="/images/wallpaper2.jpg#博文默认的图片">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('/images/wallpaper2.jpg#博文默认的图片')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>抽象容器类型</h1>
+                    
+                    <span class="meta">
+                         作者 LoongX
+                        <span>
+                          日期 2020-02-01
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#C++"
+                           title="C++">C++</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            抽象容器类型
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <font size="3">
+
+<h2 id="顺序容器"><a href="#顺序容器" class="headerlink" title="顺序容器"></a>顺序容器</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;顺序容器有以下三种：可变长动态数组 vector、双端队列 deque、双向链表 list。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;它们之所以被称为顺序容器，是因为元素在容器中的位置同元素的值无关，即容器不是排序的。将元素插入容器时，指定在什么位置（尾部、头部或中间某处）插入，元素就会位于什么位置。<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>这三种都是动态增长的，在这三者中选择的准则主要是关注插入特性以及对元素后续访问的要求。<br>关于选择三种顺序容器的准则：</p>
+<ul>
+<li>如果需要随机地访问一个容器，选择vector</li>
+<li>如果已知要存储元素的个数，选择vector（通过reserve方法设置容量为指定值）</li>
+<li>如果需要不只是在容器两端插入删除元素，酌情选择list和vector</li>
+<li>如果需要在容器首部插入删除元素，选择deque，否则优先选择vector<a id="more"></a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果既需要随机访问元素，又需要随机插入和删除元素，那么由主要操作来决定使用的容器类型，更有可能要自己设计使用更加复杂的数据结构。</li>
+</ul>
+<h3 id="vector"><a href="#vector" class="headerlink" title="vector"></a>vector</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vector为可变长动态数组。vector表示一段<strong>连续</strong>的内存区域，每个元素被顺序存储在这段内存中。对vector随机访问效率很高，因为每次访问离vector起始处的位移都是固定的。但是，在任意位置（不是在vector的末尾）插入或删除元素，效率很低，此时它需要将待插入元素右边的每个元素都拷贝一遍。这种代价对于大型（要拷贝的数据多）、复杂（调用的构造函数和析构函数开销大）的类对象来说尤其大。</p>
+<h4 id="vector的增长"><a href="#vector的增长" class="headerlink" title="vector的增长"></a>vector的增长</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;为了提高效率，vector并不是随每一个元素的增长而增长，而是当vector需要增长自身时，它实际分配的空间要比当前所需要的空间多一点（分配额外容量的大小由具体实现定义）。由于存在这种机制，<strong>实际上对于小的对象，vector在使用中比list效率更高</strong>。STL的Rogue Wave实现版本下分配的额外容量如下表：</p>
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>长度(字节)</th>
+<th>初始插入后的容量（元素个数）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>int</td>
+<td>4</td>
+<td>256</td>
+</tr>
+<tr>
+<td>double</td>
+<td>8</td>
+<td>128</td>
+</tr>
+<tr>
+<td>String</td>
+<td>12</td>
+<td>85</td>
+</tr>
+<tr>
+<td>simple class</td>
+<td>12</td>
+<td>85</td>
+</tr>
+<tr>
+<td>large simple class</td>
+<td>8000</td>
+<td>1</td>
+</tr>
+<tr>
+<td>large complex class</td>
+<td>8000</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;由表可见，随着数据类型的<strong>长度</strong>越来越大，vector为其分配的额外容量越来越少，这也意味着vector的效率越来越低。<strong>在分配的额外空间满后，重分配后的缺省容量为之前的两倍</strong>。对于大型的数据类型，缺省容量较小，因此插入操作后频繁引发的重分配和拷贝操作成为使用vector的主要开销。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;而数据类型的长度不仅仅是影响vector性能的唯一因素，由于在额外空间满后，每个元素需要依次调用析构函数和拷贝构造函数，类越复杂，调用拷贝构造函数和析构函数的开销也就越大，vector的性能也就越低。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关于reserve方法（依据经验）：用一个非1的缺省值来调整vector的容量看起来总会引起性能的退化。例如对于string和double型的vector，通过reserve()会导致很差的性能，而增加大型复杂类的容量，又能大大改善其性能。</p>
+<h4 id="vector的比较"><a href="#vector的比较" class="headerlink" title="vector的比较"></a>vector的比较</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;容器间的比较，是两个容器的元素之间成对地比较，从第一个元素开始开始往后进行比较。对于大于和小于比较，第一个不相同的元素哪个容器里的更大哪个容器就更大，如果都相同，元素个数多的容器更大；对于等于比较，只有所有元素都相同且两个容器元素个数相同，这两个容器才相同。（支持运算符重载）</p>
+<h3 id="List"><a href="#List" class="headerlink" title="List"></a>List</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;list为双向链表，允许双向遍历，在任意位置插入删除元素效率高，但对随机访问不友好，需要先遍历中间的元素，除此之外还需要额外的空间开销。</p>
+<h4 id="vector和list的选择"><a href="#vector和list的选择" class="headerlink" title="vector和list的选择"></a>vector和list的选择</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在vector和list插入1000w个元素来进行比较(单位为秒)：</p>
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>list</th>
+<th>vector</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>int</td>
+<td>1038</td>
+<td>3.76</td>
+</tr>
+<tr>
+<td>double</td>
+<td>10.72</td>
+<td>3.95</td>
+</tr>
+<tr>
+<td>simple class</td>
+<td>12.31</td>
+<td>5.89</td>
+</tr>
+<tr>
+<td>string</td>
+<td>14.42</td>
+<td>11.80</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>large simple class</td>
+<td>360</td>
+<td>2230</td>
+</tr>
+<tr>
+<td>large complex class</td>
+<td>2370</td>
+<td>6700</td>
+</tr>
+</tbody></table>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;对于小的数据类型，vector有更好的性能，但对于大型的数据类型，list则有更好的性能。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在小数据类型下，vector的额外容量分配较多，加之重分配后额外容量加倍，使得重分配次数大大减少，与此同时vector不用像list一样进行遍历，小数据类型的复制操作开销也相对较小，因此相较之下性能更佳。而在大数据类型下，vector额外容量少，大量的插入操作引发频繁的重分配（重分配又引起全部元素的析构和拷贝），相较之下list只需要遍历后直接插入，性能自然更佳。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;一种获得最好性能的方法是在vector的开销变得大时把vector转换成list（需要额外的转换时间）。另一种常用的方式是<strong>用指针存储大数据类型</strong>。指针长度仅为4，额外容量有256，而且指针的拷贝和释放不用调用该类的构造和析构函数。</p>
+<h3 id="deque"><a href="#deque" class="headerlink" title="deque"></a>deque</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;deque为双端队列。为分段连续的内存区域，但通过迭代器的++、–伪装成一段连续的内存区域，支持高效的在首部插入删除元素，这种功能通过两级数组结构来实现（中控器和缓冲区）：</p>
+<p><img src="/images/deque_structure.png" alt="deque的数据结构"></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;deque内部维护的map（不是STL中的map容器，类型为T** ）是一小块连续的空间（中控器），该空间中每个元素都是指针，指向另一段（较大的）区域，这个区域称为缓冲区，缓冲区用来保存deque中的数据。因此deque在随机访问和遍历数据会比vector慢。它首次插入一个元素，默认会动态分配512字节空间，当这512字节空间用完后，它会再动态分配自己另外的512字节空间，然后虚拟地连在一起（配置策略见reallocate_map()）。deque的这种设计使得它具有比vector复杂得多的架构、算法和迭代器设计。它的随机访问和遍历性能比vector差。</p>
+</font>
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2020/02/03/类成员/" data-toggle="tooltip" data-placement="top"
+                           title="静态类成员">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2020/01/19/求集合的所有子集/" data-toggle="tooltip" data-placement="top"
+                           title="求集合的所有子集">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#顺序容器"><span class="toc-text">顺序容器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#vector"><span class="toc-text">vector</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#vector的增长"><span class="toc-text">vector的增长</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#vector的比较"><span class="toc-text">vector的比较</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#List"><span class="toc-text">List</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#vector和list的选择"><span class="toc-text">vector和list的选择</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#deque"><span class="toc-text">deque</span></a></li></ol></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#C++"
+                           title="C++">C++</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/CVSink">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; LoongX 2020
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/" target="_blank" rel="noopener">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+
+<script src="/js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/js/blog.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://cvsink.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','','2.0.0');
+</script>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="/images/header.jpg">
+</body>
+
+</html>

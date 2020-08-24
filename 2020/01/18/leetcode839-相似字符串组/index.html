@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="林某在 Github 上的个人博客">
+    <meta name="keyword" content="">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="LoongX" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        leetcode839 相似字符串组｜LoongX&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://cvsink.github.io/2020/01/18/leetcode839-相似字符串组/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+
+    <!-- Custom CSS -->
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
+
+    <!-- Pygments Github CSS -->
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('//o7bkkhiex.bkt.clouddn.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    LoongX
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/my-works/">my-works</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/Tags/">Tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="/images/wallpaper2.jpg#博文默认的图片">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('/images/wallpaper2.jpg#博文默认的图片')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>leetcode839 相似字符串组</h1>
+                    
+                    <span class="meta">
+                         作者 LoongX
+                        <span>
+                          日期 2020-01-18
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#算法"
+                           title="算法">算法</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            leetcode839 相似字符串组
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <font size="3">
+
+<h4 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果我们交换字符串 X 中的两个不同位置的字母，使得它和字符串 Y 相等，那么称 X 和 Y 两个字符串相似。如果这两个字符串本身是相等的，那它们也是相似的。<br><br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 例如，”tars” 和 “rats” 是相似的 (交换 0 与 2 的位置)； “rats” 和 “arts” 也是相似的，但是 “star” 不与 “tars”，”rats”，或 “arts” 相似。<br>总之，它们通过相似性形成了两个关联组：{“tars”, “rats”, “arts”} 和 {“star”}。注意，”tars” 和 “arts” 是在同一组中，即使它们并不相似。形式上，对每个组而言，要确定一个单词在组中，只需要这个词和该组中至少一个单词相似。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我们给出了一个不包含重复的字符串列表 A。列表中的每个字符串都是 A 中其它所有字符串的一个字母异位词。请问 A 中有多少个相似字符串组？</p>
+<a id="more"></a>
+<p><br> 1.A.length &lt;= 2000<br><br> 2.A[i].length &lt;= 1000<br><br> 3.A.length * A[i].length &lt;= 20000<br><br> 4.A 中的所有单词都只包含小写字母。<br><br> 5.A 中的所有单词都具有相同的长度，且是彼此的字母异位词<br><br> 输入样例:<br>  <br> 输入：[“tars”,”rats”,”arts”,”star”]&nbsp;&nbsp;&nbsp;输出：2</p>
+<h4 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 朴素方法：两重遍历字符串组，对目标串中的字符两两对调后与比较串比较，利用并查集将相似的字符串合并。<br><br>代码如下：<br></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">numSimilarGroups</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; A)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">int</span> len = A.<span class="built_in">size</span>();</span><br><span class="line">      <span class="function">UF <span class="title">uf</span><span class="params">(len)</span></span>;</span><br><span class="line">      <span class="built_in">string</span> tem = <span class="string">""</span>;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">          <span class="keyword">for</span> (<span class="keyword">int</span> j = i + <span class="number">1</span>; j &lt; len; j++) &#123;</span><br><span class="line">              <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; A[i].length(); k++) &#123;</span><br><span class="line">                  <span class="keyword">for</span> (<span class="keyword">int</span> m = k + <span class="number">1</span>; m &lt; A[i].length(); m++) &#123;</span><br><span class="line">                      tem = A[i];</span><br><span class="line">                      tem[k] = (A[i])[m];</span><br><span class="line">                      tem[m] = (A[i])[k];</span><br><span class="line">                      <span class="keyword">if</span> (tem == A[j] || A[i] == A[j])</span><br><span class="line">                          uf.Union(i, j);</span><br><span class="line">                  &#125;</span><br><span class="line">              &#125;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> uf.clusterNum();</span><br><span class="line">  &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">UF</span> &#123;</span></span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    UF(<span class="keyword">int</span> n) :<span class="built_in">size</span>(n) &#123;</span><br><span class="line">        tag = <span class="keyword">new</span> <span class="keyword">int</span>[n];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) tag[i] = i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">root</span><span class="params">(<span class="keyword">int</span> source)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> r = source;</span><br><span class="line">        <span class="keyword">while</span> (tag[r] != r)</span><br><span class="line">            r = tag[r];</span><br><span class="line">        <span class="keyword">return</span> r;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">connected</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> root(a) == root(b);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Union</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> aRoot = root(a);</span><br><span class="line">        <span class="keyword">int</span> bRoot = root(b);</span><br><span class="line">        tag[bRoot] = aRoot;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">clusterNum</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="built_in">size</span>; i++)</span><br><span class="line">            tag[i] = root(i);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="built_in">size</span>; i++)</span><br><span class="line">            <span class="keyword">if</span> (tag[i] == i) count++;</span><br><span class="line">        <span class="keyword">return</span> count;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">size</span>;</span><br><span class="line">    <span class="keyword">int</span>* tag;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;朴素暴力算法时间复杂度极高，包含四层for循环，这样的算法果然在第28个样例timelimited。</p>
+<h4 id="另一种思路"><a href="#另一种思路" class="headerlink" title="另一种思路"></a>另一种思路</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果两个字符串相似，那么这两个字符串长度一定相等，并且不同字符个数只能有两个，如果个数超过两个或者不足两个，可以直接断定这两个字符串不相似。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>改进后的numSimilarGroups方法代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">numSimilarGroups</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; A)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> len = A.<span class="built_in">size</span>();</span><br><span class="line">    <span class="function">UF <span class="title">uf</span><span class="params">(len)</span></span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = i + <span class="number">1</span>; j &lt; len; j++) &#123;</span><br><span class="line">            <span class="keyword">int</span> Alen = A[i].length();</span><br><span class="line">            <span class="keyword">int</span> diff = <span class="number">0</span>;	<span class="comment">//统计不同字符个数</span></span><br><span class="line">            <span class="keyword">if</span> (A[i].length() == A[j].length()) &#123;<span class="comment">//长度不同直接跳过</span></span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; Alen; k++) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (A[i][k] != A[j][k])</span><br><span class="line">                        diff++;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (diff == <span class="number">0</span>)	<span class="comment">//坑，相同字符串也相似</span></span><br><span class="line">                    uf.Union(i, j);</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span> (diff == <span class="number">2</span>) &#123;</span><br><span class="line">                    <span class="keyword">int</span> p1, p2;</span><br><span class="line">                    <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; Alen; k++) &#123;</span><br><span class="line">                        <span class="keyword">if</span> (A[i][k] != A[j][k]) &#123;</span><br><span class="line">                            <span class="keyword">if</span> (diff == <span class="number">2</span>) &#123;</span><br><span class="line">                                p1 = k;</span><br><span class="line">                                diff--;</span><br><span class="line">                            &#125;</span><br><span class="line">                            <span class="keyword">else</span> &#123;</span><br><span class="line">                                p2 = k;</span><br><span class="line">                                <span class="keyword">break</span>;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">if</span> (A[i][p1] == A[j][p2] &amp;&amp; A[i][p2] == A[j][p1])<span class="comment">//不同字符交换后相等即相似</span></span><br><span class="line">                        uf.Union(i, j);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">    count = uf.clusterNum();</span><br><span class="line">    <span class="keyword">return</span> count;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="天坑"><a href="#天坑" class="headerlink" title="天坑"></a>天坑</h4><p><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果UF中Union方法仅仅只将tag[a]指向b:</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Union</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">    tag[a] = b;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>那么在输入样例{ “zkhnmefhyr”, “ykznfhehmr”, “mkhnyefrzh”, “zkhnyefrmh”, “zkmnhefhyr”, “ykznhfehmr”, “zkynhfehmr”, “mkhnhefrzy”, “zkhnmefryh”, “zkmnhfehyr” }中，正确输出应为1，但计算出的连通分量数却为2，有一个字符串既与一类中的某个字符串相似，又与另一类中的某个字符串相似，此时会出现一个结点对应两个父结点，由于tag[a]只能记录一个父结点，那么必然导致另一个父结点信息丢失。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;另外虽然题目声称不包含重复字符串，但样例中仍存在若干个重复的字符串，重复字符串算作相似。<br><br><br>leetcode839: <a href="https://leetcode-cn.com/problems/similar-string-groups/" target="_blank" rel="noopener">https://leetcode-cn.com/problems/similar-string-groups/</a></p>
+</font>
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2020/01/19/求集合的所有子集/" data-toggle="tooltip" data-placement="top"
+                           title="求集合的所有子集">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2020/01/13/hello-world/" data-toggle="tooltip" data-placement="top"
+                           title="Hello World">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#题目描述"><span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#解题思路"><span class="toc-text">解题思路</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#另一种思路"><span class="toc-text">另一种思路</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#天坑"><span class="toc-text">天坑</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#算法"
+                           title="算法">算法</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/CVSink">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; LoongX 2020
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/" target="_blank" rel="noopener">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+
+<script src="/js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/js/blog.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://cvsink.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','','2.0.0');
+</script>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="/images/header.jpg">
+</body>
+
+</html>
