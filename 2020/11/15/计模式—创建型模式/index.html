@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="林某在 Github 上的个人博客">
+    <meta name="keyword" content="">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="LoongX" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        设计模式—创建型模式｜LoongX&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://cvsink.github.io/2020/11/15/计模式—创建型模式/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+
+    <!-- Custom CSS -->
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
+
+    <!-- Pygments Github CSS -->
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('//o7bkkhiex.bkt.clouddn.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    LoongX
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/my-works/">my-works</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/Tags/">Tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="/images/wallpaper2.jpg#博文默认的图片">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('/images/wallpaper2.jpg#博文默认的图片')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>设计模式—创建型模式</h1>
+                    
+                    <span class="meta">
+                         作者 LoongX
+                        <span>
+                          日期 2020-11-15
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#设计模式"
+                           title="设计模式">设计模式</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            设计模式—创建型模式
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <font size="3">
+
+<h2 id="为什么需要创建型模式？"><a href="#为什么需要创建型模式？" class="headerlink" title="为什么需要创建型模式？"></a>为什么需要创建型模式？</h2><p>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;创建型模式能够将实例的创建与使用分离，这样客户端程序就不必关注对象的创建。对象的创建过程被全部封装在创建型模式之中，不会散乱地存在于使用的类中，更加便于维护，也符合依赖倒置原则。使用创建型模式，就对客户端程序隐藏了对象创建的细节，客户端仅需面对抽象编程，不需要关注实际使用对象的具体类型，降低了耦合度。将复杂类的建造和初始化过程封装起来，也能提高代码的可读性，使代码逻辑更清晰。</p>
+<h2 id="简单工厂模式（Simple-Factory）"><a href="#简单工厂模式（Simple-Factory）" class="headerlink" title="简单工厂模式（Simple Factory）"></a>简单工厂模式（Simple Factory）</h2><h3 id="模式动机"><a href="#模式动机" class="headerlink" title="模式动机"></a>模式动机</h3><p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;假如有一系列不同形状的按钮，都来源于同一基类，现在想要只知道他的形状就创建出相应的按钮对象实例，这时可以使用简单工厂模式。</p>
+<h3 id="一般结构"><a href="#一般结构" class="headerlink" title="一般结构"></a>一般结构</h3><p> Factory:负责实现创建所有实例的内部逻辑。<br><br> Product:抽象产品角色。<br><br> ConcreteProduct:具体产品，继承自Product。<br> <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Factory</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Product <span class="title">getProduct</span><span class="params">(String type)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="string">"A"</span>.equalsIgnoreCase(type)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> ProductA();</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">"B"</span>.equalsIgnoreCase(type)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> ProductB();</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            System.out.print(<span class="string">"error!"</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="改进的简单工厂模式"><a href="#改进的简单工厂模式" class="headerlink" title="改进的简单工厂模式"></a>改进的简单工厂模式</h3><p>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;一般结构中利用if-else来判断要创建的类，如果要加入新的类型，就要对Factory进行修改。在Java中可以利用反射来解耦合。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Factory</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Product <span class="title">getProduct</span><span class="params">(String type)</span> <span class="keyword">throws</span> ClassNotFoundException, IllegalAccessException, InstantiationException </span>&#123;</span><br><span class="line">        Class product = Class.forName(type);</span><br><span class="line">        <span class="keyword">return</span> (Product) product.newInstance();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>还可以利用配置文件来获得type从而提高灵活性，引入配置文件可以实现不修改任何客户端代码就实现更换增加新的产品类。</p>
+<h3 id="模式应用"><a href="#模式应用" class="headerlink" title="模式应用"></a>模式应用</h3><p>工具类java.text.DateFormat</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> DateFormat <span class="title">getDateInstance</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> DateFormat <span class="title">getDateInstance</span><span class="params">(<span class="keyword">int</span> style)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> DateFormat <span class="title">getDateInstance</span><span class="params">(<span class="keyword">int</span> style,Local local)</span></span>;</span><br></pre></td></tr></table></figure>
+<h3 id="模式缺点"><a href="#模式缺点" class="headerlink" title="模式缺点"></a>模式缺点</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;改进后的简单工厂模式可以实现完全解耦，但其仍是静态方法，无法形成基于继承的等级结构。</p>
+<h2 id="工厂方法模式（Factory-method）"><a href="#工厂方法模式（Factory-method）" class="headerlink" title="工厂方法模式（Factory method）"></a>工厂方法模式（Factory method）</h2><h3 id="模式动机-1"><a href="#模式动机-1" class="headerlink" title="模式动机"></a>模式动机</h3><p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;简单工厂模式中，工厂类负责了所有类型的创建，如果有多个参数，工厂类的职责太重。在此基础上增加一个Factory抽象层，不同的工厂子类负责不同的类型创建，以此分担指责。</p>
+<h3 id="一般结构-1"><a href="#一般结构-1" class="headerlink" title="一般结构"></a>一般结构</h3><p>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;所有工厂类都继承自同一父类，工厂子类结构与简单方法模式基本相同，参数数量更少。</p>
+<h3 id="模式缺点-1"><a href="#模式缺点-1" class="headerlink" title="模式缺点"></a>模式缺点</h3><p>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;增加新产品种类时，不仅需要增加新的产品类，还要增加新的工厂类，增加了系统复杂度。如果参数表仅有一个参数，那么使用工厂方法模式就失去了意义，应该使用简单工厂方法模式。</p>
+<h2 id="抽象工厂模式（Abstract-Factory）"><a href="#抽象工厂模式（Abstract-Factory）" class="headerlink" title="抽象工厂模式（Abstract Factory）"></a>抽象工厂模式（Abstract Factory）</h2><h3 id="模式动机-2"><a href="#模式动机-2" class="headerlink" title="模式动机"></a>模式动机</h3><p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;假设现在有不同风格的套件，不同套件的组件种类都相同，但不同皮肤下的产品的颜色不同，现在要创建一套颜色相同的组件，这时使用抽象工厂模式来成套创建不同皮肤的套件。工厂方法模式是创建不同风格的相同组件，此时使用比用工厂方法模式和简单方法模式一个组件一个组件创建更有效率。</p>
+<h3 id="一般结构-2"><a href="#一般结构-2" class="headerlink" title="一般结构"></a>一般结构</h3>  <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">  <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractFactory</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> AbstractProductA <span class="title">createProductA</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> AbstractProductB <span class="title">createProductB</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteFactory1</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> AbstractProductA <span class="title">createProductA</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ConcreteProductA1();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> AbstractProductB <span class="title">createProductB</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ConcreteProductB1();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="模式应用-1"><a href="#模式应用-1" class="headerlink" title="模式应用"></a>模式应用</h3><p> Java SE AWT（抽象窗口工具包）：用来创建和当前操作系统一致的外观界面。</p>
+<h3 id="模式缺点-2"><a href="#模式缺点-2" class="headerlink" title="模式缺点"></a>模式缺点</h3><p>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果要增加组件的种类，那么就需要修改包括基类在内的所有工厂类，增加相应的createProductn()方法，会带来极大的不便。</p>
+<h2 id="建造者模式（Builder）"><a href="#建造者模式（Builder）" class="headerlink" title="建造者模式（Builder）"></a>建造者模式（Builder）</h2><h3 id="模式动机-3"><a href="#模式动机-3" class="headerlink" title="模式动机"></a>模式动机</h3><p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;有时候一个对象的创建十分复杂，可能需要先创建若干部件再按一定顺序进行初始化、组装等，为了将复杂对象的创建与其组装过程分开，可以使用建造者模式。用户无需关注其组装方式。</p>
+<h3 id="一般结构-3"><a href="#一般结构-3" class="headerlink" title="一般结构"></a>一般结构</h3> <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Product</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String partA; <span class="comment">//可以是任意类型</span></span><br><span class="line">    <span class="keyword">private</span> String partB;</span><br><span class="line">    <span class="keyword">private</span> String partC;</span><br><span class="line">    <span class="comment">//partA的Getter方法和Setter方法省略</span></span><br><span class="line">    <span class="comment">//partB的Getter方法和Setter方法省略</span></span><br><span class="line">    <span class="comment">//partC的Getter方法和Setter方法省略</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Builder</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">protected</span> Product product=<span class="keyword">new</span> Product();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">buildPartA</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">buildPartB</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">buildPartC</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Product <span class="title">getResult</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> product;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Director</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Builder builder;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Director</span><span class="params">(Builder builder)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.builder=builder;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setBuilder</span><span class="params">(Builder builder)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.builder=builer;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Product <span class="title">construct</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        builder.buildPartA();</span><br><span class="line">        builder.buildPartB();</span><br><span class="line">        builder.buildPartC();</span><br><span class="line">        <span class="keyword">return</span> builder.getResult();</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="comment">//客户端程序</span></span><br><span class="line">...</span><br><span class="line">Builder builder = <span class="keyword">new</span> ConcreteBuilder();</span><br><span class="line">Director director = <span class="keyword">new</span> Director(builder);</span><br><span class="line">Product product = director.construct();</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h3 id="模式应用-2"><a href="#模式应用-2" class="headerlink" title="模式应用"></a>模式应用</h3><p>  JavaMail、游戏中人物地图等元素的创建。</p>
+<h3 id="改进"><a href="#改进" class="headerlink" title="改进"></a>改进</h3><p>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果具体建造者只有一个，那么可以省略抽象建造者；如果系统中不同产品的建造过程都相同，那么可以省略指挥者。</p>
+<h3 id="模式缺点-3"><a href="#模式缺点-3" class="headerlink" title="模式缺点"></a>模式缺点</h3><p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果产品的内部组件也非常复杂，可能需要定义很多具体建造者和指挥者，会导致系统变得臃肿庞大。</p>
+<h2 id="原型模式（Prototype）"><a href="#原型模式（Prototype）" class="headerlink" title="原型模式（Prototype）"></a>原型模式（Prototype）</h2><h3 id="模式动机-4"><a href="#模式动机-4" class="headerlink" title="模式动机"></a>模式动机</h3><p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;使用原型模式来复制一个复杂对象，从而克隆出多个和原型对象一样的对象。这样对于创建多个复杂对象，就不需要定义多个Builder和Director。</p>
+<h3 id="一般模式"><a href="#一般模式" class="headerlink" title="一般模式"></a>一般模式</h3><p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Java的Object类提供了一个clone()方法，可以直接使用clone()方法将自身对象拷贝一个。支持clone的类必须实现标识接口Cloneable，如果一个类没有实现该接口却调用了clone()方法，就会抛出CloneNotSupportedException异常。<br> <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PrototypeDemo</span> <span class="keyword">implements</span> <span class="title">Cloneable</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">clone</span><span class="params">()</span> <span class="keyword">throws</span> CloneNotSupportedException </span>&#123;</span><br><span class="line">        Object object = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            object = <span class="keyword">super</span>.clone();</span><br><span class="line">        &#125;<span class="keyword">catch</span> (CloneNotSupportedException)&#123;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> object;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="模式应用-3"><a href="#模式应用-3" class="headerlink" title="模式应用"></a>模式应用</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Spring中可以使用原型模式来创建新的bean实例，从而实现每次获取的是通过克隆生成的新实例，在对其进行修改时对原有实例不造成任何影响。</p>
+<h3 id="模式改进"><a href="#模式改进" class="headerlink" title="模式改进"></a>模式改进</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;加入原型管理器。将多个原型存储在一个集合中，如果需要某个原型对象的克隆，可以通过复制集合中对应的原型对象来实现。原型管理器中针对抽象原型类编程。</p>
+<h3 id="模式注意点"><a href="#模式注意点" class="headerlink" title="模式注意点"></a>模式注意点</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;需要特别注意可能的浅拷贝不足，如果要实现深克隆，每一层对象都要实现深克隆。</p>
+<h2 id="单例模式（Singleton）"><a href="#单例模式（Singleton）" class="headerlink" title="单例模式（Singleton）"></a>单例模式（Singleton）</h2><h3 id="模式动机-5"><a href="#模式动机-5" class="headerlink" title="模式动机"></a>模式动机</h3><p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;对于某些系统的某些类，只能允许存在一个实例。例如任务管理器、文件系统。单例模式确保某一类只有一个实例且提供访问该实例的方法。</p>
+<h3 id="一般模式-1"><a href="#一般模式-1" class="headerlink" title="一般模式"></a>一般模式</h3> <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance=<span class="keyword">null</span>;  <span class="comment">//静态私有成员变量</span></span><br><span class="line">    <span class="comment">//私有构造函数</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;	&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//静态公有工厂方法，返回唯一实例</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(instance==<span class="keyword">null</span>)</span><br><span class="line">            instance=<span class="keyword">new</span> Singleton();</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="模式扩展"><a href="#模式扩展" class="headerlink" title="模式扩展"></a>模式扩展</h3><p> 单例模式的几种写法：</p>
+<h3 id="模式应用-4"><a href="#模式应用-4" class="headerlink" title="模式应用"></a>模式应用</h3><p> java.lang.Runtime类<br><br> Spring bean实例的创建</p>
+<h3 id="模式缺点-4"><a href="#模式缺点-4" class="headerlink" title="模式缺点"></a>模式缺点</h3><p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;单例类既是工厂又是产品，违背了单一职责原则；同时单例模式中没有抽象层，因此单例类的扩展有很大的困难。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>滥用单例模式还可能造成严重的内存泄露：</strong><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://blog.csdn.net/cao_dayong/article/details/64447191" target="_blank" rel="noopener">https://blog.csdn.net/cao_dayong/article/details/64447191</a></p>
+</font>
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2020/11/16/例模式的几种写法/" data-toggle="tooltip" data-placement="top"
+                           title="单例模式的几种写法">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2020/10/11/pache-POI的使用/" data-toggle="tooltip" data-placement="top"
+                           title="Apache POI的使用">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么需要创建型模式？"><span class="toc-text">为什么需要创建型模式？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#简单工厂模式（Simple-Factory）"><span class="toc-text">简单工厂模式（Simple Factory）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#模式动机"><span class="toc-text">模式动机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一般结构"><span class="toc-text">一般结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#改进的简单工厂模式"><span class="toc-text">改进的简单工厂模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模式应用"><span class="toc-text">模式应用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模式缺点"><span class="toc-text">模式缺点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#工厂方法模式（Factory-method）"><span class="toc-text">工厂方法模式（Factory method）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#模式动机-1"><span class="toc-text">模式动机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一般结构-1"><span class="toc-text">一般结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模式缺点-1"><span class="toc-text">模式缺点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#抽象工厂模式（Abstract-Factory）"><span class="toc-text">抽象工厂模式（Abstract Factory）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#模式动机-2"><span class="toc-text">模式动机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一般结构-2"><span class="toc-text">一般结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模式应用-1"><span class="toc-text">模式应用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模式缺点-2"><span class="toc-text">模式缺点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建造者模式（Builder）"><span class="toc-text">建造者模式（Builder）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#模式动机-3"><span class="toc-text">模式动机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一般结构-3"><span class="toc-text">一般结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模式应用-2"><span class="toc-text">模式应用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#改进"><span class="toc-text">改进</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模式缺点-3"><span class="toc-text">模式缺点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原型模式（Prototype）"><span class="toc-text">原型模式（Prototype）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#模式动机-4"><span class="toc-text">模式动机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一般模式"><span class="toc-text">一般模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模式应用-3"><span class="toc-text">模式应用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模式改进"><span class="toc-text">模式改进</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模式注意点"><span class="toc-text">模式注意点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#单例模式（Singleton）"><span class="toc-text">单例模式（Singleton）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#模式动机-5"><span class="toc-text">模式动机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一般模式-1"><span class="toc-text">一般模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模式扩展"><span class="toc-text">模式扩展</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模式应用-4"><span class="toc-text">模式应用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模式缺点-4"><span class="toc-text">模式缺点</span></a></li></ol></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#设计模式"
+                           title="设计模式">设计模式</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/CVSink">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; LoongX 2020
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/" target="_blank" rel="noopener">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+
+<script src="/js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/js/blog.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://cvsink.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','','2.0.0');
+</script>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="/images/header.jpg">
+</body>
+
+</html>
