@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="林某在 Github 上的个人博客">
+    <meta name="keyword" content="">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="LoongX" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        定时器Timer使用及源码剖析｜LoongX&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://cvsink.github.io/2021/01/22/器Timer源码剖析/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+
+    <!-- Custom CSS -->
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
+
+    <!-- Pygments Github CSS -->
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('//o7bkkhiex.bkt.clouddn.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    LoongX
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/my-works/">my-works</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/Tags/">Tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="/images/wallpaper2.jpg#博文默认的图片">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('/images/wallpaper2.jpg#博文默认的图片')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>定时器Timer使用及源码剖析</h1>
+                    
+                    <span class="meta">
+                         作者 LoongX
+                        <span>
+                          日期 2021-01-22
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#Java"
+                           title="Java">Java</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            定时器Timer使用及源码剖析
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <font size="4">
+
+<h1 id="Timer类的使用"><a href="#Timer类的使用" class="headerlink" title="Timer类的使用"></a>Timer类的使用</h1><p>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Timer类经常被用来定时计划任务，除去构造方法，Timer类提供了以下几种方法供我们调用：</p>
+  <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">schedule</span><span class="params">(TimerTask task, <span class="keyword">long</span> delay)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">schedule</span><span class="params">(TimerTask task, Date time)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">schedule</span><span class="params">(TimerTask task, <span class="keyword">long</span> delay, <span class="keyword">long</span> period)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">schedule</span><span class="params">(TimerTask task, Date firstTime, <span class="keyword">long</span> period)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">scheduleAtFixedRate</span><span class="params">(TimerTask task, <span class="keyword">long</span> delay, <span class="keyword">long</span> period)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">scheduleAtFixedRate</span><span class="params">(TimerTask task, Date firstTime,<span class="keyword">long</span> period)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">cancel</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">purge</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
+<h2 id="定时器的设置"><a href="#定时器的设置" class="headerlink" title="定时器的设置"></a>定时器的设置</h2><p>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 通过调用schedule方法就可以实现任务的定时执行，从参数表可以知道，要想调用schedule方法来使某个任务定时执行，这个任务类必须要继承TimerTask类，TimerTask的类定义为：</p>
+  <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">TimerTask</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;...&#125;</span><br></pre></td></tr></table></figure>
+<p>  继承了Runnable接口，那么必须要实现run()方法，实际上定时器定时执行的任务即为相应的run()方法。<br>  <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">  <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo</span> </span>&#123;</span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Timer timer = <span class="keyword">new</span> Timer();</span><br><span class="line">        DemoTask  demoTask = <span class="keyword">new</span> DemoTask();</span><br><span class="line">        </span><br><span class="line">        timer.schedule(demoTask, <span class="number">0</span>, <span class="number">5</span> * <span class="number">1000</span>);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DemoTask</span> <span class="keyword">extends</span> <span class="title">TimerTask</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Process..."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="任务的取消"><a href="#任务的取消" class="headerlink" title="任务的取消"></a>任务的取消</h2><p>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;通过调用cancel()方法，即可取消所有任务的定时进行。</p>
+<h2 id="使用时的坑点"><a href="#使用时的坑点" class="headerlink" title="使用时的坑点"></a>使用时的坑点</h2><p>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <strong>cancel()方法只要执行一次，这个定时器便“死亡”了，无法通过调用schedule()来添加任务，如果在调用cancel()后又调用schedule()，那么就会抛出IllegalStateException(“Timer already cancelled.”)异常。</strong><br>  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;不能通过purge()方法来取消任务，<strong>除非自己修改了Timer类的代码</strong> ，否则调用purge()方法并没有任何效果。<br>  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>定时器并不能保证在指定的间隔时间到后就马上执行任务</strong> ，在时间间隔小、任务的run()方法所需的执行时间较长的情况下格外明显。</p>
+<h1 id="源码剖析"><a href="#源码剖析" class="headerlink" title="源码剖析"></a>源码剖析</h1><h2 id="Timer的结构及执行过程"><a href="#Timer的结构及执行过程" class="headerlink" title="Timer的结构及执行过程"></a>Timer的结构及执行过程</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Timer的核心结构为一个任务队列和一个计时器线程：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> TaskQueue queue = <span class="keyword">new</span> TaskQueue();</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> TimerThread thread = <span class="keyword">new</span> TimerThread(queue);</span><br></pre></td></tr></table></figure>
+<p>计时器线程thread负责执行任务队列queue中的任务，同时也负责设置完成后任务执行过程中对任务队列queue的维护。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在用户调用schedule方法后，schedule方法将任务放入任务队列queue，之后由thread调用执行任务队列中任务的run()方法，同时对于需要重复执行的任务，再将这个任务加入到任务队列，对于一次性任务，调用后便从queue中移除。</p>
+<h2 id="为什么说cancel-方法调用后定时器便“死亡”了？"><a href="#为什么说cancel-方法调用后定时器便“死亡”了？" class="headerlink" title="为什么说cancel()方法调用后定时器便“死亡”了？"></a>为什么说cancel()方法调用后定时器便“死亡”了？</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  cancel()方法的源码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">cancel</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">synchronized</span>(queue) &#123;</span><br><span class="line">            thread.newTasksMayBeScheduled = <span class="keyword">false</span>;</span><br><span class="line">            queue.clear();</span><br><span class="line">            queue.notify();  <span class="comment">// In case queue was already empty.</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>可以看出，在调用cancel()方法后，thread的newTasksMayBeScheduled属性便被置为false，而在mainloop()中，有这么几行：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> (queue.isEmpty() &amp;&amp; newTasksMayBeScheduled)	<span class="comment">//line 526</span></span><br><span class="line">                        queue.wait();	<span class="comment">//line 527</span></span><br><span class="line"><span class="keyword">if</span> (queue.isEmpty())</span><br><span class="line">                        <span class="keyword">break</span>; <span class="comment">// Queue is empty and will forever remain; die</span></span><br></pre></td></tr></table></figure>
+<p>如果newTasksMayBeScheduled属性被置为false，那么意味着线程不会等待下一个任务的到来，如果任务队列中有未执行完的任务，那么执行剩下的任务后跳出循环，如果没有，那么直接break跳出循环，该线程就此“死亡”。</p>
+<h2 id="为什么purge-方法没有作用？"><a href="#为什么purge-方法没有作用？" class="headerlink" title="为什么purge()方法没有作用？"></a>为什么purge()方法没有作用？</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;purge()方法的源码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">purge</span><span class="params">()</span> </span>&#123;	<span class="comment">//line 457</span></span><br><span class="line">         <span class="keyword">int</span> result = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">         <span class="keyword">synchronized</span>(queue) &#123;</span><br><span class="line">             <span class="keyword">for</span> (<span class="keyword">int</span> i = queue.size(); i &gt; <span class="number">0</span>; i--) &#123;</span><br><span class="line">                 <span class="keyword">if</span> (queue.get(i).state == TimerTask.CANCELLED) &#123;</span><br><span class="line">                     queue.quickRemove(i);</span><br><span class="line">                     result++;</span><br><span class="line">                 &#125;</span><br><span class="line">             &#125;</span><br><span class="line"></span><br><span class="line">             <span class="keyword">if</span> (result != <span class="number">0</span>)</span><br><span class="line">                 queue.heapify();</span><br><span class="line">         &#125;</span><br><span class="line"></span><br><span class="line">         <span class="keyword">return</span> result;</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
+<p>可以知道purge()的作用是清除任务队列中被标记为CANCELLED的任务，而在原始的Timer类源码中没有任何代码能将任务队列中的任务标记为CANCELLED，因此如果没有对源码进行更改，purge()方法是没有任何作用的。</p>
+<h2 id="如何不调用cancel-方法停止任务"><a href="#如何不调用cancel-方法停止任务" class="headerlink" title="如何不调用cancel()方法停止任务?"></a>如何不调用cancel()方法停止任务?</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在Timer类的使用的过程中，如果要停止执行已经在任务队列中的任务，而又不想重新安排不需要停止的任务（如果使用cancel()方法意味着要重新实例化一个新的Timer并重新一一调用schedule()），那么可以在Timer类中增加一个方法来将任务队列中要停止的任务标记为CANCELLED。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>将任务标记为CANCELLED后，有两种机制可以将这些任务从任务队列中清除出去。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;一是purge()方法，此时调用purge()方法便可以主动清除这些任务。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;二是thread在执行任务队列中的任务时，会判断这个任务是否已经CANCELLED，如果已经被标记为CANCELLED，那么便会抛弃这个任务。在mainloop的循环中，有如下代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (task.state == TimerTask.CANCELLED) &#123;	<span class="comment">//line535</span></span><br><span class="line">       queue.removeMin();</span><br><span class="line">       <span class="keyword">continue</span>;  <span class="comment">// No action required, poll queue again</span></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>因此如果被标记为CANCELLED的任务数量较少，其实并不需要主动调用purge()方法，并不会对性能造成很大影响。但是如果被标记为CANCELLED的数量非常多，那么如果不在标记后主动调用purge()方法，就会对任务的执行造成影响。</p>
+<h2 id="为什么说定时器并不能保证在指定的间隔时间到后就马上执行任务？"><a href="#为什么说定时器并不能保证在指定的间隔时间到后就马上执行任务？" class="headerlink" title="为什么说定时器并不能保证在指定的间隔时间到后就马上执行任务？"></a>为什么说定时器并不能保证在指定的间隔时间到后就马上执行任务？</h2><p><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;从Timer的结构我们知道，在实例化Timer时，一个Timer只拥有一个线程的使用权，thread按先进先出的顺序执行任务队列queue中的任务，任务的执行是串行的，那么就有可能出现这样的情况：上一个任务还没执行完，下一个任务的设定时间已经到了。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>出现这种情况时，由于线程的使用权已经转移给了TimerTask并被run()方法占用，计时器根本无法知道这一情况，只有等上一个任务执行完后线程使用权交还给Timer，Timer才会发现要执行的任务已经过期。如果两个任务的实际间隔时间短、任务在某些情况下的实际执行时间较长，那么这一情况会频繁发生。</p>
+<h3 id="如果这一情况发生怎么办？"><a href="#如果这一情况发生怎么办？" class="headerlink" title="如果这一情况发生怎么办？"></a>如果这一情况发生怎么办？</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 在原始的Timer中，如果任务过期，thread仍然执行这一任务:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">currentTime = System.currentTimeMillis();	<span class="comment">//line 539</span></span><br><span class="line">executionTime = task.nextExecutionTime;</span><br><span class="line"><span class="keyword">if</span> (taskFired = (executionTime&lt;=currentTime)) &#123;</span><br><span class="line">        <span class="keyword">if</span> (task.period == <span class="number">0</span>) &#123; <span class="comment">// Non-repeating, remove</span></span><br><span class="line">                queue.removeMin();</span><br><span class="line">                task.state = TimerTask.EXECUTED;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123; <span class="comment">// Repeating task, reschedule</span></span><br><span class="line">                queue.rescheduleMin(</span><br><span class="line">                task.period&lt;<span class="number">0</span> ? currentTime   - task.period: executionTime + task.period);</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果对任务的时效性有很强的要求，而这种情况却频繁发生，那么有两个选择：（1）将这一任务的定时工作交给另一个Timer；（2）修改Timer源码，在上面的代码块中加入判断模块，丢弃<strong>严重过期</strong>的任务。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果选择第二种方法，那么很有可能遇到这样的坑：把&lt;=改成==，同时加一个else块来抛弃并重设置过期的任务块，此时发现什么任务都不执行了，进一步检查发现判断模块将所有的任务都判断为过期任务。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;为什么会出现这种情况？原因在于对于时间未到的任务，等待机构为：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (!taskFired) <span class="comment">// Task hasn't yet fired; wait	//line 552</span></span><br><span class="line">        queue.wait(executionTime - currentTime);</span><br></pre></td></tr></table></figure>
+<p>时间为毫秒，也就是说，在这个代码块中，executionTime == currentTime，而等待之后系统又进入循环，这时又要经过一系列判断才选择任务执行，currentTime必然大于executionTime。</p>
+<h2 id="两种方法要如何选择？"><a href="#两种方法要如何选择？" class="headerlink" title="两种方法要如何选择？"></a>两种方法要如何选择？</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果要执行的任务间并没有联系，对它们之间的先后顺序并没有要求，那么这时最好一个任务交给一个Timer来执行，所耗费的代价也仅是多一个线程的开销。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果对任务间的先后要求有要求，那么在一个Timer中安排这些任务，因为一个Timer中的任务都只由一个线程执行，是线程安全的，如果放在不同的Timer中，那么就必须考虑加锁等措施保证线程安全。如果同时对任务时效性有要求，那么最简单的方法是复用Timer，在此基础上修改Timer的代码来reschedule过期任务。</p>
+</font>
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/2020/11/16/例模式的几种写法/" data-toggle="tooltip" data-placement="top"
+                           title="单例模式的几种写法">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Timer类的使用"><span class="toc-text">Timer类的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#定时器的设置"><span class="toc-text">定时器的设置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#任务的取消"><span class="toc-text">任务的取消</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用时的坑点"><span class="toc-text">使用时的坑点</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#源码剖析"><span class="toc-text">源码剖析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Timer的结构及执行过程"><span class="toc-text">Timer的结构及执行过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么说cancel-方法调用后定时器便“死亡”了？"><span class="toc-text">为什么说cancel()方法调用后定时器便“死亡”了？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么purge-方法没有作用？"><span class="toc-text">为什么purge()方法没有作用？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何不调用cancel-方法停止任务"><span class="toc-text">如何不调用cancel()方法停止任务?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么说定时器并不能保证在指定的间隔时间到后就马上执行任务？"><span class="toc-text">为什么说定时器并不能保证在指定的间隔时间到后就马上执行任务？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#如果这一情况发生怎么办？"><span class="toc-text">如果这一情况发生怎么办？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#两种方法要如何选择？"><span class="toc-text">两种方法要如何选择？</span></a></li></ol></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#Java"
+                           title="Java">Java</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/CVSink">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; LoongX 2021
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/" target="_blank" rel="noopener">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+
+<script src="/js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/js/blog.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://cvsink.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','','2.0.0');
+</script>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="/images/header.jpg">
+</body>
+
+</html>
