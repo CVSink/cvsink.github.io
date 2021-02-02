@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="林某在 Github 上的个人博客">
+    <meta name="keyword" content="">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="LoongX" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        Java装箱与拆箱｜LoongX&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://cvsink.github.io/2021/02/01/va装箱与拆箱/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+
+    <!-- Custom CSS -->
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
+
+    <!-- Pygments Github CSS -->
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('//o7bkkhiex.bkt.clouddn.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    LoongX
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/my-works/">my-works</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/Tags/">Tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="/images/wallpaper2.jpg#博文默认的图片">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('/images/wallpaper2.jpg#博文默认的图片')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>Java装箱与拆箱</h1>
+                    
+                    <span class="meta">
+                         作者 LoongX
+                        <span>
+                          日期 2021-02-01
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#Java"
+                           title="Java">Java</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            Java装箱与拆箱
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <font size="4">
+
+<h1 id="什么是拆箱和装箱"><a href="#什么是拆箱和装箱" class="headerlink" title="什么是拆箱和装箱"></a>什么是拆箱和装箱</h1><p>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Java的基本类型有byte,short,int,double,float,long,char,boolean八种，同时八种基本类型对应有八种包装类Byte，Short，Integer，Double，Float，Long，Character，Boolean。包装类为class类型，new出来的对象存在于堆中，而基本类型则存在于栈中，Java不支持运算符重载，按理来说包装类对象和基本类型不能直接进行+-等操作，但实际上基本类型和包装类对象能用+-等符号自由连接。这便涉及到装箱和拆箱。<br>   <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;装箱：把基本类型转为相应的包装器类型。<br>   <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;拆箱：把包装器类型转为基本类型。</p>
+<h1 id="为什么需要包装类"><a href="#为什么需要包装类" class="headerlink" title="为什么需要包装类"></a>为什么需要包装类</h1><p>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Map、set、list等容器要求的元素类型是Object，基本类型无法作为他们的元素，这时就需要包装类将基本类型包装起来，使基本类型具有对象的性质。同时，将基本类型包装为类，能使其拥有许多诸如进制转换、类型转换等实用的方法。</p>
+<h1 id="什么时候需要拆箱和装箱"><a href="#什么时候需要拆箱和装箱" class="headerlink" title="什么时候需要拆箱和装箱"></a>什么时候需要拆箱和装箱</h1><p>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;将基本类型包装为类，虽然能使其拥有类的优点，但是如果包装类不能在大多数情况下和基本类型一样使用，那么就失去了包装的意义。为了能让类类型的包装类和基本类型一样使用，就需要拆箱和装箱来实现基本类型和包装类的相互转换。<br>  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;例如在进行涉及包装类的比较或运算时：</p>
+  <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">  <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> </span>&#123;</span><br><span class="line">        Integer a = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> b = <span class="number">4</span>;</span><br><span class="line">        System.out.println(b == a);</span><br><span class="line">        System.out.println(b &gt; a);</span><br><span class="line">        System.out.println(a + b);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;或者必须将基本类型转换为类类型时：<br>  <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">  <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> </span>&#123;</span><br><span class="line">        List&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        list.add(<span class="number">1</span>);	<span class="comment">//基本类型1被自动装箱为包装类</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>  <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">  <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">aTest</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Integer a = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">return</span> a;	<span class="comment">//包装类对象a被自动拆箱为基本类型</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="拆箱和装箱的原理"><a href="#拆箱和装箱的原理" class="headerlink" title="拆箱和装箱的原理"></a>拆箱和装箱的原理</h1><p>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;或者换一种说法：包装类这种类似于运算符重载的功能是如何实现的？<br>  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;对于典型的场景：<br>  <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">  <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> </span>&#123;</span><br><span class="line">        Integer a = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> b = <span class="number">4</span>;</span><br><span class="line">        System.out.println(b == a);</span><br><span class="line">        System.out.println(b &gt; a);</span><br><span class="line">        System.out.println(a + b);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>  javap反编译这段代码：</p>
+  <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">  <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">test</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">test</span><span class="params">()</span></span>;</span><br><span class="line">    Code:</span><br><span class="line">       <span class="number">0</span>: aload_0</span><br><span class="line">       1: invokespecial #1                  // Method java/lang/Object."&lt;init&gt;":()V</span><br><span class="line">       <span class="number">4</span>: <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(java.lang.String[])</span></span>;</span><br><span class="line">    Code:</span><br><span class="line">       <span class="number">0</span>: iconst_1</span><br><span class="line">       1: invokestatic  #2                  // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;</span><br><span class="line">       <span class="number">4</span>: astore_1</span><br><span class="line">       <span class="number">5</span>: iconst_4</span><br><span class="line">       <span class="number">6</span>: istore_2</span><br><span class="line">       7: getstatic     #3                  // Field java/lang/System.out:Ljava/io/PrintStream;</span><br><span class="line">      <span class="number">10</span>: iload_2</span><br><span class="line">      <span class="number">11</span>: aload_1</span><br><span class="line">      12: invokevirtual #4                  // Method java/lang/Integer.intValue:()I</span><br><span class="line">      <span class="number">15</span>: if_icmpne     <span class="number">22</span></span><br><span class="line">      <span class="number">18</span>: iconst_1</span><br><span class="line">      <span class="number">19</span>: goto          <span class="number">23</span></span><br><span class="line">      <span class="number">22</span>: iconst_0</span><br><span class="line">      23: invokevirtual #5                  // Method java/io/PrintStream.println:(Z)V</span><br><span class="line">      26: getstatic     #3                  // Field java/lang/System.out:Ljava/io/PrintStream;</span><br><span class="line">      <span class="number">29</span>: iload_2</span><br><span class="line">      <span class="number">30</span>: aload_1</span><br><span class="line">      31: invokevirtual #4                  // Method java/lang/Integer.intValue:()I</span><br><span class="line">      <span class="number">34</span>: if_icmple     <span class="number">41</span></span><br><span class="line">      <span class="number">37</span>: iconst_1</span><br><span class="line">      <span class="number">38</span>: goto          <span class="number">42</span></span><br><span class="line">      <span class="number">41</span>: iconst_0</span><br><span class="line">      42: invokevirtual #5                  // Method java/io/PrintStream.println:(Z)V</span><br><span class="line">      45: getstatic     #3                  // Field java/lang/System.out:Ljava/io/PrintStream;</span><br><span class="line">      <span class="number">48</span>: aload_1</span><br><span class="line">      49: invokevirtual #4                  // Method java/lang/Integer.intValue:()I</span><br><span class="line">      <span class="number">52</span>: iload_2</span><br><span class="line">      <span class="number">53</span>: iadd</span><br><span class="line">      54: invokevirtual #6                  // Method java/io/PrintStream.println:(I)V</span><br><span class="line">      <span class="number">57</span>: <span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  可以看到代码Integer a = 1;实际上调用了Integer的构造方法，装箱是通过调用 Method java/lang/Integer.valueOf实现，而拆箱则是通过调用 Method java/lang/Integer.intValue:()实现。<br>  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;实际上所有八种包装类的装箱都是通过调用其valueOf()方法实现，拆箱是通过调用*value()方法实现。如果涉及到加减乘除大于小于比较操作（==操作除外），那么都是先调用*value()拆箱再进行相应的操作；如果需要将基本类型转为类类型，那么都是先调用valueOf()装箱再进行下一步操作。</p>
+<h1 id="Integer中的缓存池"><a href="#Integer中的缓存池" class="headerlink" title="Integer中的缓存池"></a>Integer中的缓存池</h1><p>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;包装类Integer中包含了一个内部静态类IntegerCache：</p>
+  <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">   * Cache to support the object identity semantics of autoboxing for values between</span></span><br><span class="line"><span class="comment">   * -128 and 127 (inclusive) as required by JLS.</span></span><br><span class="line"><span class="comment">   *</span></span><br><span class="line"><span class="comment">   * The cache is initialized on first usage.  The size of the cache</span></span><br><span class="line"><span class="comment">   * may be controlled by the &#123;<span class="doctag">@code</span> -XX:AutoBoxCacheMax=&lt;size&gt;&#125; option.</span></span><br><span class="line"><span class="comment">   * During VM initialization, java.lang.Integer.IntegerCache.high property</span></span><br><span class="line"><span class="comment">   * may be set and saved in the private system properties in the</span></span><br><span class="line"><span class="comment">   * jdk.internal.misc.VM class.</span></span><br><span class="line"><span class="comment">   *</span></span><br><span class="line"><span class="comment">   * WARNING: The cache is archived with CDS and reloaded from the shared</span></span><br><span class="line"><span class="comment">   * archive at runtime. The archived cache (Integer[]) and Integer objects</span></span><br><span class="line"><span class="comment">   * reside in the closed archive heap regions. Care should be taken when</span></span><br><span class="line"><span class="comment">   * changing the implementation and the cache array should not be assigned</span></span><br><span class="line"><span class="comment">   * with new Integer object(s) after initialization.</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">IntegerCache</span> </span>&#123;</span><br><span class="line">      <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> low = -<span class="number">128</span>;</span><br><span class="line">      <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> high;</span><br><span class="line">      <span class="keyword">static</span> <span class="keyword">final</span> Integer[] cache;</span><br><span class="line">      <span class="keyword">static</span> Integer[] archivedCache;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">static</span> &#123;</span><br><span class="line">          <span class="comment">// high value may be configured by property</span></span><br><span class="line">          <span class="keyword">int</span> h = <span class="number">127</span>;</span><br><span class="line">          String integerCacheHighPropValue =</span><br><span class="line">              VM.getSavedProperty(<span class="string">"java.lang.Integer.IntegerCache.high"</span>);</span><br><span class="line">          <span class="keyword">if</span> (integerCacheHighPropValue != <span class="keyword">null</span>) &#123;</span><br><span class="line">              <span class="keyword">try</span> &#123;</span><br><span class="line">                  h = Math.max(parseInt(integerCacheHighPropValue), <span class="number">127</span>);</span><br><span class="line">                  <span class="comment">// Maximum array size is Integer.MAX_VALUE</span></span><br><span class="line">                  h = Math.min(h, Integer.MAX_VALUE - (-low) -<span class="number">1</span>);</span><br><span class="line">              &#125; <span class="keyword">catch</span>( NumberFormatException nfe) &#123;</span><br><span class="line">                  <span class="comment">// If the property cannot be parsed into an int, ignore it.</span></span><br><span class="line">              &#125;</span><br><span class="line">          &#125;</span><br><span class="line">          high = h;</span><br><span class="line"></span><br><span class="line">          <span class="comment">// Load IntegerCache.archivedCache from archive, if possible</span></span><br><span class="line">          VM.initializeFromArchive(IntegerCache<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">          <span class="keyword">int</span> size = (high - low) + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">          <span class="comment">// Use the archived cache if it exists and is large enough</span></span><br><span class="line">          <span class="keyword">if</span> (archivedCache == <span class="keyword">null</span> || size &gt; archivedCache.length) &#123;</span><br><span class="line">              Integer[] c = <span class="keyword">new</span> Integer[size];</span><br><span class="line">              <span class="keyword">int</span> j = low;</span><br><span class="line">              <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; c.length; i++) &#123;</span><br><span class="line">                  c[i] = <span class="keyword">new</span> Integer(j++);</span><br><span class="line">              &#125;</span><br><span class="line">              archivedCache = c;</span><br><span class="line">          &#125;</span><br><span class="line">          cache = archivedCache;</span><br><span class="line">          <span class="comment">// range [-128, 127] must be interned (JLS7 5.1.7)</span></span><br><span class="line">          <span class="keyword">assert</span> IntegerCache.high &gt;= <span class="number">127</span>;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="function"><span class="keyword">private</span> <span class="title">IntegerCache</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>  在Integer类被第一次装载时，这一缓存池便被初始化，之后对于范围在[-128,127]的Integer数，如果不是通过new语句创建，那么这个数实际上存放在缓存池中，这一范围数的自动装箱源码为：<br>  <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@HotSpotIntrinsicCandidate</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Integer <span class="title">valueOf</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (i &gt;= IntegerCache.low &amp;&amp; i &lt;= IntegerCache.high)</span><br><span class="line">          <span class="keyword">return</span> IntegerCache.cache[i + (-IntegerCache.low)];</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">new</span> Integer(i);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure><br>  因此如果有：<br>  <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Integer a = <span class="number">1</span>;</span><br><span class="line">Integer b = <span class="number">1</span>;</span><br></pre></td></tr></table></figure><br>  那么实际上a和b为同一对象，都为IntegerCache.cache[1 + (-IntegerCache.low)]。</p>
+<h1 id="使用时要注意的问题"><a href="#使用时要注意的问题" class="headerlink" title="使用时要注意的问题"></a>使用时要注意的问题</h1><h2 id="不能使用-来比较两个包装类类型数"><a href="#不能使用-来比较两个包装类类型数" class="headerlink" title="不能使用==来比较两个包装类类型数"></a>不能使用==来比较两个包装类类型数</h2><p>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;包装类是类类型，因此如果直接使用==，那么实际上比较的是这两个对象的地址是否相同，一定要使用equals()方法。如果使用==，可能的情况有下面几种：<br>  <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">  <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> </span>&#123;</span><br><span class="line">        Integer a = <span class="number">1</span>;</span><br><span class="line">        Integer b = <span class="number">1</span>;</span><br><span class="line">        Integer c = <span class="keyword">new</span> Integer(<span class="number">1</span>);</span><br><span class="line">        Integer d = <span class="keyword">new</span> Integer(<span class="number">1</span>);</span><br><span class="line">        Integer e = <span class="number">128</span>;</span><br><span class="line">        Integer f = <span class="number">128</span>;</span><br><span class="line">        System.out.println(a == b);	<span class="comment">//true</span></span><br><span class="line">        System.out.println(c == d);	<span class="comment">//false</span></span><br><span class="line">        System.out.println(a == c);	<span class="comment">//false</span></span><br><span class="line">        System.out.println(e == f);	<span class="comment">//false</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="注意自动拆箱装箱可能导致的资源浪费"><a href="#注意自动拆箱装箱可能导致的资源浪费" class="headerlink" title="注意自动拆箱装箱可能导致的资源浪费"></a>注意自动拆箱装箱可能导致的资源浪费</h2><p>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果不是必须要用包装类，那么就避免使用包装类，尤其是在for循环中。包装类对象需要在堆上先创建才能使用，如果在for循环中出现自动拆箱装箱，那么就会产生大量的临时对象，造成资源浪费。</p>
+<h2 id="自动拆箱可能导致空指针异常"><a href="#自动拆箱可能导致空指针异常" class="headerlink" title="自动拆箱可能导致空指针异常"></a>自动拆箱可能导致空指针异常</h2><p>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.hollischuang.com/archives/435" target="_blank" rel="noopener">http://www.hollischuang.com/archives/435</a></p>
+</font>
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/2021/01/22/器Timer源码剖析/" data-toggle="tooltip" data-placement="top"
+                           title="定时器Timer使用及源码剖析">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#什么是拆箱和装箱"><span class="toc-text">什么是拆箱和装箱</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#为什么需要包装类"><span class="toc-text">为什么需要包装类</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#什么时候需要拆箱和装箱"><span class="toc-text">什么时候需要拆箱和装箱</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#拆箱和装箱的原理"><span class="toc-text">拆箱和装箱的原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Integer中的缓存池"><span class="toc-text">Integer中的缓存池</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用时要注意的问题"><span class="toc-text">使用时要注意的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#不能使用-来比较两个包装类类型数"><span class="toc-text">不能使用&#x3D;&#x3D;来比较两个包装类类型数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#注意自动拆箱装箱可能导致的资源浪费"><span class="toc-text">注意自动拆箱装箱可能导致的资源浪费</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自动拆箱可能导致空指针异常"><span class="toc-text">自动拆箱可能导致空指针异常</span></a></li></ol></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#Java"
+                           title="Java">Java</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/CVSink">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; LoongX 2021
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/" target="_blank" rel="noopener">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+
+<script src="/js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/js/blog.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://cvsink.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','','2.0.0');
+</script>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="/images/header.jpg">
+</body>
+
+</html>
