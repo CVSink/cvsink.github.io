@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        Hello World｜LoongX&#39;s blog
+        String类与字符串池｜LoongX&#39;s blog
         
     </title>
 
-    <link rel="canonical" href="http://cvsink.github.io/2020/01/13/hello-world/">
+    <link rel="canonical" href="http://cvsink.github.io/2021/02/03/String类与字符串池/">
 
     <!-- Bootstrap Core CSS -->
     
@@ -159,12 +159,12 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>Hello World</h1>
+                    <h1>String类与字符串池</h1>
                     
                     <span class="meta">
                          作者 LoongX
                         <span>
-                          日期 2020-01-13
+                          日期 2021-02-03
                          </span>
                     </span>
                     <div class="tags text-center">
@@ -176,7 +176,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            Hello World
+            String类与字符串池
         </span>
     </div>
 </header>
@@ -187,30 +187,21 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+                <font size="4">
 
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
+<h1 id="问题发现"><a href="#问题发现" class="headerlink" title="问题发现"></a>问题发现</h1><p>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;已经知道八个包装类中Integer、Boolean、Byte、Short、Long、Character六类具有缓冲池，对于值在一定范围内的对象不分配新空间，指向的是缓存池中的对象，因此使用==进行比较时可能得到的是正确的结果。现在有以下代码：<br>   <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">   <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> </span>&#123;</span><br><span class="line">        String s1 = <span class="string">"Hello world"</span>;</span><br><span class="line">        String s2 = <span class="string">"Hello world"</span>;</span><br><span class="line">        System.out.println(s1 == s2);  <span class="comment">// true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>   输出的结果为true。s1和s2是两个不同的对象，使用==比较的是它们的内存地址，按理来说结果应为false，故猜测String类也有与包装类类似的缓存机制。</p>
+<h1 id="字符串池"><a href="#字符串池" class="headerlink" title="字符串池"></a>字符串池</h1><p>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;阅读String类的源码，却没有发现StringCache。事实上确实存在与包装类缓存池概念功能类似的字符串池，但是包装类的缓存池实现是代码层面的，而字符串池的实现则是在Java虚拟机层面。<br>   <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在 JDK 1.6 以及以前的版本中，字符串池是放在 Perm 区(Permanent Generation，永久代)。Perm 区是一个类静态的区域，主要存储一些加载类的信息，常量池，方法片段等内容，容量是固定的，默认在 32 M 到 96 M 间，我们可以通过 -XX:MaxPermSize = N 来配置永久代的大小，但是在运行过程中它仍然还是固定大小的。在 JDK 1.7 的版本中，字符串池移到Java Heap。在 JDK 1.8 中永久代的说法被废弃，元空间成为方法区的替代品。<br>   <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+</font>
                 <hr>
                 
 
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/2020/01/18/leetcode839-相似字符串组/" data-toggle="tooltip" data-placement="top"
-                           title="leetcode839 相似字符串组">&larr; Previous Post</a>
-                    </li>
                     
+                    <li class="next">
+                        <a href="/2021/02/01/va装箱与拆箱/" data-toggle="tooltip" data-placement="top"
+                           title="Java装箱与拆箱">Next Post &rarr;</a>
+                    </li>
                     
                 </ul>
 
@@ -228,7 +219,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#问题发现"><span class="toc-text">问题发现</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#字符串池"><span class="toc-text">字符串池</span></a></li></ol>
                 </div>
             </div>
         </div>
