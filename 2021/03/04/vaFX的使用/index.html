@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="林某在 Github 上的个人博客">
+    <meta name="keyword" content="">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="LoongX" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        JavaFX的使用｜LoongX&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://cvsink.github.io/2021/03/04/vaFX的使用/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+
+    <!-- Custom CSS -->
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
+
+    <!-- Pygments Github CSS -->
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('//o7bkkhiex.bkt.clouddn.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    LoongX
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/my-works/">my-works</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/Tags/">Tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="/images/wallpaper2.jpg#博文默认的图片">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('/images/wallpaper2.jpg#博文默认的图片')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>JavaFX的使用</h1>
+                    
+                    <span class="meta">
+                         作者 LoongX
+                        <span>
+                          日期 2021-03-04
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            JavaFX的使用
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <font size="4">
+
+<h1 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h1><p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;使用IDEA开发JavaFX程序。JDK11之后，JavaFX模块被独立出来，需要下载独立的JavaFX包。<br> <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;下载地址: <a href="https://gluonhq.com/products/javafx/" target="_blank" rel="noopener">https://gluonhq.com/products/javafx/</a><br> <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Scene Builder下载 : <a href="https://www.oracle.com/java/technologies/javase/javafxscenebuilder-info.html" target="_blank" rel="noopener">https://www.oracle.com/java/technologies/javase/javafxscenebuilder-info.html</a><br> <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IDEA配置: <a href="https://www.jetbrains.com/help/idea/javafx.html" target="_blank" rel="noopener">https://www.jetbrains.com/help/idea/javafx.html</a><br> <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;demo: <a href="https://blog.csdn.net/cnds123321/article/details/102941517" target="_blank" rel="noopener">https://blog.csdn.net/cnds123321/article/details/102941517</a></p>
+<h1 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h1><p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;创建的JavaFX application目录结构应为：<br> <img src="/images/JavaFx%E7%9A%84%E4%BD%BF%E7%94%A8_image1.png" alt="图片1"><br> 使用IDEA创建的的项目没有Launcher，需要自己添加并删掉Main类里的main方法，否则运行会出现无法运行的情况：<br>  <img src="/images/JavaFx%E7%9A%84%E4%BD%BF%E7%94%A8_image2.png" alt="图片2"><br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lacher类应为：<br>  <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> sample;</span><br><span class="line"><span class="keyword">import</span> javafx.application.Application;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Launcher</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span></span>&#123;</span><br><span class="line">        Application.launch(Main<span class="class">.<span class="keyword">class</span>, <span class="title">args</span>)</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Controller类用于控制图形应用的按钮触发事件，Main类的start方法用于对应用进行初始化（包括图形界面设置及后台线程的创建），sample.fxml文件则是我们用Scene Builder设计的图形界面。</p>
+<h1 id="添加组件并赋予功能"><a href="#添加组件并赋予功能" class="headerlink" title="添加组件并赋予功能"></a>添加组件并赋予功能</h1><p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;先用Scene Builder打开fxml文件，现在添加一个确认按钮，首先在右侧Code区为这个按钮设置标识和响应函数：<br> <img src="/images/JavaFx%E7%9A%84%E4%BD%BF%E7%94%A8_image3.png" alt="图片3"><br> 之后在Controller中实现具体响应函数：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@FXML</span></span><br><span class="line"><span class="keyword">private</span> Button check;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">check</span><span class="params">(ActionEvent actionEvent)</span></span>&#123;</span><br><span class="line">	System.out.println(<span class="string">"checked"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样在按下check按钮后便会调用check函数。</p>
+<h1 id="TextField动态显示"><a href="#TextField动态显示" class="headerlink" title="TextField动态显示"></a>TextField动态显示</h1><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;为了使TextField能够动态显示更新，我使用了一个单独的线程更新内容，由Timer来管理。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Timer timer = <span class="keyword">new</span> Timer();<span class="comment">//先new一个定时器</span></span><br><span class="line">timer.schedule(<span class="keyword">new</span> TimerTask() &#123;</span><br><span class="line">       <span class="meta">@Override</span></span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">             Platform.runLater(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">                   <span class="meta">@Override</span></span><br><span class="line">                   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                            <span class="comment">//这一块设置更新的代码</span></span><br><span class="line">                            <span class="comment">//调用Textfiled的setText()方法</span></span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;);</span><br><span class="line"></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;, <span class="number">100</span>, <span class="number">500</span>);<span class="comment">//定时器的延迟时间及间隔时间，不要设置太小</span></span><br></pre></td></tr></table></figure>
+<p>我设置了一个启动按钮，启动按钮的响应函数中插入了上面这段代码，为了避免线程的重复，应该设置一个标志位或使用单例模式。</p>
+<h1 id="如何在关闭图形界面的同时关闭所有线程？"><a href="#如何在关闭图形界面的同时关闭所有线程？" class="headerlink" title="如何在关闭图形界面的同时关闭所有线程？"></a>如何在关闭图形界面的同时关闭所有线程？</h1><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果使用了多线程，那么在关闭图形界面之后，其他线程仍然会在运行，为了避免这一问题，在Main类的start方法中插入以下代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">primaryStage.setOnCloseRequest(<span class="keyword">new</span> EventHandler&lt;WindowEvent&gt;() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handle</span><span class="params">(WindowEvent event)</span> </span>&#123;</span><br><span class="line">                System.exit(<span class="number">0</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
+<p>这样在关闭主界面primaryStage后便会结束当前正在运行中的java虚拟机。</p>
+<h1 id="如何设置弹窗"><a href="#如何设置弹窗" class="headerlink" title="如何设置弹窗"></a>如何设置弹窗</h1><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;实现弹出对话框，可以在Controller中调用这两个方法：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">f_alert_confirmDialog</span><span class="params">(String p_header,String p_message)</span></span>&#123;</span><br><span class="line">        <span class="comment">//按钮部分可以使用预设的也可以像这样自己 new 一个</span></span><br><span class="line">        Alert _alert = <span class="keyword">new</span> Alert(Alert.AlertType.CONFIRMATION,p_message,<span class="keyword">new</span> ButtonType(<span class="string">"取消"</span>, ButtonBar.ButtonData.NO),</span><br><span class="line">                <span class="keyword">new</span> ButtonType(<span class="string">"确定"</span>, ButtonBar.ButtonData.YES));</span><br><span class="line">        <span class="comment">//设置窗口的标题</span></span><br><span class="line">        _alert.setTitle(<span class="string">"确认"</span>);</span><br><span class="line">        _alert.setHeaderText(p_header);</span><br><span class="line">        <span class="comment">//showAndWait() 将在对话框消失以前不会执行之后的代码</span></span><br><span class="line">        Optional&lt;ButtonType&gt; _buttonType = _alert.showAndWait();</span><br><span class="line">        <span class="comment">//根据点击结果返回</span></span><br><span class="line">        <span class="keyword">if</span>(_buttonType.get().getButtonData().equals(ButtonBar.ButtonData.YES))&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//弹出一个信息对话框</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">f_alert_informationDialog</span><span class="params">(String p_header, String p_message)</span></span>&#123;</span><br><span class="line">        Alert _alert = <span class="keyword">new</span> Alert(Alert.AlertType.INFORMATION);</span><br><span class="line">        _alert.setTitle(<span class="string">"信息"</span>);</span><br><span class="line">        _alert.setHeaderText(p_header);</span><br><span class="line">        _alert.setContentText(p_message);</span><br><span class="line">        _alert.show();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>调用效果如下：<br> <img src="/images/JavaFx%E7%9A%84%E4%BD%BF%E7%94%A8_image4.png" alt="图片4"></p>
+<h1 id="如何引入Maven"><a href="#如何引入Maven" class="headerlink" title="如何引入Maven"></a>如何引入Maven</h1><p>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;右键项目目录，在Add Framework Support中选择Maven。<br> <img src="/images/JavaFx%E7%9A%84%E4%BD%BF%E7%94%A8_image5.png" alt="图片5"></p>
+<h1 id="如何将项目打包为jar包"><a href="#如何将项目打包为jar包" class="headerlink" title="如何将项目打包为jar包"></a>如何将项目打包为jar包</h1><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;demo: <a href="https://www.cnblogs.com/ztabk/p/14011035.html" target="_blank" rel="noopener">https://www.cnblogs.com/ztabk/p/14011035.html</a></p>
+<h1 id="如何运行jar包"><a href="#如何运行jar包" class="headerlink" title="如何运行jar包"></a>如何运行jar包</h1><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;传送门： <a href="https://stackoverflow.com/questions/53450011/build-and-deploy-javafx-application-using-java11" target="_blank" rel="noopener">https://stackoverflow.com/questions/53450011/build-and-deploy-javafx-application-using-java11</a><br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果直接双击生成的jar包，会发现没有任何反应，在cmd中运行：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">java -jar sample.jar</span><br></pre></td></tr></table></figure>
+<p>则会出现下面的报错：<br> <img src="/images/JavaFx%E7%9A%84%E4%BD%BF%E7%94%A8_image6.png" alt="图片6"><br> 之前我们说过，在JDK11之后，JavaFX便被分离出去，因此还需要加入单独的javafx模块才能执行。正确的执行代码为：<br> <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">java --module-path PATH_TO_YOUR_JAVAFX_LIB_FOLDER --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.web -jar yourJar.jar</span><br></pre></td></tr></table></figure></p>
+</font>
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/2021/02/03/String类与字符串池/" data-toggle="tooltip" data-placement="top"
+                           title="String类与字符串池">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#环境搭建"><span class="toc-text">环境搭建</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#目录结构"><span class="toc-text">目录结构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#添加组件并赋予功能"><span class="toc-text">添加组件并赋予功能</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#TextField动态显示"><span class="toc-text">TextField动态显示</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#如何在关闭图形界面的同时关闭所有线程？"><span class="toc-text">如何在关闭图形界面的同时关闭所有线程？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#如何设置弹窗"><span class="toc-text">如何设置弹窗</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#如何引入Maven"><span class="toc-text">如何引入Maven</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#如何将项目打包为jar包"><span class="toc-text">如何将项目打包为jar包</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#如何运行jar包"><span class="toc-text">如何运行jar包</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/CVSink">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; LoongX 2021
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/" target="_blank" rel="noopener">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+
+<script src="/js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/js/blog.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://cvsink.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','','2.0.0');
+</script>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="/images/header.jpg">
+</body>
+
+</html>
