@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        JavaFX的使用｜LoongX&#39;s blog
+        JavaFX 的使用｜LoongX&#39;s blog
         
     </title>
 
@@ -86,7 +86,7 @@
                         
 							
                         <li>
-                            <a href="/my-works/">my-works</a>
+                            <a href="/Tags/">Tags</a>
                         </li>
 							
 						
@@ -94,7 +94,7 @@
                         
 							
                         <li>
-                            <a href="/Tags/">Tags</a>
+                            <a href="/my-works/">my-works</a>
                         </li>
 							
 						
@@ -159,7 +159,7 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>JavaFX的使用</h1>
+                    <h1>JavaFX 的使用</h1>
                     
                     <span class="meta">
                          作者 LoongX
@@ -169,6 +169,9 @@
                     </span>
                     <div class="tags text-center">
                         
+                        <a class="tag" href="/tags/#Java"
+                           title="Java">Java</a>
+                        
                     </div>
                 </div>
             </div>
@@ -176,7 +179,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            JavaFX的使用
+            JavaFX 的使用
         </span>
     </div>
 </header>
@@ -187,10 +190,9 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <font size="4">
-
-<h1 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h1><p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;使用IDEA开发JavaFX程序。JDK11之后，JavaFX模块被独立出来，需要下载独立的JavaFX包。<br> <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;下载地址: <a href="https://gluonhq.com/products/javafx/" target="_blank" rel="noopener">https://gluonhq.com/products/javafx/</a><br> <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Scene Builder下载 : <a href="https://www.oracle.com/java/technologies/javase/javafxscenebuilder-info.html" target="_blank" rel="noopener">https://www.oracle.com/java/technologies/javase/javafxscenebuilder-info.html</a><br> <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IDEA配置: <a href="https://www.jetbrains.com/help/idea/javafx.html" target="_blank" rel="noopener">https://www.jetbrains.com/help/idea/javafx.html</a><br> <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;demo: <a href="https://blog.csdn.net/cnds123321/article/details/102941517" target="_blank" rel="noopener">https://blog.csdn.net/cnds123321/article/details/102941517</a></p>
-<h1 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h1><p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;创建的JavaFX application目录结构应为：<br> <img src="/images/JavaFx%E7%9A%84%E4%BD%BF%E7%94%A8_image1.png" alt="图片1"><br> 使用IDEA创建的的项目没有Launcher，需要自己添加并删掉Main类里的main方法，否则运行会出现无法运行的情况：<br>  <img src="/images/JavaFx%E7%9A%84%E4%BD%BF%E7%94%A8_image2.png" alt="图片2"><br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lacher类应为：<br>  <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> sample;</span><br><span class="line"><span class="keyword">import</span> javafx.application.Application;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Launcher</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span></span>&#123;</span><br><span class="line">        Application.launch(Main<span class="class">.<span class="keyword">class</span>, <span class="title">args</span>)</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Controller类用于控制图形应用的按钮触发事件，Main类的start方法用于对应用进行初始化（包括图形界面设置及后台线程的创建），sample.fxml文件则是我们用Scene Builder设计的图形界面。</p>
+                <h1 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h1><p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;使用 IDEA 开发 JavaFX 程序。JDK11 之后，JavaFX 模块被独立出来，需要下载独立的 JavaFX 包，之后在   ProjectStructure -&gt; Libraries 中添加 JavaFX 包 lib 目录下的 jar 包。<br> <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;下载地址: <a href="https://gluonhq.com/products/javafx/" target="_blank" rel="noopener">https://gluonhq.com/products/javafx/</a><br> <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Scene Builder下载 : <a href="https://www.oracle.com/java/technologies/javase/javafxscenebuilder-info.html" target="_blank" rel="noopener">https://www.oracle.com/java/technologies/javase/javafxscenebuilder-info.html</a><br> <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IDEA配置: <a href="https://www.jetbrains.com/help/idea/javafx.html" target="_blank" rel="noopener">https://www.jetbrains.com/help/idea/javafx.html</a><br> <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;演示: <a href="https://blog.csdn.net/cnds123321/article/details/102941517" target="_blank" rel="noopener">https://blog.csdn.net/cnds123321/article/details/102941517</a><br> <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;demo：<a href="https://github.com/CVSink/EducationManagementSystem" target="_blank" rel="noopener">https://github.com/CVSink/EducationManagementSystem</a></p>
+<h1 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h1><p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;创建的 JavaFX application 目录结构应为：<br> <img src="/images/JavaFx%E7%9A%84%E4%BD%BF%E7%94%A8_image1.png" alt="图片1"><br> 使用 IDEA 创建的的项目没有 Launcher，需要自己添加并删掉 Main 类里的 main 方法，否则运行会出现无法运行的情况：<br>  <img src="/images/JavaFx%E7%9A%84%E4%BD%BF%E7%94%A8_image2.png" alt="图片2"><br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lacher 类应为：<br>  <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> sample;</span><br><span class="line"><span class="keyword">import</span> javafx.application.Application;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Launcher</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span></span>&#123;</span><br><span class="line">        Application.launch(Main<span class="class">.<span class="keyword">class</span>, <span class="title">args</span>)</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Controller 类用于控制图形应用的按钮触发事件，Main 类的 start 方法用于对应用进行初始化（包括图形界面设置及后台线程的创建），sample.fxml 文件则是我们用 Scene Builder 设计的图形界面。</p>
+<h1 id="为什么显示找不到fxml文件？"><a href="#为什么显示找不到fxml文件？" class="headerlink" title="为什么显示找不到fxml文件？"></a>为什么显示找不到fxml文件？</h1><p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;点击运行后，出现如下错误：<br> <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Caused by: java.lang.NullPointerException: Location is required.</span><br><span class="line">at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:3230)</span><br><span class="line">at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:3194)</span><br><span class="line">at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:3163)</span><br><span class="line">at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:3136)</span><br><span class="line">at javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:3113)</span><br><span class="line">at javafx.fxml.FXMLLoader.load(FXMLLoader.java:3106)</span><br><span class="line">at stage.Main.start(Main.java:13)</span><br></pre></td></tr></table></figure><br> 无法找到 fxml 文件导致空指针异常，并且经过检查，发现文件路径填写无误。这是因为 IDEA 在编译时并不会把 fxml 文件复制到 target 文件夹，点开 target，会发现 fxml 文件缺失，这时只要把 fxml 文件复制到 target 文件夹就能正常运行。</p>
 <h1 id="添加组件并赋予功能"><a href="#添加组件并赋予功能" class="headerlink" title="添加组件并赋予功能"></a>添加组件并赋予功能</h1><p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;先用Scene Builder打开fxml文件，现在添加一个确认按钮，首先在右侧Code区为这个按钮设置标识和响应函数：<br> <img src="/images/JavaFx%E7%9A%84%E4%BD%BF%E7%94%A8_image3.png" alt="图片3"><br> 之后在Controller中实现具体响应函数：</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@FXML</span></span><br><span class="line"><span class="keyword">private</span> Button check;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">check</span><span class="params">(ActionEvent actionEvent)</span></span>&#123;</span><br><span class="line">	System.out.println(<span class="string">"checked"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这样在按下check按钮后便会调用check函数。</p>
@@ -208,16 +210,21 @@
 <h1 id="如何运行jar包"><a href="#如何运行jar包" class="headerlink" title="如何运行jar包"></a>如何运行jar包</h1><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;传送门： <a href="https://stackoverflow.com/questions/53450011/build-and-deploy-javafx-application-using-java11" target="_blank" rel="noopener">https://stackoverflow.com/questions/53450011/build-and-deploy-javafx-application-using-java11</a><br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果直接双击生成的jar包，会发现没有任何反应，在cmd中运行：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">java -jar sample.jar</span><br></pre></td></tr></table></figure>
 <p>则会出现下面的报错：<br> <img src="/images/JavaFx%E7%9A%84%E4%BD%BF%E7%94%A8_image6.png" alt="图片6"><br> 之前我们说过，在JDK11之后，JavaFX便被分离出去，因此还需要加入单独的javafx模块才能执行。正确的执行代码为：<br> <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">java --module-path PATH_TO_YOUR_JAVAFX_LIB_FOLDER --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.web -jar yourJar.jar</span><br></pre></td></tr></table></figure></p>
-</font>
+
                 <hr>
                 
 
                 <ul class="pager">
                     
+                    <li class="previous">
+                        <a href="/2021/04/10/TCP为什么需要三次握手/" data-toggle="tooltip" data-placement="top"
+                           title="TCP 为什么需要三次握手">&larr; Previous Post</a>
+                    </li>
+                    
                     
                     <li class="next">
                         <a href="/2021/02/03/String类与字符串池/" data-toggle="tooltip" data-placement="top"
-                           title="String类与字符串池">Next Post &rarr;</a>
+                           title="String 类与字符串池">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -236,7 +243,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#环境搭建"><span class="toc-text">环境搭建</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#目录结构"><span class="toc-text">目录结构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#添加组件并赋予功能"><span class="toc-text">添加组件并赋予功能</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#TextField动态显示"><span class="toc-text">TextField动态显示</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#如何在关闭图形界面的同时关闭所有线程？"><span class="toc-text">如何在关闭图形界面的同时关闭所有线程？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#如何设置弹窗"><span class="toc-text">如何设置弹窗</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#如何引入Maven"><span class="toc-text">如何引入Maven</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#如何将项目打包为jar包"><span class="toc-text">如何将项目打包为jar包</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#如何运行jar包"><span class="toc-text">如何运行jar包</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#环境搭建"><span class="toc-text">环境搭建</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#目录结构"><span class="toc-text">目录结构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#为什么显示找不到fxml文件？"><span class="toc-text">为什么显示找不到fxml文件？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#添加组件并赋予功能"><span class="toc-text">添加组件并赋予功能</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#TextField动态显示"><span class="toc-text">TextField动态显示</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#如何在关闭图形界面的同时关闭所有线程？"><span class="toc-text">如何在关闭图形界面的同时关闭所有线程？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#如何设置弹窗"><span class="toc-text">如何设置弹窗</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#如何引入Maven"><span class="toc-text">如何引入Maven</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#如何将项目打包为jar包"><span class="toc-text">如何将项目打包为jar包</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#如何运行jar包"><span class="toc-text">如何运行jar包</span></a></li></ol>
                 </div>
             </div>
         </div>
@@ -257,6 +264,9 @@
                         <a href="/tags/">FEATURED TAGS</a>
                     </h5>
                     <div class="tags">
+                        
+                        <a class="tag" href="/tags/#Java"
+                           title="Java">Java</a>
                         
                     </div>
                 </section>

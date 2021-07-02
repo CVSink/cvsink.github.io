@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="林某在 Github 上的个人博客">
+    <meta name="keyword" content="">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="LoongX" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        数据结构整理—排序｜LoongX&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://cvsink.github.io/2021/06/08/数据结构整理—排序/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+
+    <!-- Custom CSS -->
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
+
+    <!-- Pygments Github CSS -->
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('//o7bkkhiex.bkt.clouddn.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    LoongX
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/Tags/">Tags</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/my-works/">my-works</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="/images/wallpaper2.jpg#博文默认的图片">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('/images/wallpaper2.jpg#博文默认的图片')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>数据结构整理—排序</h1>
+                    
+                    <span class="meta">
+                         作者 LoongX
+                        <span>
+                          日期 2021-06-08
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            数据结构整理—排序
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>算法可视化演示： <a href="https://www.cs.usfca.edu/~galles/visualization/Algorithms.html" target="_blank" rel="noopener">https://www.cs.usfca.edu/~galles/visualization/Algorithms.html</a></p>
+<h2 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//A下标从0开始</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InsertSort</span><span class="params">(<span class="keyword">int</span> A[], <span class="keyword">int</span> len)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i, j, temp;</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">1</span>; i &lt; len; i++) &#123;</span><br><span class="line">		<span class="keyword">if</span> (A[i] &lt; A[i - <span class="number">1</span>]) &#123;</span><br><span class="line">			temp = A[i];</span><br><span class="line">			<span class="keyword">for</span> (j = i - <span class="number">1</span>; j &gt;= <span class="number">0</span> &amp;&amp; A[j] &gt; temp; --j)</span><br><span class="line">				A[j + <span class="number">1</span>] = A[j];</span><br><span class="line">			A[j + <span class="number">1</span>] = temp;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="希尔排序"><a href="#希尔排序" class="headerlink" title="希尔排序"></a>希尔排序</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//A下标从1开始</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ShellSort</span><span class="params">(<span class="keyword">int</span> A[], <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> d, i, j;</span><br><span class="line">	<span class="keyword">for</span> (d = n / <span class="number">2</span>; d &gt;= <span class="number">1</span>; d = d / <span class="number">2</span>) &#123;</span><br><span class="line">		<span class="keyword">for</span> (i = d + <span class="number">1</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">			<span class="keyword">if</span> (A[i] &lt; A[i - d]) &#123;</span><br><span class="line">				A[<span class="number">0</span>] = A[i];	<span class="comment">//A[0]相当于temp，只是暂存</span></span><br><span class="line">				<span class="keyword">for</span> (j = i - d; j &gt; <span class="number">0</span> &amp;&amp; A[<span class="number">0</span>] &lt; A[j]; j -= d) &#123;</span><br><span class="line">					A[j + d] = A[j];</span><br><span class="line">				&#125;</span><br><span class="line">				A[j + d] = A[<span class="number">0</span>];</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//A下标从0开始</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">BubbleSort</span><span class="params">(<span class="keyword">int</span> A[], <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n - <span class="number">1</span>; i++) &#123;</span><br><span class="line">		<span class="keyword">bool</span> flag = <span class="literal">false</span>;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = n - <span class="number">1</span>; j &gt; i; j--) &#123;</span><br><span class="line">			<span class="keyword">if</span> (A[j - <span class="number">1</span>] &gt; A[j]) &#123;</span><br><span class="line">				<span class="keyword">int</span> temp = A[j<span class="number">-1</span>];</span><br><span class="line">				A[j - <span class="number">1</span>] = A[j];</span><br><span class="line">				A[j] = temp;</span><br><span class="line">				flag = <span class="literal">true</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (flag == <span class="literal">false</span>)</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//A下标从0开始</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">SelectSort</span><span class="params">(<span class="keyword">int</span> A[], <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n - <span class="number">1</span>; i++) &#123;</span><br><span class="line">		<span class="keyword">int</span> <span class="built_in">min</span> = i;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = i + <span class="number">1</span>; j &lt; n; j++) &#123;</span><br><span class="line">			<span class="keyword">if</span> (A[j] &lt; A[<span class="built_in">min</span>])</span><br><span class="line">				<span class="built_in">min</span> = j;</span><br><span class="line">			<span class="keyword">if</span> (<span class="built_in">min</span> != i) &#123;</span><br><span class="line">				<span class="keyword">int</span> temp = A[i];</span><br><span class="line">				A[i] = A[<span class="built_in">min</span>];</span><br><span class="line">				A[<span class="built_in">min</span>] = temp;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//A下标均从0开始</span></span><br><span class="line"><span class="comment">//用第一个元素将待排序列分成左右两个部分</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Partition</span><span class="params">(<span class="keyword">int</span> A[], <span class="keyword">int</span> low, <span class="keyword">int</span> high)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> pivot = A[low];</span><br><span class="line">	<span class="keyword">while</span> (low &lt; high) &#123;	<span class="comment">//low==high时即为枢轴最终位置</span></span><br><span class="line">		<span class="keyword">while</span> (low &lt; high &amp;&amp; A[high] &gt;= pivot) --high;</span><br><span class="line">		A[low] = A[high];		<span class="comment">//比枢轴小的移到枢轴最终位置左边</span></span><br><span class="line">		<span class="keyword">while</span> (low &lt; high &amp;&amp; A[low] &lt;= pivot) ++low;</span><br><span class="line">		A[high] = A[low];		<span class="comment">//比枢轴大的移到枢轴最终位置右边</span></span><br><span class="line">	&#125;</span><br><span class="line">	A[low] = pivot;</span><br><span class="line">	<span class="keyword">return</span> low;		<span class="comment">//返回枢轴的下标</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">QuickSort</span><span class="params">(<span class="keyword">int</span> A[], <span class="keyword">int</span> low, <span class="keyword">int</span> high)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (low &lt; high) &#123;</span><br><span class="line">		<span class="keyword">int</span> pivotpos = Partition(A, low, high);</span><br><span class="line">		QuickSort(A, low, pivotpos - <span class="number">1</span>);	<span class="comment">//划分左子表</span></span><br><span class="line">		QuickSort(A, pivotpos + <span class="number">1</span>, high);	<span class="comment">//划分右子表</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX 999</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//A下标从0开始</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Merge</span><span class="params">(<span class="keyword">int</span> A[], <span class="keyword">int</span> low, <span class="keyword">int</span> mid, <span class="keyword">int</span> high)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> B[MAX];	<span class="comment">//辅助数组</span></span><br><span class="line">	<span class="keyword">int</span> i, j, k;</span><br><span class="line">	<span class="keyword">for</span> (k = low; k &lt;= high; k++)	<span class="comment">//把A复制到B</span></span><br><span class="line">		B[k] = A[k];</span><br><span class="line">	<span class="keyword">for</span> (k = low, j = mid + <span class="number">1</span>, k = i; i &lt;= mid &amp;&amp; j &lt;= high; k++) &#123;</span><br><span class="line">		<span class="comment">//把B[i]和B[j]中较小的复制到A中</span></span><br><span class="line">		<span class="keyword">if</span> (B[i] &lt;= B[j])</span><br><span class="line">			A[k] = B[i++];</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			A[k] = B[j++];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//把剩下的复制到A中</span></span><br><span class="line">	<span class="keyword">while</span> (i &lt;= mid) A[k++] = B[i++];</span><br><span class="line">	<span class="keyword">while</span> (j &lt;= high) A[k++] = B[j++];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MergeSort</span><span class="params">(<span class="keyword">int</span> A[], <span class="keyword">int</span> low, <span class="keyword">int</span> high)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (low &lt; high) &#123;</span><br><span class="line">		<span class="keyword">int</span> mid = (low + high) / <span class="number">2</span>;</span><br><span class="line">		MergeSort(A, low, mid);		<span class="comment">//对左半边归并排序</span></span><br><span class="line">		MergeSort(A, mid + <span class="number">1</span>, high);	<span class="comment">//对右半边归并排序</span></span><br><span class="line">		Merge(A, low, mid, high);	<span class="comment">//归并</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//A下标从1开始</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//将以k为根的子树调整为大根堆</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">HeadAdjust</span><span class="params">(<span class="keyword">int</span> A[], <span class="keyword">int</span> k, <span class="keyword">int</span> len)</span> </span>&#123;</span><br><span class="line">	A[<span class="number">0</span>] = A[k];	<span class="comment">//A[0]相当于temp，暂存A[k]</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span> * k; i &lt;= len; i *= <span class="number">2</span>) &#123;</span><br><span class="line">		<span class="keyword">if</span> (i &lt; len &amp;&amp; A[i] &lt; A[i + <span class="number">1</span>])	<span class="comment">//i指向较大的孩子结点</span></span><br><span class="line">			i++;</span><br><span class="line">		<span class="keyword">if</span> (A[<span class="number">0</span>] &gt;= A[i])	<span class="comment">//不需要和孩子结点交换</span></span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">else</span> &#123;</span><br><span class="line">			A[k] = A[i];	<span class="comment">//和孩子结点交换</span></span><br><span class="line">			k = i;			<span class="comment">//k指向交换的孩子结点，继续向下调整</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	A[k] = A[<span class="number">0</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">BuildMaxHeap</span><span class="params">(<span class="keyword">int</span> A[], <span class="keyword">int</span> len)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = len / <span class="number">2</span>; i &gt; <span class="number">0</span>; i--) &#123;	<span class="comment">//从后向前调节所有非终端结点</span></span><br><span class="line">		HeadAdjust(A, i, len);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">HeapSort</span><span class="params">(<span class="keyword">int</span> A[], <span class="keyword">int</span> len)</span> </span>&#123;</span><br><span class="line">	BuildMaxHeap(A, len);	<span class="comment">//初始建堆</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = len; i &gt; <span class="number">1</span>; i--) &#123;</span><br><span class="line">		<span class="keyword">int</span> temp = A[i];	<span class="comment">//堆顶元素和堆底元素交换</span></span><br><span class="line">		A[i] = A[<span class="number">1</span>];</span><br><span class="line">		A[<span class="number">1</span>] = temp;</span><br><span class="line">		HeadAdjust(A, <span class="number">1</span>, i - <span class="number">1</span>);	<span class="comment">//把剩余元素整理成堆</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/2021/06/04/B-树/" data-toggle="tooltip" data-placement="top"
+                           title="B 和 B+ 树">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#插入排序"><span class="toc-text">插入排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#希尔排序"><span class="toc-text">希尔排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#冒泡排序"><span class="toc-text">冒泡排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#选择排序"><span class="toc-text">选择排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#快速排序"><span class="toc-text">快速排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#归并排序"><span class="toc-text">归并排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#堆排序"><span class="toc-text">堆排序</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/CVSink">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; LoongX 2021
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/" target="_blank" rel="noopener">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+
+<script src="/js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/js/blog.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://cvsink.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','','2.0.0');
+</script>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="/images/header.jpg">
+</body>
+
+</html>

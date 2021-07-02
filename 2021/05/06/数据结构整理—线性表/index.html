@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="林某在 Github 上的个人博客">
+    <meta name="keyword" content="">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="LoongX" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        数据结构整理—线性表｜LoongX&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://cvsink.github.io/2021/05/06/数据结构整理—线性表/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+
+    <!-- Custom CSS -->
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
+
+    <!-- Pygments Github CSS -->
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('//o7bkkhiex.bkt.clouddn.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    LoongX
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/Tags/">Tags</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/my-works/">my-works</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="/images/wallpaper2.jpg#博文默认的图片">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('/images/wallpaper2.jpg#博文默认的图片')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>数据结构整理—线性表</h1>
+                    
+                    <span class="meta">
+                         作者 LoongX
+                        <span>
+                          日期 2021-05-06
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#数据结构"
+                           title="数据结构">数据结构</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            数据结构整理—线性表
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;数据结构整理系列的代码参考王道教材，其语言为C风格的C++，C不支持引用特性，如果要求为严格C代码，务必使用指针代替引用。（<a href="https://cvsink.gitee.io/2020/09/16/%E4%B8%8EC-%E7%9A%84%E5%8C%BA%E5%88%AB/" target="_blank" rel="noopener">记一次C与C++混用导致的错误</a>）<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;另外所有函数形参表中传入的位置均为线性表的逻辑位置（从1开始），并非数组下标（从0开始）。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;malloc函数需要引用&lt; stdlib.h &gt;头文件。</p>
+<h2 id="顺序表"><a href="#顺序表" class="headerlink" title="顺序表"></a>顺序表</h2><p>结构体定义：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ElemType int</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> InitSize 50</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">	ElemType *data;</span><br><span class="line">	<span class="keyword">int</span> MaxSize;</span><br><span class="line">	<span class="keyword">int</span> length;</span><br><span class="line">&#125; SeqList;</span><br></pre></td></tr></table></figure>
+<p>基本操作：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InitList</span><span class="params">(SeqList &amp;L)</span> </span>&#123;	<span class="comment">//顺序表初始化</span></span><br><span class="line">	L.data = (ElemType*)<span class="built_in">malloc</span>(InitSize * <span class="keyword">sizeof</span>(ElemType));</span><br><span class="line">	L.length = <span class="number">0</span>;</span><br><span class="line">	L.MaxSize = InitSize;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">IncreaseSize</span><span class="params">(SeqList &amp;L, <span class="keyword">int</span> len)</span> </span>&#123;	<span class="comment">//顺序表容量扩大len</span></span><br><span class="line">	ElemType *p = L.data;</span><br><span class="line">	L.data = (ElemType*)<span class="built_in">malloc</span>((L.MaxSize + len) * <span class="keyword">sizeof</span>(ElemType));	<span class="comment">//也可直接使用realloc</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; L.length; i++) &#123;</span><br><span class="line">		L.data[i] = p[i];</span><br><span class="line">	&#125;</span><br><span class="line">	L.MaxSize = L.MaxSize + len;</span><br><span class="line">	<span class="built_in">free</span>(p);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">ListInsert</span><span class="params">(SeqList &amp;L, <span class="keyword">int</span> i, ElemType e)</span> </span>&#123;	<span class="comment">//在逻辑位置i处插入e</span></span><br><span class="line">	<span class="keyword">if</span> (i&lt;<span class="number">1</span> || i&gt;L.length + <span class="number">1</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	<span class="keyword">if</span> (L.length &gt;= L.MaxSize)	<span class="comment">//这条判断容易遗漏</span></span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> j = L.length; j &gt;= i; j--) &#123;</span><br><span class="line">		L.data[j] = L.data[j - <span class="number">1</span>];</span><br><span class="line">	&#125;</span><br><span class="line">	L.data[i - <span class="number">1</span>] = e;</span><br><span class="line">	L.length++;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">ListDelete</span><span class="params">(SeqList &amp;L, <span class="keyword">int</span> i, ElemType &amp;e)</span> </span>&#123;	<span class="comment">//删除逻辑位置i处的元素并通过e返回</span></span><br><span class="line">	<span class="keyword">if</span> (i&lt;<span class="number">1</span> || i&gt;L.length)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	e = L.data[i - <span class="number">1</span>];</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> j = i; j &lt; L.length; j++) &#123;</span><br><span class="line">		L.data[j - <span class="number">1</span>] = L.data[j];</span><br><span class="line">	&#125;</span><br><span class="line">	L.length--;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">ElemType <span class="title">GetElem</span><span class="params">(SeqList L, <span class="keyword">int</span> i)</span> </span>&#123;	<span class="comment">//获取逻辑位置i处的元素</span></span><br><span class="line">	<span class="keyword">if</span> (i&lt;<span class="number">1</span> || i&gt;L.length)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">return</span> L.data[i - <span class="number">1</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">LocateElem</span><span class="params">(SeqList L, ElemType e)</span> </span>&#123;	<span class="comment">//定位元素e的逻辑位置</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; L.length; i++) &#123;</span><br><span class="line">		<span class="keyword">if</span> (L.data[i] == e) &#123;</span><br><span class="line">			<span class="keyword">return</span> i + <span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">DestoryList</span><span class="params">(SeqList&amp; L)</span> </span>&#123;	<span class="comment">//删除顺序表</span></span><br><span class="line">	<span class="built_in">free</span>(L.data);</span><br><span class="line">	L.length = <span class="number">0</span>;</span><br><span class="line">	L.MaxSize = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">PrintList</span><span class="params">(SeqList L)</span> </span>&#123;	<span class="comment">//打印顺序表</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; L.length; i++) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d-&gt;"</span>, L.data[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="单链表（带头结点）"><a href="#单链表（带头结点）" class="headerlink" title="单链表（带头结点）"></a>单链表（带头结点）</h2><p>结构体定义：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">LNode</span> &#123;</span></span><br><span class="line">	ElemType data;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">LNode</span>* <span class="title">next</span>;</span></span><br><span class="line">&#125;LNode, * LinkList;</span><br></pre></td></tr></table></figure>
+<p>基本操作：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">InitList</span><span class="params">(LinkList&amp; L)</span> </span>&#123;	<span class="comment">//初始化单链表（带头结点）</span></span><br><span class="line">	L = (LNode*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(LNode));</span><br><span class="line">	<span class="keyword">if</span> (L == <span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	L-&gt;next = <span class="literal">NULL</span>;	<span class="comment">//容易遗漏</span></span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">ListInsert</span><span class="params">(LinkList&amp; L, <span class="keyword">int</span> i, ElemType e)</span> </span>&#123;	<span class="comment">//在逻辑位置i处插入e</span></span><br><span class="line">	<span class="keyword">if</span> (i &lt; <span class="number">1</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	<span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">	LNode* p = L;</span><br><span class="line">	<span class="keyword">while</span> (p != <span class="literal">NULL</span> &amp;&amp; j &lt; i - <span class="number">1</span>) &#123;	<span class="comment">//找到第i-1个结点</span></span><br><span class="line">		p = p-&gt;next;</span><br><span class="line">		j++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (p == <span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	LNode* s = (LNode*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(LNode));</span><br><span class="line">	<span class="keyword">if</span> (s == <span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	s-&gt;data = e;</span><br><span class="line">	s-&gt;next = p-&gt;next;</span><br><span class="line">	p-&gt;next = s;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">InsertNextNode</span><span class="params">(LNode* p, ElemType e)</span> </span>&#123;	<span class="comment">//在p结点后添加结点</span></span><br><span class="line">	<span class="keyword">if</span> (p == <span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	LNode* s = (LNode*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(LNode));</span><br><span class="line">	<span class="keyword">if</span> (s == <span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	s-&gt;data = e;</span><br><span class="line">	s-&gt;next = p-&gt;next;</span><br><span class="line">	p-&gt;next = s;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//时间复杂度为O(n)</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">InsertPriorNode</span><span class="params">(LinkList L, LNode* p, ElemType e)</span> </span>&#123;	<span class="comment">//在结点p前插入结点，头结点已知</span></span><br><span class="line">	<span class="keyword">if</span> (p == <span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	LNode* s = L;</span><br><span class="line">	<span class="keyword">while</span> (s != <span class="literal">NULL</span> &amp;&amp; s-&gt;next != p) &#123;	<span class="comment">//找到p结点前一个结点</span></span><br><span class="line">		s = s-&gt;next;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (s == <span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	LNode* temp = (LNode*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(LNode));</span><br><span class="line">	<span class="keyword">if</span> (temp == <span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	temp-&gt;data = e;</span><br><span class="line">	temp-&gt;next = p;</span><br><span class="line">	s-&gt;next = temp;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//时间复杂度为O(1)</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">InsertPriorNode</span><span class="params">(LNode* p, ElemType e)</span> </span>&#123;	<span class="comment">//在结点p前插入结点，头结点未知</span></span><br><span class="line">	<span class="keyword">if</span> (p == <span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	LNode* s = (LNode*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(LNode));</span><br><span class="line">	<span class="keyword">if</span> (s == <span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	s-&gt;data = p-&gt;data;	<span class="comment">//在p后面插入s之后交换s和p的值</span></span><br><span class="line">	s-&gt;next = p-&gt;next;</span><br><span class="line">	p-&gt;data = e;</span><br><span class="line">	p-&gt;next = s;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">ListDelete</span><span class="params">(LinkList&amp; L, <span class="keyword">int</span> i, ElemType&amp; e)</span> </span>&#123;	<span class="comment">//删除第i个结点并通过e返回</span></span><br><span class="line">	<span class="keyword">if</span> (i &lt; <span class="number">1</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	LNode* p = L;</span><br><span class="line">	<span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span> (p != <span class="literal">NULL</span> &amp;&amp; j &lt; i - <span class="number">1</span>) &#123;	<span class="comment">//找到第i-1个结点</span></span><br><span class="line">		p = p-&gt;next;</span><br><span class="line">		j++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (p == <span class="literal">NULL</span>)	<span class="comment">//i值不合法</span></span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	<span class="keyword">if</span> (p-&gt;next == <span class="literal">NULL</span>)	<span class="comment">//第i-1个结点后没有其它结点，i值不合法（容易遗漏）</span></span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	LNode* s = p-&gt;next;</span><br><span class="line">	e = s-&gt;data;	<span class="comment">//如果没有上面的判断，此处可能会报空指针异常</span></span><br><span class="line">	p-&gt;next = s-&gt;next;</span><br><span class="line">	<span class="built_in">free</span>(s);</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//有bug，如果p是最后一个结点，无法删除</span></span><br><span class="line"><span class="comment">//时间复杂度为O(1)</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">DeleteNode</span><span class="params">(LNode* p)</span> </span>&#123;	<span class="comment">//删除指定结点p，头结点未知</span></span><br><span class="line">	<span class="keyword">if</span> (p == <span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	LNode* q = p-&gt;next;	<span class="comment">//将p和p下一个结点数据交换后删除p下一个结点</span></span><br><span class="line">	p-&gt;data = q-&gt;data;	<span class="comment">//如果p是最后一个结点，会报空指针异常</span></span><br><span class="line">	p-&gt;next = q-&gt;next;</span><br><span class="line">	<span class="built_in">free</span>(q);</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//时间复杂度为O(n)</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">DeleteNode</span><span class="params">(LinkList&amp; L, LNode* p)</span> </span>&#123;	<span class="comment">//删除指定结点p，头结点已知</span></span><br><span class="line">	<span class="keyword">if</span> (p == <span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	LNode* q = L;</span><br><span class="line">	<span class="keyword">while</span> (q != <span class="literal">NULL</span> &amp;&amp; q-&gt;next != p) &#123;</span><br><span class="line">		q = q-&gt;next;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (q == <span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	q-&gt;next = p-&gt;next;</span><br><span class="line">	<span class="built_in">free</span>(p);</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">LNode* <span class="title">GetElem</span><span class="params">(LinkList L, <span class="keyword">int</span> i)</span> </span>&#123;	<span class="comment">//找到并返回逻辑位置为i的结点</span></span><br><span class="line">	<span class="keyword">if</span> (i &lt; <span class="number">0</span>)	<span class="comment">//等于0时返回头结点</span></span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	LNode* p = L;</span><br><span class="line">	<span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span> (p != <span class="literal">NULL</span> &amp;&amp; j &lt; i) &#123;	<span class="comment">//找到第i个结点为止</span></span><br><span class="line">		p = p-&gt;next;</span><br><span class="line">		j++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> p;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">LNode* <span class="title">LocateElem</span><span class="params">(LinkList L, ElemType e)</span> </span>&#123;	<span class="comment">//返回数据为e的结点</span></span><br><span class="line">	LNode* p = L-&gt;next;	<span class="comment">//注意头结点不存数据，不能从头结点开始</span></span><br><span class="line">	<span class="keyword">while</span> (p != <span class="literal">NULL</span> &amp;&amp; p-&gt;data != e) &#123;</span><br><span class="line">		p = p-&gt;next;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> p;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Length</span><span class="params">(LinkList L)</span> </span>&#123;	<span class="comment">//返回链表长度</span></span><br><span class="line">	<span class="keyword">int</span> len = <span class="number">0</span>;</span><br><span class="line">	LNode* p = L;</span><br><span class="line">	<span class="keyword">while</span> (p-&gt;next != <span class="literal">NULL</span>) &#123;	<span class="comment">//头结点跳过</span></span><br><span class="line">		p = p-&gt;next;</span><br><span class="line">		len++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> len;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>建立链表的两种方式：尾插法和头插法</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//时间复杂度为O(n)</span></span><br><span class="line"><span class="function">LinkList <span class="title">List_TailInsert</span><span class="params">(LinkList&amp; L)</span> </span>&#123;	<span class="comment">//尾插法建立链表</span></span><br><span class="line">	ElemType x;</span><br><span class="line">	L = (LinkList)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(LNode));</span><br><span class="line">	LNode* s, * r = L;	<span class="comment">//r记录链表尾</span></span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;x);</span><br><span class="line">	<span class="keyword">while</span> (x != <span class="number">9999</span>) &#123;</span><br><span class="line">		s = (LNode*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(LNode));</span><br><span class="line">		s-&gt;data = x;</span><br><span class="line">		r-&gt;next = s;</span><br><span class="line">		r = s;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;x);</span><br><span class="line">	&#125;</span><br><span class="line">	r-&gt;next = <span class="literal">NULL</span>;	<span class="comment">//容易遗漏</span></span><br><span class="line">	<span class="keyword">return</span> L;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">LinkList <span class="title">List_HeadInsert</span><span class="params">(LinkList&amp; L)</span> </span>&#123;	<span class="comment">//逆向建立单向链表</span></span><br><span class="line">	ElemType x;</span><br><span class="line">	L = (LinkList)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(LNode));</span><br><span class="line">	L-&gt;next = <span class="literal">NULL</span>;	<span class="comment">//没有这行会导致链表尾没有置空（容易遗漏）</span></span><br><span class="line">	LNode* s;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;x);</span><br><span class="line">	<span class="keyword">while</span> (x != <span class="number">9999</span>) &#123;</span><br><span class="line">		s = (LNode*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(LNode));</span><br><span class="line">		s-&gt;data = x;</span><br><span class="line">		s-&gt;next = L-&gt;next;</span><br><span class="line">		L-&gt;next = s;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;x);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> L;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="双链表-带头结点）"><a href="#双链表-带头结点）" class="headerlink" title="双链表(带头结点）"></a>双链表(带头结点）</h2><p>结构体定义：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ElemType int</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">DNode</span> &#123;</span></span><br><span class="line">	ElemType data;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">DNode</span>* <span class="title">prior</span>, * <span class="title">next</span>;</span></span><br><span class="line">&#125;DNode, * DLinkList;</span><br></pre></td></tr></table></figure>
+<p>基本操作：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">InitDLinkList</span><span class="params">(DLinkList&amp; L)</span> </span>&#123;	<span class="comment">//初始化双链表</span></span><br><span class="line">	L = (DLinkList)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(DNode));</span><br><span class="line">	<span class="keyword">if</span> (L == <span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	L-&gt;prior = <span class="literal">NULL</span>;</span><br><span class="line">	L-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">InsertNextDNode</span><span class="params">(DNode* p, DNode* s)</span> </span>&#123;	<span class="comment">//在结点p后插入s</span></span><br><span class="line">	<span class="keyword">if</span> (p == <span class="literal">NULL</span> || s == <span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	s-&gt;next = p-&gt;next;</span><br><span class="line">	<span class="keyword">if</span> (p-&gt;next != <span class="literal">NULL</span>)</span><br><span class="line">		p-&gt;next-&gt;prior = s;</span><br><span class="line">	s-&gt;prior = p;</span><br><span class="line">	p-&gt;next = s;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">DeleteNextDNode</span><span class="params">(DNode* p)</span> </span>&#123;	<span class="comment">//删除p的下一个结点</span></span><br><span class="line">	<span class="keyword">if</span> (p == <span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	<span class="keyword">if</span> (p-&gt;next == <span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	DNode* q = p-&gt;next;</span><br><span class="line">	p-&gt;next = q-&gt;next;</span><br><span class="line">	<span class="keyword">if</span> (q-&gt;next != <span class="literal">NULL</span>) &#123;</span><br><span class="line">		q-&gt;next-&gt;prior = p;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">free</span>(q);</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">DestoryDLinkList</span><span class="params">(DLinkList&amp; L)</span> </span>&#123;	<span class="comment">//删除整个双链表</span></span><br><span class="line">	<span class="keyword">while</span> (L-&gt;next != <span class="literal">NULL</span>) &#123;</span><br><span class="line">		DeleteNextDNode(L);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">free</span>(L);	<span class="comment">//还要释放头结点</span></span><br><span class="line">	L = <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2021/05/26/数据结构整理—二叉树建立/" data-toggle="tooltip" data-placement="top"
+                           title="数据结构整理—重建二叉树">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2021/04/10/bash-hexo-command-not-found解决方案/" data-toggle="tooltip" data-placement="top"
+                           title="bash: hexo: command not found解决方案">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#说明"><span class="toc-text">说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#顺序表"><span class="toc-text">顺序表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#单链表（带头结点）"><span class="toc-text">单链表（带头结点）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#双链表-带头结点）"><span class="toc-text">双链表(带头结点）</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#数据结构"
+                           title="数据结构">数据结构</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/CVSink">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; LoongX 2021
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/" target="_blank" rel="noopener">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+
+<script src="/js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/js/blog.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://cvsink.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','','2.0.0');
+</script>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="/images/header.jpg">
+</body>
+
+</html>

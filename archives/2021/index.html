@@ -86,7 +86,7 @@
                         
 							
                         <li>
-                            <a href="/my-works/">my-works</a>
+                            <a href="/Tags/">Tags</a>
                         </li>
 							
 						
@@ -94,7 +94,7 @@
                         
 							
                         <li>
-                            <a href="/Tags/">Tags</a>
+                            <a href="/my-works/">my-works</a>
                         </li>
 							
 						
@@ -167,19 +167,18 @@
 
 <div class="post-preview "
      style="background-image: url('/images/wallpaper2.jpg#移动端显示的图片')">
-    <a href="/2021/03/04/vaFX的使用/">
+    <a href="/2021/06/08/数据结构整理—排序/">
         <h2 class="post-title">
-            JavaFX的使用
+            数据结构整理—排序
         </h2>
         <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2021-03-04
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2021-06-08
         </p>
         
         <div class="post-content-preview">
             <p>
-                
-
-环境搭建 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;使用IDEA开发JavaFX程序。JDK11之后，JavaFX模块被独立出来，需要下载独立的JavaFX包。 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;下载..
+                算法可视化演示： https://www.cs.usfca.edu/~galles/visualization/Algorithms.html
+插入排序//A下标从0开始void InsertSort(int A[], int len) &#123;	int i, j, temp;	for (i..
             </p>
         </div>
     </a>
@@ -192,19 +191,17 @@
 
 <div class="post-preview "
      style="background-image: url('/images/wallpaper2.jpg#移动端显示的图片')">
-    <a href="/2021/02/03/String类与字符串池/">
+    <a href="/2021/06/04/B-树/">
         <h2 class="post-title">
-            String类与字符串池
+            B 和 B+ 树
         </h2>
         <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2021-02-03
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2021-06-04
         </p>
         
         <div class="post-content-preview">
             <p>
-                
-
-问题发现   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;已经知道八个包装类中Integer、Boolean、Byte、Short、Long、Character六类具有缓冲池，对于值在一定范围内的对象不分配新空间，指向的是缓存池中的对象，因此使用==进..
+                前言
             </p>
         </div>
     </a>
@@ -217,19 +214,18 @@
 
 <div class="post-preview "
      style="background-image: url('/images/wallpaper2.jpg#移动端显示的图片')">
-    <a href="/2021/02/01/va装箱与拆箱/">
+    <a href="/2021/06/04/MySQL为什么使用-B-树/">
         <h2 class="post-title">
-            Java装箱与拆箱
+            MySQL为什么使用 B+ 树
         </h2>
         <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2021-02-01
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2021-06-04
         </p>
         
         <div class="post-content-preview">
             <p>
-                
-
-什么是拆箱和装箱  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Java的基本类型有byte,short,int,double,float,long,char,boolean八种，同时八种基本类型对应有八种包装类Byte，Short，Integer，D..
+                前言&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当我们想提高数据库的查询效率时，往往第一个想到的便是添加索引，MySQL 的默认存储引擎 InnoDB 便是使用 B+ 树来存储索引。
+索引是如何提高查询速度的&nbsp;&nbsp;&nbsp;&nbsp;..
             </p>
         </div>
     </a>
@@ -242,20 +238,116 @@
 
 <div class="post-preview "
      style="background-image: url('/images/wallpaper2.jpg#移动端显示的图片')">
-    <a href="/2021/01/22/器Timer源码剖析/">
+    <a href="/2021/05/29/数据结构整理—线索二叉树/">
         <h2 class="post-title">
-            定时器Timer使用及源码剖析
+            数据结构整理—线索二叉树
         </h2>
         <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2021-01-22
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2021-05-29
         </p>
         
         <div class="post-content-preview">
             <p>
-                
+                结构体定义&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ltag和rtag用于标记其lchild和rchild保存的是孩子结点还是先序/后序结点。如果tag值为0，说明其对应的child保存的是孩子结点；如果ltag值为1，说明lchild保存的是该结点前驱..
+            </p>
+        </div>
+    </a>
 
-Timer类的使用   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Timer类经常被用来定时计划任务，除去构造方法，Timer类提供了以下几种方法供我们调用：
-  public void schedule(TimerTask task, long d..
+</div>
+
+<hr>
+
+
+
+<div class="post-preview "
+     style="background-image: url('/images/wallpaper2.jpg#移动端显示的图片')">
+    <a href="/2021/05/26/数据结构整理—二叉树建立/">
+        <h2 class="post-title">
+            数据结构整理—重建二叉树
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2021-05-26
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                结构体定义#define MaxSize 100#define ElemType inttypedef struct BiTNode &#123;	ElemType value;	struct BiTNode* lchild, * rchild;&#125;BiTNode,*BiTree;
+
+
+..
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+
+<div class="post-preview "
+     style="background-image: url('/images/wallpaper2.jpg#移动端显示的图片')">
+    <a href="/2021/05/06/数据结构整理—线性表/">
+        <h2 class="post-title">
+            数据结构整理—线性表
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2021-05-06
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                说明&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;数据结构整理系列的代码参考王道教材，其语言为C风格的C++，C不支持引用特性，如果要求为严格C代码，务必使用指针代替引用。（记一次C与C++混用导致的错误）&nbsp;&nbsp;&nbsp;&nbsp;&n..
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+
+<div class="post-preview "
+     style="background-image: url('/images/wallpaper2.jpg#移动端显示的图片')">
+    <a href="/2021/04/10/bash-hexo-command-not-found解决方案/">
+        <h2 class="post-title">
+            bash: hexo: command not found解决方案
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2021-04-10
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                问题出现&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;一个月没有写博客了，今天准备写博客时在git bash中像往常那样输入:
+$ hexo server
+结果却出现了这样的错误：
+bash: hexo: command not found
+第一次出现这样的..
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+
+<div class="post-preview "
+     style="background-image: url('/images/wallpaper2.jpg#移动端显示的图片')">
+    <a href="/2021/04/10/TCP为什么需要三次握手/">
+        <h2 class="post-title">
+            TCP 为什么需要三次握手
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2021-04-10
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                前言 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TCP 协议是一种面向连接的、可靠的、基于字节流的传输层通信协议，由IETF的RFC 793定义。在简化的计算机网络OSI模型中，它完成第四层传输层所指定的功能。[1] &nbsp;&nbsp;&nbsp;..
             </p>
         </div>
     </a>
@@ -271,6 +363,10 @@ Timer类的使用   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Timer类经常被�
 
 <ul class="pager">
     
+    
+    <li class="next">
+        <a href="/archives/2021/page/2/">Older Posts &rarr;</a>
+    </li>
     
 </ul>
 
@@ -329,8 +425,10 @@ Timer类的使用   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Timer类经常被�
                 <div class="tags">
                     
                     
-                    <a href="/tags/#C++" title="C++"
-                       rel="5">C++</a>
+                    <a href="/tags/#Java" title="Java"
+                       rel="5">Java</a>
+                    
+                    
                     
                     
                     
@@ -339,8 +437,8 @@ Timer类的使用   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Timer类经常被�
                     
                     
                     
-                    <a href="/tags/#项目" title="项目"
-                       rel="2">项目</a>
+                    <a href="/tags/#杂记" title="杂记"
+                       rel="4">杂记</a>
                     
                     
                     
@@ -349,13 +447,20 @@ Timer类的使用   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Timer类经常被�
                     
                     
                     
-                    <a href="/tags/#Java" title="Java"
-                       rel="4">Java</a>
+                    <a href="/tags/#项目" title="项目"
+                       rel="2">项目</a>
                     
                     
                     
-                    <a href="/tags/#C/C++" title="C/C++"
-                       rel="2">C/C++</a>
+                    <a href="/tags/#C++" title="C++"
+                       rel="5">C++</a>
+                    
+                    
+                    
+                    <a href="/tags/#数据结构" title="数据结构"
+                       rel="4">数据结构</a>
+                    
+                    
                     
                     
                 </div>

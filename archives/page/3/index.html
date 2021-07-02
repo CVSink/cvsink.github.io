@@ -86,7 +86,7 @@
                         
 							
                         <li>
-                            <a href="/my-works/">my-works</a>
+                            <a href="/Tags/">Tags</a>
                         </li>
 							
 						
@@ -94,7 +94,7 @@
                         
 							
                         <li>
-                            <a href="/Tags/">Tags</a>
+                            <a href="/my-works/">my-works</a>
                         </li>
 							
 						
@@ -167,9 +167,134 @@
 
 <div class="post-preview "
      style="background-image: url('/images/wallpaper2.jpg#移动端显示的图片')">
-    <a href="/2020/02/03/类成员/">
+    <a href="/2020/09/16/与C-的区别/">
         <h2 class="post-title">
-            静态类成员
+            记一次 C 与 C++ 混用导致的错误
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2020-09-16
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在写虚拟机的时候，有这样一个结构体
+    typedef struct &#123;  	union &#123;  		uint32_t _32;  		uint16_t _16;  		uint8_..
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+
+<div class="post-preview "
+     style="background-image: url('/images/wallpaper2.jpg#移动端显示的图片')">
+    <a href="/2020/08/24/于Kmeans和关联度分析预测球队排名/">
+        <h2 class="post-title">
+            基于 Kmeans 和关联度分析预测球队排名
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2020-08-24
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;预测原理：先利用Kmeans聚类分析出NBA的数支一流球队，利用这几支球队的各项数据进行关联度分析，分析各项数据对球队排名影响程度。本人负责关联度分析部分，以下均摘自软件著作权申请材料。Kmeans部分可..
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+
+<div class="post-preview "
+     style="background-image: url('/images/wallpaper2.jpg#移动端显示的图片')">
+    <a href="/2020/06/22/eetcode739-每日温度/">
+        <h2 class="post-title">
+            leetcode739 每日温度
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2020-06-22
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                
+
+leetcode739: https://leetcode-cn.com/problems/daily-temperatures/
+题目描述&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;请根据每日 气温 列表，重新生成一个列表。对应位置的输出为：要想观测..
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+
+<div class="post-preview "
+     style="background-image: url('/images/wallpaper2.jpg#移动端显示的图片')">
+    <a href="/2020/06/22/踩坑—vector的size-函数/">
+        <h2 class="post-title">
+            C++ 踩坑—vector 的 size() 函数
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2020-06-22
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                
+
+问题代码如下：
+vector&lt;int&gt; p &#123; 1 &#125;;cout &lt;&lt; "p.size()=" &lt;&lt; p.size() &lt;&lt; endl;for (int i = 0; i &lt; p.size() - 2; ++i) &#..
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+
+<div class="post-preview "
+     style="background-image: url('/images/wallpaper2.jpg#移动端显示的图片')">
+    <a href="/2020/03/29/蛇自动寻路/">
+        <h2 class="post-title">
+            贪吃蛇自动寻路
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2020-03-29
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                贪吃蛇自动寻路Github链接: https://github.com/CVSink/RetroSnake_forCompetition
+数据结构课程设计B题&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;要求实现贪吃蛇的自动寻路算法，在一张地图上..
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+
+<div class="post-preview "
+     style="background-image: url('/images/wallpaper2.jpg#移动端显示的图片')">
+    <a href="/2020/02/03/重继承/">
+        <h2 class="post-title">
+            多重继承
         </h2>
         <p class="post-meta">
             <i class="fa fa-calendar" aria-hidden="true"></i> 2020-02-03
@@ -178,7 +303,14 @@
         <div class="post-content-preview">
             <p>
                 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static类型的数据能更好地支持类的抽象。有时候某个特殊类类型的所有对象都需要访问一个全局对象，可能是要计数程序在某一点总共创建了多少个此类型的对象，或者是指向该类型错误处理例程的指针，或者是指向该类类型对象的自由存储区..
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;派生类的构造与析构顺序:
+
+构造时 严格按继承顺序构造 
+析构时与构造顺序相反
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n..
             </p>
         </div>
     </a>
@@ -191,19 +323,20 @@
 
 <div class="post-preview "
      style="background-image: url('/images/wallpaper2.jpg#移动端显示的图片')">
-    <a href="/2020/02/01/抽象容器类型/">
+    <a href="/2020/02/03/承下的类型转换/">
         <h2 class="post-title">
-            抽象容器类型
+            继承下的类型转换
         </h2>
         <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2020-02-01
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2020-02-03
         </p>
         
         <div class="post-content-preview">
             <p>
                 
 
-顺序容器&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;顺序容器有以下三种：可变长动态数组 vector、双端队列 deque、双向链表 list。&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;..
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;子类转换为父类：
+//子类的指针转换成父类指针（指针型）MTCar c;Car* c1 = &amp;c;  //安全的Car* c2 = new MTCar;  //安全的//子类对象转换成父类..
             </p>
         </div>
     </a>
@@ -216,44 +349,24 @@
 
 <div class="post-preview "
      style="background-image: url('/images/wallpaper2.jpg#移动端显示的图片')">
-    <a href="/2020/01/19/求集合的所有子集/">
+    <a href="/2020/02/03/和赋值/">
         <h2 class="post-title">
-            求集合的所有子集
+            拷贝和赋值
         </h2>
         <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2020-01-19
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2020-02-03
         </p>
         
         <div class="post-content-preview">
             <p>
                 
-
-二进制法&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用一个二进制数来表示一个集合，如有一个含六个元素的集合{1,2,3,4,5,6}，它的一个子集{1,2,4,6}可以用二进制数110101表示。要进行集合间的运算就可以对其二进制数进行位运..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;拷贝构造与普通赋值构造的区别:
 
 
+拷贝构造构造前对象不存在 创造一个新对象
+普通赋值构造前对象已经存在 只是赋值
 
-<div class="post-preview "
-     style="background-image: url('/images/wallpaper2.jpg#移动端显示的图片')">
-    <a href="/2020/01/18/leetcode839-相似字符串组/">
-        <h2 class="post-title">
-            leetcode839 相似字符串组
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2020-01-18
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                
-
-题目描述&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果我们交换字符串 X 中的两个不同位置的字母，使得它和字符串 Y 相等，那么称 X 和 Y 两个字符串相似。如果这两个字符串本身是相等的，那它们也是相似的。 &nbsp;&nbsp;&nbsp;&n..
+int main( )  &#123;    A   a1;//无参构造,如果没有无参的构造..
             </p>
         </div>
     </a>
@@ -273,6 +386,10 @@
         <a href="/archives/page/2/">&larr; Newer Posts</a>
     </li>
     
+    
+    <li class="next">
+        <a href="/archives/page/4/">Older Posts &rarr;</a>
+    </li>
     
 </ul>
 
@@ -331,8 +448,10 @@
                 <div class="tags">
                     
                     
-                    <a href="/tags/#C++" title="C++"
-                       rel="5">C++</a>
+                    <a href="/tags/#Java" title="Java"
+                       rel="5">Java</a>
+                    
+                    
                     
                     
                     
@@ -341,8 +460,8 @@
                     
                     
                     
-                    <a href="/tags/#项目" title="项目"
-                       rel="2">项目</a>
+                    <a href="/tags/#杂记" title="杂记"
+                       rel="4">杂记</a>
                     
                     
                     
@@ -351,13 +470,20 @@
                     
                     
                     
-                    <a href="/tags/#Java" title="Java"
-                       rel="4">Java</a>
+                    <a href="/tags/#项目" title="项目"
+                       rel="2">项目</a>
                     
                     
                     
-                    <a href="/tags/#C/C++" title="C/C++"
-                       rel="2">C/C++</a>
+                    <a href="/tags/#C++" title="C++"
+                       rel="5">C++</a>
+                    
+                    
+                    
+                    <a href="/tags/#数据结构" title="数据结构"
+                       rel="4">数据结构</a>
+                    
+                    
                     
                     
                 </div>

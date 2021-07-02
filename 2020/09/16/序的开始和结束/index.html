@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        程序的开始和结束｜LoongX&#39;s blog
+        C 程序的开始和结束｜LoongX&#39;s blog
         
     </title>
 
@@ -86,7 +86,7 @@
                         
 							
                         <li>
-                            <a href="/my-works/">my-works</a>
+                            <a href="/Tags/">Tags</a>
                         </li>
 							
 						
@@ -94,7 +94,7 @@
                         
 							
                         <li>
-                            <a href="/Tags/">Tags</a>
+                            <a href="/my-works/">my-works</a>
                         </li>
 							
 						
@@ -159,7 +159,7 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>程序的开始和结束</h1>
+                    <h1>C 程序的开始和结束</h1>
                     
                     <span class="meta">
                          作者 LoongX
@@ -169,6 +169,9 @@
                     </span>
                     <div class="tags text-center">
                         
+                        <a class="tag" href="/tags/#杂记"
+                           title="杂记">杂记</a>
+                        
                     </div>
                 </div>
             </div>
@@ -176,7 +179,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            程序的开始和结束
+            C 程序的开始和结束
         </span>
     </div>
 </header>
@@ -191,9 +194,9 @@
    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;一直以为C/C++程序都是从main函数开始执行，在main函数执行结束时结束。但在写虚拟机时发现其实并不是这样...
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NEMU下虚拟机的在调用main函数之前，还要进行一些初始化工作，包括读入 ELF 文件的符号表和字符串表，编译正则表达式，初始化监视点结构池等，这些工作都在main函数开始之前进行。
 
-<h4 id="main函数开始前执行的函数"><a href="#main函数开始前执行的函数" class="headerlink" title="main函数开始前执行的函数"></a>main函数开始前执行的函数</h4><p>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_ <em>attribute _</em> 可以设置函数属性、变量属性和类型属性。若函数被设定为constructor属性，则该函数会在main函数执行之前被自动的执行。除此之外，static静态和global全局变量的初始化也是在进入main函数之前执行，在C++中，全局对象的构造函数也在进入main函数之前执行。</p>
-<h4 id="main函数结束之后执行的函数"><a href="#main函数结束之后执行的函数" class="headerlink" title="main函数结束之后执行的函数"></a>main函数结束之后执行的函数</h4><p>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_ <em>attribute _</em> 也可将函数设定为destructor属性，那么该函数会在main函数执行之后或者exit被调用后被自动的执行。使用atexit()函数注册的函数也会在mian函数执行结束之后执行。此外，全局对象的析构函数也在main函数结束之后执行。</p>
-<h4 id="程序的开始和结束"><a href="#程序的开始和结束" class="headerlink" title="程序的开始和结束"></a>程序的开始和结束</h4><p>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;main函数与standard C library的交互过程为：<br>  <img src="/images/%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%BC%80%E5%A7%8B%E5%92%8C%E7%BB%93%E6%9D%9F_image2.png" alt="图片1"><br>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在操作系统中，一个简单的程序一般为一个进程。<br>  <img src="/images/%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%BC%80%E5%A7%8B%E5%92%8C%E7%BB%93%E6%9D%9F_image1.png" alt="图片2"><br>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当系统内核要执行一个用户程序时，调用exec函数进入C start-up routine，程序开始执行，此时进行分配空间、初始化等操作。<br>  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;一个正常结束的程序的结束标志为_exit或_Exit函数的调用，此函数直接使进程停止运行，清除其使用的内存空间，并销毁其在内核中的各种数据结构，所有使用atexit()函数注册的函数在此时被调用。在这之后程序才真正结束。</p>
+<h2 id="main函数开始前执行的函数"><a href="#main函数开始前执行的函数" class="headerlink" title="main函数开始前执行的函数"></a>main函数开始前执行的函数</h2><p>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_ <em>attribute _</em> 可以设置函数属性、变量属性和类型属性。若函数被设定为constructor属性，则该函数会在main函数执行之前被自动的执行。除此之外，static静态和global全局变量的初始化也是在进入main函数之前执行，在C++中，全局对象的构造函数也在进入main函数之前执行。</p>
+<h2 id="main函数结束之后执行的函数"><a href="#main函数结束之后执行的函数" class="headerlink" title="main函数结束之后执行的函数"></a>main函数结束之后执行的函数</h2><p>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_ <em>attribute _</em> 也可将函数设定为destructor属性，那么该函数会在main函数执行之后或者exit被调用后被自动的执行。使用atexit()函数注册的函数也会在mian函数执行结束之后执行。此外，全局对象的析构函数也在main函数结束之后执行。</p>
+<h2 id="程序的开始和结束"><a href="#程序的开始和结束" class="headerlink" title="程序的开始和结束"></a>程序的开始和结束</h2><p>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;main函数与standard C library的交互过程为：<br>  <img src="/images/%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%BC%80%E5%A7%8B%E5%92%8C%E7%BB%93%E6%9D%9F_image2.png" alt="图片1"><br>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在操作系统中，一个简单的程序一般为一个进程。<br>  <img src="/images/%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%BC%80%E5%A7%8B%E5%92%8C%E7%BB%93%E6%9D%9F_image1.png" alt="图片2"><br>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当系统内核要执行一个用户程序时，调用exec函数进入C start-up routine，程序开始执行，此时进行分配空间、初始化等操作。<br>  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;一个正常结束的程序的结束标志为_exit或_Exit函数的调用，此函数直接使进程停止运行，清除其使用的内存空间，并销毁其在内核中的各种数据结构，所有使用atexit()函数注册的函数在此时被调用。在这之后程序才真正结束。</p>
 </font>
                 <hr>
                 
@@ -202,13 +205,13 @@
                     
                     <li class="previous">
                         <a href="/2020/10/11/pache-POI的使用/" data-toggle="tooltip" data-placement="top"
-                           title="Apache POI的使用">&larr; Previous Post</a>
+                           title="Apache POI 的使用">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
                         <a href="/2020/09/16/与C-的区别/" data-toggle="tooltip" data-placement="top"
-                           title="C与C++的区别">Next Post &rarr;</a>
+                           title="记一次 C 与 C++ 混用导致的错误">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -227,7 +230,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#main函数开始前执行的函数"><span class="toc-text">main函数开始前执行的函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#main函数结束之后执行的函数"><span class="toc-text">main函数结束之后执行的函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#程序的开始和结束"><span class="toc-text">程序的开始和结束</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#main函数开始前执行的函数"><span class="toc-text">main函数开始前执行的函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#main函数结束之后执行的函数"><span class="toc-text">main函数结束之后执行的函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程序的开始和结束"><span class="toc-text">程序的开始和结束</span></a></li></ol>
                 </div>
             </div>
         </div>
@@ -248,6 +251,9 @@
                         <a href="/tags/">FEATURED TAGS</a>
                     </h5>
                     <div class="tags">
+                        
+                        <a class="tag" href="/tags/#杂记"
+                           title="杂记">杂记</a>
                         
                     </div>
                 </section>

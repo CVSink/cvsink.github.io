@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="林某在 Github 上的个人博客">
+    <meta name="keyword" content="">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="LoongX" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        MySQL为什么使用 B+ 树｜LoongX&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://cvsink.github.io/2021/06/04/MySQL为什么使用-B-树/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+
+    <!-- Custom CSS -->
+    
+<link rel="stylesheet" href="/css/blog-style.css">
+
+
+    <!-- Pygments Github CSS -->
+    
+<link rel="stylesheet" href="/css/syntax.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('//o7bkkhiex.bkt.clouddn.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    LoongX
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/Tags/">Tags</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/my-works/">my-works</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="/images/wallpaper2.jpg#博文默认的图片">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('/images/wallpaper2.jpg#博文默认的图片')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>MySQL为什么使用 B+ 树</h1>
+                    
+                    <span class="meta">
+                         作者 LoongX
+                        <span>
+                          日期 2021-06-04
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#数据库"
+                           title="数据库">数据库</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            MySQL为什么使用 B+ 树
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当我们想提高数据库的查询效率时，往往第一个想到的便是添加索引，MySQL 的默认存储引擎 InnoDB 便是使用 B+ 树来存储索引。</p>
+<h2 id="索引是如何提高查询速度的"><a href="#索引是如何提高查询速度的" class="headerlink" title="索引是如何提高查询速度的"></a>索引是如何提高查询速度的</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;数据库里存储了大量的数据，这些数据往往不能一次性全部读取到内存中，如果所要查询的数据恰好不在内存中，那么便要通过 I/O 操作从外部存储器读取数据。相较于 CPU 的处理速度（若干个时钟周期），外部存储设备（如机械硬盘）磁头寻道、读取等操作要花费更多的时间（大约需要 10ms），因此影响数据库查询速度的主要因素是查询过程中触发 I/O 操作的次数。<br><br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>如果有一个大小为 10 页的表，考虑一条普通的查询语句：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">name</span> <span class="keyword">FROM</span> Student <span class="keyword">WHERE</span> gpa&gt;<span class="number">3.0</span></span><br></pre></td></tr></table></figure>
+<p>如果没有任何索引（包括主键索引和辅助索引），那么要完成这次查询，就需要遍历所有的表项，由于 InnoDB 以页作为磁盘和内存间交互的基本单位，因此这次查询需要进行 10 次 I/O 操作。现在我们在 gpa 栏添加索引，那么在执行这条查询语句时，会先找到该表的索引页并读入内存（在很多情况下索引页不一定只在一页中），之后就只需要比较查询已经读入内存的索引，只读取相应索引指向的真实物理页，就可以避免读入不包含查询结果的物理页，从而减少 I/O 次数。</p>
+<h2 id="B-树的数据结构"><a href="#B-树的数据结构" class="headerlink" title="B+树的数据结构"></a>B+树的数据结构</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B+ 树的数据结构在之前的文章中已有介绍：<a href="https://cvsink.gitee.io/2021/06/04/B-%E6%A0%91/" target="_blank" rel="noopener">B+树</a></p>
+<p>需要注意 B+ 树中一个结点存储了 1 页的索引。</p>
+<h2 id="为什么需要-B-树"><a href="#为什么需要-B-树" class="headerlink" title="为什么需要 B+ 树"></a>为什么需要 B+ 树</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;前面我们已经知道索引能够提高查询的速度，也特别提到一个表的所有索引不一定能够由一页存储，这是使用特殊数据结构优化索引查询必要性的前提，如果所有的索引能一次读入内存进行查找，那么只需要采用高效的查找算法（如折半查找）直接对所有索引进行查询而不需要花费功夫来构造诸如 B+ 树这样的复杂数据结构。在大多数操作系统中，一页的大小通常是 4kb，索引需要多页存储的情况是可以想象的。前面我们已经提到InnoDB 以页作为磁盘和内存间交互的基本单位，这也意味着我们在使用索引的时候，对索引的查询方式也会影响 I/O 操作的次数，进而影响查询的速度。</p>
+<h2 id="为什么是-B-树"><a href="#为什么是-B-树" class="headerlink" title="为什么是 B+ 树"></a>为什么是 B+ 树</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我们考虑其他的几种候选数据结构，分析 B+ 树在某些情况下相较于他们的优越之处。</p>
+<h3 id="哈希表"><a href="#哈希表" class="headerlink" title="哈希表"></a>哈希表</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;哈希表的查询时间复杂度为 O(1)，乍一看使用哈希表能获得更好的性能，下面考虑这样的 SQL 语句：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">name</span> <span class="keyword">FROM</span> student <span class="keyword">where</span> gpa&gt;<span class="number">3.000</span> <span class="keyword">ORDER</span> <span class="keyword">BY</span> gpa</span><br></pre></td></tr></table></figure>
+<p>由于哈希表中的数据并不是按顺序排列的，因此遇到 order by 排序或范围查询时，如果要使用哈希表进行查询，就要按照最小精度递增查询，查询的次数取决于小数点后的精度，这样的查询方式效率可以想象甚至不如直接全表查询。而在 B+ 树中所有的索引在叶结点中是按顺序排列的，按下限找到第一个索引后便可以在叶结点里直接向后查询。除此之外，B+ 树对于这种情况还做了优化，我们知道叶结点间通过指针连接，那么如果遍历完一个叶结点后还需要继续往后查询，只需要读入指针指向的下一页，不需要从根结点重新查询。</p>
+<h3 id="B-树"><a href="#B-树" class="headerlink" title="B 树"></a>B 树</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B 树与 B+ 树的不同在于 B 树的非叶结点也能存储索引数据，相比于 B+ 树，B 树的高度更低，这意味着查找时 B 树只需要查找更少的结点便可以找到目标索引。我们仍考虑上一个例子：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">name</span> <span class="keyword">FROM</span> student <span class="keyword">where</span> gpa&gt;<span class="number">3.000</span> <span class="keyword">ORDER</span> <span class="keyword">BY</span> gpa</span><br></pre></td></tr></table></figure>
+<p>如果符合条件的学生人数极多，查询结果的数量极大，它们的索引大小超过了一个结点所能容纳的最大值，那么在遍历完一个结点里的索引后，还需要继续往后查找，但是相较于 B+ 树，B 树的结点里没有指向下一个结点的指针，这意味着为了找到下一个结点，需要重新从根结点出发向下寻找。</p>
+<p><img src="/images/MySQL%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8B+%E6%A0%91__image1.png" alt="图片1"></p>
+<p>在这个例子中，如果要查找值在 [5,8] 的索引，B 树查找需要经过 6 个结点，相应的触发 6 次 I/O 操作。</p>
+<p><img src="/images/MySQL%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8B+%E6%A0%91__image3.png" alt="图片2"></p>
+<p>同样查找值在 [5,8] 的索引，B+ 树查找则只需要经过 4 个结点，触发 4 次 I/O 操作。</p>
+<h3 id="跳表"><a href="#跳表" class="headerlink" title="跳表"></a>跳表</h3><p>reference：<a href="https://stackoverflow.com/questions/21828834/why-are-skip-lists-not-preferred-over-b-trees-for-databases" target="_blank" rel="noopener">https://stackoverflow.com/questions/21828834/why-are-skip-lists-not-preferred-over-b-trees-for-databases</a><br><br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;简单概括一下回答的内容：<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;每个 B+ 树指令触发的 I/O 操作次数为 O(log n/log B)，B 是块大小，而跳表触发的 I/O 操作次数为 O(log n)，由于块的大小一般以 MB 为单位，因此 B+ 树的性能更加优越。B+ 树的另外一个优越性在于 B+ 树的<code>worst-case efficient</code>特性，由于在 B+ 树中所有的索引都在叶结点，因此无论对于什么样的目标索引，I/O 次数都是一样的，而大多数的跳表实现对于不同目标的行为是随机的，这种情况在数据库系统中是不可接受的。</p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2021/06/04/B-树/" data-toggle="tooltip" data-placement="top"
+                           title="B 和 B+ 树">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2021/05/29/数据结构整理—线索二叉树/" data-toggle="tooltip" data-placement="top"
+                           title="数据结构整理—线索二叉树">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#索引是如何提高查询速度的"><span class="toc-text">索引是如何提高查询速度的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#B-树的数据结构"><span class="toc-text">B+树的数据结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么需要-B-树"><span class="toc-text">为什么需要 B+ 树</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么是-B-树"><span class="toc-text">为什么是 B+ 树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#哈希表"><span class="toc-text">哈希表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B-树"><span class="toc-text">B 树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#跳表"><span class="toc-text">跳表</span></a></li></ol></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#数据库"
+                           title="数据库">数据库</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/CVSink">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; LoongX 2021
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/" target="_blank" rel="noopener">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+
+<script src="/js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/js/blog.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://cvsink.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','','2.0.0');
+</script>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="/images/header.jpg">
+</body>
+
+</html>
