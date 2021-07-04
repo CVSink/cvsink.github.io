@@ -190,7 +190,64 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2>
+                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;维基百科对 B 树的描述为：B 树是一种自平衡的树，能够保持数据有序。这种数据结构能够让查找数据、顺序访问、插入数据及删除的动作，都在对数时间内完成。B 树，概括来说是一个一般化的二叉查找树，一个节点可以拥有 2 个以上的子节点。与自平衡二叉查找树不同， B 树适用于读写相对大的数据块的存储系统，例如磁盘。 B 树减少定位记录时所经历的中间过程，从而加快存取速度。 B 树这种数据结构可以用来描述外部存储。这种数据结构常被应用在数据库和文件系统的实现上。<br>B+ 树的应用见：<a href="https://cvsink.gitee.io/2021/06/04/MySQL%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8-B-%E6%A0%91/" target="_blank" rel="noopener">MySQL为什么使用 B+ 树</a></p>
+<h2 id="B-树"><a href="#B-树" class="headerlink" title="B 树"></a>B 树</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;B 树的定义为：<br>对于一个 m 阶的 B 树</p>
+<ol>
+<li>每个结点有不多于 m 个孩子</li>
+<li>除根节点和叶结点外的每个结点有不少于 m/2 个孩子</li>
+<li>根结点至少有两个孩子</li>
+<li>具有 k 个孩子的非叶结点包含 k-1 个关键词</li>
+<li>所有的叶结点都在同一层上</li>
+</ol>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;对于一棵 B 树，一个关键字左方所有子树的关键字都比它小，一个关键字右方所有子树的关键字都比它大。<br><img src="/images/MySQL%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8B+%E6%A0%91__image1.png" alt="图片1"></p>
+<h3 id="B-树的插入"><a href="#B-树的插入" class="headerlink" title="B 树的插入"></a>B 树的插入</h3><p>B 树的插入过程为：</p>
+<ol>
+<li>从根出发寻找应该插入的<strong>叶结点</strong></li>
+<li>如果该叶结点还有空位那么直接插入</li>
+<li>如果该叶结点已满，那么插入后需要将该叶结点分裂成左右两部分，中间的关键字上移插入该叶结点的父结点</li>
+<li>如果父结点也满，父结点需要重复步骤 3</li>
+</ol>
+<p><img src="/images/B%E5%92%8CB+%E6%A0%91/B%E5%92%8CB+%E6%A0%91_image2.gif" alt="图片2"></p>
+<h3 id="B-树的删除"><a href="#B-树的删除" class="headerlink" title="B 树的删除"></a>B 树的删除</h3><p>B 树的删除即为插入的逆过程：</p>
+<ol>
+<li>从根出发寻找要删除的关键字所在的结点</li>
+<li>如果结点是叶结点<ol>
+<li>如果删除后不为空，那么直接删除该关键字</li>
+<li>如果删除后为空，那么删除后要向父结点借一个关键字，同时该叶结点右兄弟的第一个关键字上移到父结点</li>
+<li>如果右兄弟中关键字只有一个，那么删除后要向父结点借一个关键字，同时该叶结点左兄弟的最后一个关键字上移到父结点</li>
+<li>如果左右结点都只有一个关键字，那么父结点的一个关键字要下移到左兄弟或右兄弟，左右兄弟合并</li>
+</ol>
+</li>
+<li>如果结点不是叶结点<ol>
+<li>如果该结点有大于 m/2 个关键字， 那么删除后向该关键字的右儿子借第一个关键字填补空缺</li>
+<li>如果该结点有大于 m/2 个关键字，且右儿子不够借， 那么删除后向该关键字的左儿子借最后一个关键字填补空缺</li>
+<li>如果左右儿子都不够借，那么左右孩子合并</li>
+</ol>
+</li>
+</ol>
+<h2 id="B-树-1"><a href="#B-树-1" class="headerlink" title="B+ 树"></a>B+ 树</h2><p>B+ 树与 B 树的定义类似，区别在于：</p>
+<ol>
+<li>B+ 树只有叶子结点存储数据</li>
+<li>B+ 树结点的一个关键字只指向一个孩子</li>
+<li>B+ 树的叶结点中有指向它的兄弟结点的指针</li>
+</ol>
+<p><img src="/images/MySQL%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8B+%E6%A0%91__image3.png" alt="图片3"></p>
+<h3 id="B-树的插入-1"><a href="#B-树的插入-1" class="headerlink" title="B+ 树的插入"></a>B+ 树的插入</h3><p>B+ 树的插入过程为：</p>
+<ol>
+<li>从根出发寻找应该插入的<strong>叶结点</strong></li>
+<li>如果该叶结点还有空位那么直接插入</li>
+<li>如果该结点已满，那么插入后需要将该叶结点分裂成左右两部分，左边部分的最后一个关键字<strong>复制</strong>插入到该结点的父结点</li>
+<li>如果父结点也满，父结点需要重复步骤 3</li>
+</ol>
+<h3 id="B-树的删除-1"><a href="#B-树的删除-1" class="headerlink" title="B+ 树的删除"></a>B+ 树的删除</h3><p>B+ 树的删除同样为插入的逆过程：</p>
+<ol>
+<li>从根出发寻找要删除的关键字所在的<strong>叶结点</strong></li>
+<li>如果删除后结点仍有不少于 m/2 个关键字，那么直接删除，如果删除的关键字是最后一个关键字，那么需要更新父结点的相应关键字</li>
+<li>如果删除后结点关键字少于 m/2 个，那么先向右兄弟借一个关键字，同时更新父结点相应的关键字，如果右兄弟不够借，那么向左兄弟借</li>
+<li>如果左右兄弟都不够借，那么左右兄弟合并，同时删除父结点中的一个相应关键字（父结点的删除也遵循这些步骤）</li>
+</ol>
+<h2 id="B-树的代码实现"><a href="#B-树的代码实现" class="headerlink" title="B+ 树的代码实现"></a>B+ 树的代码实现</h2><p>BPlusTree文件夹下：<br><a href="https://github.com/CVSink/DataStructure" target="_blank" rel="noopener">https://github.com/CVSink/DataStructure</a></p>
+
                 <hr>
                 
 
@@ -223,7 +280,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#B-树"><span class="toc-text">B 树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#B-树的插入"><span class="toc-text">B 树的插入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B-树的删除"><span class="toc-text">B 树的删除</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#B-树-1"><span class="toc-text">B+ 树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#B-树的插入-1"><span class="toc-text">B+ 树的插入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B-树的删除-1"><span class="toc-text">B+ 树的删除</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#B-树的代码实现"><span class="toc-text">B+ 树的代码实现</span></a></li></ol>
                 </div>
             </div>
         </div>
