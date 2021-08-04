@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        Ping命令详解｜LoongX&#39;s blog
+        Ping 命令详解｜LoongX&#39;s blog
         
     </title>
 
@@ -159,7 +159,7 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>Ping命令详解</h1>
+                    <h1>Ping 命令详解</h1>
                     
                     <span class="meta">
                          作者 LoongX
@@ -179,7 +179,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            Ping命令详解
+            Ping 命令详解
         </span>
     </div>
 </header>
@@ -196,11 +196,11 @@
 <p>路由器的局域网IP地址设为<code>192.168.3.1</code>，路由器厂商为 Huawei ，测试机的网卡制造商为 Intel 。</p>
 <h2 id="ping一个可达的外部网站"><a href="#ping一个可达的外部网站" class="headerlink" title="ping一个可达的外部网站"></a>ping一个可达的外部网站</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在 cmd 输入:</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ping www.stackoverflow.com</span><br></pre></td></tr></table></figure>
-<p>stackoverflow 与我们的客户机不在同一局域网且可以正常访问。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;由于输入的并不是 IP 地址，因此需要先进行域名解析，得到对应的 IP 地址。先通过本机的 DNS 客户端构造一个 DNS 请求报文，以 UDP 的方式发往本地 DNS 服务器，本地 DNS 服务器通过迭代查询得到域名对应的 IP 地址，之后将结果返回客户机。将 Wireshark 的过滤器设置为 UDP ，捕获到如下报文：<br><img src="/images/Ping%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/image1.png" alt="图片1"><br>DNS 应答报文的返回的查询结果为：<br><img src="/images/Ping%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/image2.png" alt="图片2"><br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在得到目的 IP 地址后，测试机发送 ICMP 请求 Echo 报文，目的机收到后返回 ICMP 应答 Echo 报文，共发送 4 次。将 Wireshark 的过滤器设置为 ICMP ，捕获到如下报文：<br><img src="/images/Ping%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/image3.png" alt="图片3"><br>需要注意此时在 cmd 下通过<code>arp -a</code>查看 arp 缓存，会发现并没有目的IP<code>151.101.1.69</code>对应的 Mac 物理地址，在整个过程中将 Wireshark 过滤器设置为 arp ，也没有捕获到任何 ARP 包。因此可以断定测试机并不知道目的 IP 的 MAC 地址。可是将网络层的 ICMP 包交付给数据链路层后，在数据链路层需要填写目的 MAC 地址。查看捕获到的 ICMP 回显请求报文：<br><img src="/images/Ping%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/image4.png" alt="图片4"><br>发现填写的 MAC 地址为路由器的 MAC 地址。实际上只有在最后一跳路由器，路由器发现目的 IP 属于自己所属的网络，这时才通过查询 arp 缓存或发送 arp 广播请求得到目的机的物理地址，并将目的 MAC 地址修改为目的机的物理地址。</p>
-<h2 id="ping一个局域网地址"><a href="#ping一个局域网地址" class="headerlink" title="ping一个局域网地址"></a>ping一个局域网地址</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;将我的移动设备也连接到该路由器，分配到的 IP 地址为：<code>192.168.3.55</code><br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在 cmd 输入:<code>ping 192.168.3.55</code><br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;此时因为直接 ping 的是 IP 地址，不需要进行域名解析。与上一种情况不同，测试机通过比较 IP 地址发现目的 IP 和自己属于同一个局域网，不必通过路由器转发就可以直接交付 ICMP 报文。没有路由器的协助，测试机需要自己获取目的机的 MAC 地址，于是测试机广播一个 arp 请求分组，目的机收到后以单播形式返回响应 arp 分组。将 Wireshark 的过滤器设置为 arp ，可以捕获到以下分组：<br><img src="/images/Ping%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/image6.png" alt="图片6"><br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在得到目的机的 MAC 地址后，测试机同样发送 ICMP 请求 Echo 报文，目的机收到后返回 ICMP 应答 Echo 报文，共发送 4 次。将 Wireshark 的过滤器设置为 ICMP ，捕获到如下报文：<br><img src="/images/Ping%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/image7.png" alt="图片7"><br>可以注意到与上一种情况不同，这次收到的回显应答 Echo 报文的 ttl 均为 64 ，说明没有经过任何转发，报文是通过直接交付的方式发送的。</p>
+<p>stackoverflow 与我们的客户机不在同一局域网且可以正常访问。<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;由于输入的并不是 IP 地址，因此需要先进行域名解析，得到对应的 IP 地址。先通过本机的 DNS 客户端构造一个 DNS 请求报文，以 UDP 的方式发往本地 DNS 服务器，本地 DNS 服务器通过迭代查询得到域名对应的 IP 地址，之后将结果返回客户机。将 Wireshark 的过滤器设置为 UDP ，捕获到如下报文：<br><img src="/images/Ping%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/image1.png" alt="图片1"><br>DNS 应答报文的返回的查询结果为：<br><img src="/images/Ping%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/image2.png" alt="图片2"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在得到目的 IP 地址后，测试机发送 ICMP 请求 Echo 报文，目的机收到后返回 ICMP 应答 Echo 报文，共发送 4 次。将 Wireshark 的过滤器设置为 ICMP ，捕获到如下报文：<br><img src="/images/Ping%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/image3.png" alt="图片3"><br>需要注意此时在 cmd 下通过<code>arp -a</code>查看 arp 缓存，会发现并没有目的IP<code>151.101.1.69</code>对应的 Mac 物理地址，在整个过程中将 Wireshark 过滤器设置为 arp ，也没有捕获到任何 ARP 包。因此可以断定测试机并不知道目的 IP 的 MAC 地址。可是将网络层的 ICMP 包交付给数据链路层后，在数据链路层需要填写目的 MAC 地址。查看捕获到的 ICMP 回显请求报文：<br><img src="/images/Ping%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/image4.png" alt="图片4"><br>发现填写的 MAC 地址为路由器的 MAC 地址。实际上只有在最后一跳路由器，路由器发现目的 IP 属于自己所属的网络，这时才通过查询 arp 缓存或发送 arp 广播请求得到目的机的物理地址，并将目的 MAC 地址修改为目的机的物理地址。</p>
+<h2 id="ping一个局域网地址"><a href="#ping一个局域网地址" class="headerlink" title="ping一个局域网地址"></a>ping一个局域网地址</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;将我的移动设备也连接到该路由器，分配到的 IP 地址为：<code>192.168.3.55</code><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在 cmd 输入:<code>ping 192.168.3.55</code><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;此时因为直接 ping 的是 IP 地址，不需要进行域名解析。与上一种情况不同，测试机通过比较 IP 地址发现目的 IP 和自己属于同一个局域网，不必通过路由器转发就可以直接交付 ICMP 报文。没有路由器的协助，测试机需要自己获取目的机的 MAC 地址，于是测试机广播一个 arp 请求分组，目的机收到后以单播形式返回响应 arp 分组。将 Wireshark 的过滤器设置为 arp ，可以捕获到以下分组：<br><img src="/images/Ping%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/image6.png" alt="图片6"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在得到目的机的 MAC 地址后，测试机同样发送 ICMP 请求 Echo 报文，目的机收到后返回 ICMP 应答 Echo 报文，共发送 4 次。将 Wireshark 的过滤器设置为 ICMP ，捕获到如下报文：<br><img src="/images/Ping%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/image7.png" alt="图片7"><br>可以注意到与上一种情况不同，这次收到的回显应答 Echo 报文的 ttl 均为 64 ，说明没有经过任何转发，报文是通过直接交付的方式发送的。</p>
 <h2 id="ping一个不可达的网站"><a href="#ping一个不可达的网站" class="headerlink" title="ping一个不可达的网站"></a>ping一个不可达的网站</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在 cmd 输入:</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ping www.google.com</span><br></pre></td></tr></table></figure>
-<p>Google 与我们的客户机不在同一局域网且在不使用代理的情况下无法访问。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;此时由于输入的并不是 IP 地址，仍需要先进行域名解析，这一过程在上面已经介绍，便不再赘述。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;此时测试机仍然发送 4 次 ICMP 请求 Echo 报文，但由于目的机不可达，不会返回任何 ICMP 应答 Echo 报文：<br><img src="/images/Ping%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/image5.png" alt="图片5"></p>
+<p>Google 与我们的客户机不在同一局域网且在不使用代理的情况下无法访问。<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;此时由于输入的并不是 IP 地址，仍需要先进行域名解析，这一过程在上面已经介绍，便不再赘述。<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;此时测试机仍然发送 4 次 ICMP 请求 Echo 报文，但由于目的机不可达，不会返回任何 ICMP 应答 Echo 报文：<br><img src="/images/Ping%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/image5.png" alt="图片5"></p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ping 命令使用 ICMP 网际控制报文协议来检查目的 IP 的可达性，根据 ping 的地址所属的网络的不同，主机发送的 ICMP 回显请求报文可以分为以下两种情况：</p>
 <ol>
 <li>ping 的 IP 地址与本机不属于同一局域网。此时发送的 ICMP 回显请求报文的目的 IP 填写的是目的 IP 地址，但目的 MAC 填写的是网关的 MAC 地址，在经过一连串的转发后，最后一跳的路由器会负责将目的 MAC 修改成正确的MAC地址。</li>

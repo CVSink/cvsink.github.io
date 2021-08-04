@@ -197,7 +197,7 @@
 <p>第一次出现这样的问题，实在找不到原因。</p>
 <h2 id="解决过程"><a href="#解决过程" class="headerlink" title="解决过程"></a>解决过程</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;首先自然先想到是否是 nodejs 或 npm 出现了异常，于是依次键入检查：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">node -v</span><br><span class="line">npm -v</span><br></pre></td></tr></table></figure>
-<p>都出现了版本信息，说明 nodejs 和 npm 都没有问题。这时想到早上更新了系统，于是怀疑可能是环境变量的问题。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;于是查看环境变量：在此电脑右键属性，依次选择高级系统设置-&gt;环境变量，选择系统变量 Path。经过检查，里面果然没有node_modules.bin这一文件路径，这时只需要在Path里添加博客目录下\node_modules.bin的路径即可。例如我的路径为：</p>
+<p>都出现了版本信息，说明 nodejs 和 npm 都没有问题。这时想到早上更新了系统，于是怀疑可能是环境变量的问题。<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;于是查看环境变量：在此电脑右键属性，依次选择高级系统设置-&gt;环境变量，选择系统变量 Path。经过检查，里面果然没有node_modules.bin这一文件路径，这时只需要在Path里添加博客目录下\node_modules.bin的路径即可。例如我的路径为：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">D:\MyBlog\node_modules\.bin</span><br></pre></td></tr></table></figure>
 <p>添加完毕后只需要重新git bash here就恢复正常了。</p>
 
