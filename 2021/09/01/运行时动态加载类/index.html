@@ -190,7 +190,11 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2>
+                <h2 id="加载普通类"><a href="#加载普通类" class="headerlink" title="加载普通类"></a>加载普通类</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在运行时加载类并调用类中的方法：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">            File file = <span class="keyword">new</span> File(<span class="string">"文件目录"</span>);</span><br><span class="line">            URL xUrl= file.toURL();</span><br><span class="line">            URLClassLoader classloader=<span class="keyword">new</span> URLClassLoader(<span class="keyword">new</span> URL[]&#123; xUrl &#125;);</span><br><span class="line">            Method add = URLClassLoader.class.getDeclaredMethod("addURL", new Class[]&#123;URL.class&#125;);</span><br><span class="line">            add.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">            add.invoke(classloader, <span class="keyword">new</span> Object[]&#123;file.toURI().toURL()&#125;);</span><br><span class="line">            <span class="comment">//要加载那个类</span></span><br><span class="line">            Class c = classloader.loadClass(<span class="string">"类名"</span>);</span><br><span class="line">            Object o = c.newInstance();</span><br><span class="line">            Method m = c.getDeclaredMethod(<span class="string">"要调用的方法名"</span>);</span><br><span class="line">            m.invoke(o);</span><br><span class="line">        &#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用线程池"><a href="#使用线程池" class="headerlink" title="使用线程池"></a>使用线程池</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在运行时加载类并将其放入线程池执行，此时加载的类要实现 Runnable 方法：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    File file = <span class="keyword">new</span> File(<span class="string">"类文件所在目录"</span>);</span><br><span class="line">    URL xUrl= file.toURL();</span><br><span class="line">    URLClassLoader classloader=<span class="keyword">new</span> URLClassLoader(<span class="keyword">new</span> URL[]&#123; xUrl &#125;);</span><br><span class="line">    Method add = URLClassLoader.class.getDeclaredMethod("addURL", new Class[]&#123;URL.class&#125;);</span><br><span class="line">    add.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">    add.invoke(classloader, <span class="keyword">new</span> Object[]&#123;file.toURI().toURL()&#125;);</span><br><span class="line">    <span class="comment">//加载类</span></span><br><span class="line">    Class c = classloader.loadClass(<span class="string">"类名"</span>);</span><br><span class="line">    Object o = c.newInstance();</span><br><span class="line">    <span class="comment">//将类实例放入线程池执行</span></span><br><span class="line">    pool.execute((Runnable) o);</span><br><span class="line">    &#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
                 <hr>
                 
 
@@ -223,7 +227,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#加载普通类"><span class="toc-text">加载普通类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用线程池"><span class="toc-text">使用线程池</span></a></li></ol>
                 </div>
             </div>
         </div>
